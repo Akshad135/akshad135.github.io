@@ -28,7 +28,7 @@
 
     /* Images */
     --cursor-default: url('images/pencil_2280532.png') 4 20, auto;
-    --cursor-pointer: url('images/sketched-left-arrow_39375.png') 2 12, pointer;
+    --cursor-pointer: url('images/sketched-left-arrow_39375.png') 2 8, pointer;
 
     /* Sizes */
     --max-width-paper: 800px;
@@ -71,40 +71,46 @@ input[type="submit"],
 /* Wrapper with buttons and resume side by side */
 .resume-wrapper {
     display: flex;
-    justify-content: flex-start; /* align everything to the left */
+    justify-content: flex-start;
+    /* align everything to the left */
     align-items: flex-start;
-    gap: 20px; /* space between buttons and resume */
+    gap: 20px;
+    /* space between buttons and resume */
     margin-top: 2rem;
     margin-left: 1rem;
 }
 
 .button-container {
     display: flex;
-    flex-direction: column; /* change to row if you want them side-by-side */
+    flex-direction: column;
+    /* change to row if you want them side-by-side */
     gap: 10px;
-    position: static; /* ensures they sit naturally next to resume */
+    position: static;
+    /* ensures they sit naturally next to resume */
 }
 
 .resume-paper {
     max-width: var(--max-width-paper);
     background: var(--color-bg-paper);
     padding: 3rem 4rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    border: 1px dashed var(--border-color-paper);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(203, 191, 157, 0.5);
     position: relative;
+    transition: all 0.3s ease;
 }
 
 .resume-paper::before {
     content: '';
     position: absolute;
-    top: -12px;
-    left: 30px;
-    width: 100px;
-    height: 30px;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 120px;
+    height: 32px;
     background: var(--color-bg-paper-strip);
-    transform: rotate(-3deg);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 header {
@@ -179,9 +185,15 @@ header h1 {
     color: var(--color-text-signature);
 }
 
+.signature p {
+    font-size: 1.3rem !important;
+    line-height: 1.4;
+}
+
 .signature span {
     display: inline-block;
     margin-top: 0.5rem;
+    font-size: 1.45rem !important;
 }
 
 .back-button {
@@ -221,4 +233,104 @@ header h1 {
 .download-resume:hover {
     background: var(--color-bg-download-btn-hover);
     transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .resume-wrapper {
+        flex-direction: column;
+        /* Stack buttons on top of resume */
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        gap: 15px;
+        padding: 0 1rem;
+        /* breathing room */
+    }
+
+    .button-container {
+        flex-direction: row;
+        /* Buttons side by side on mobile */
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .resume-paper {
+        padding: 1.8rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        width: 95%;
+        /* narrower so shadow is visible */
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .resume-paper::before {
+        width: 90px;
+        height: 26px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        /* center the tape on mobile */
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .section h2 {
+        font-size: 1.2rem;
+    }
+
+    .section p,
+    .section ul li {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .title {
+        font-size: 0.9rem;
+    }
+
+    .contact {
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .resume-wrapper {
+        padding: 0 0.8rem;
+    }
+
+    .button-container {
+        flex-direction: column;
+        /* Stack buttons vertically for very small screens */
+        align-items: center;
+    }
+
+    .resume-paper {
+        width: 92%;
+        /* more gap on very small devices */
+        padding: 1.2rem;
+        border-radius: 10px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .resume-paper::before {
+        width: 70px;
+        height: 22px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+    }
 }
