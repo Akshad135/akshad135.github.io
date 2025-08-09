@@ -27,8 +27,8 @@
     --font-heading: 'Zeyada', cursive;
 
     /* Images */
-    --cursor-default: url('../images/pencil_2280532.png'), auto;
-    --cursor-pointer: url('../images/sketched-left-arrow_39375.png'), pointer;
+    --cursor-default: url('images/pencil_2280532.png'), auto;
+    --cursor-pointer: url('images/sketched-left-arrow_39375.png'), pointer;
 
     /* Sizes */
     --max-width-paper: 800px;
