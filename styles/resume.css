@@ -27,8 +27,8 @@
     --font-heading: 'Zeyada', cursive;
 
     /* Images */
-    --cursor-default: url('images/pencil_2280532.png'), auto;
-    --cursor-pointer: url('images/sketched-left-arrow_39375.png'), pointer;
+    --cursor-default: url('images/pencil_2280532.png') 4 20, auto;
+    --cursor-pointer: url('images/sketched-left-arrow_39375.png') 2 12, pointer;
 
     /* Sizes */
     --max-width-paper: 800px;
@@ -68,9 +68,25 @@ input[type="submit"],
     cursor: var(--cursor-pointer) !important;
 }
 
+/* Wrapper with buttons and resume side by side */
+.resume-wrapper {
+    display: flex;
+    justify-content: flex-start; /* align everything to the left */
+    align-items: flex-start;
+    gap: 20px; /* space between buttons and resume */
+    margin-top: 2rem;
+    margin-left: 1rem;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* change to row if you want them side-by-side */
+    gap: 10px;
+    position: static; /* ensures they sit naturally next to resume */
+}
+
 .resume-paper {
     max-width: var(--max-width-paper);
-    margin: auto;
     background: var(--color-bg-paper);
     padding: 3rem 4rem;
     border-radius: 12px;
@@ -168,12 +184,8 @@ header h1 {
     margin-top: 0.5rem;
 }
 
-
 .back-button {
     display: inline-block;
-    position: absolute;
-    top: 20px;
-    left: 20px;
     background: var(--color-bg-back-btn);
     border: 2px dashed var(--border-color-back-btn);
     padding: 0.6rem 1rem;
@@ -185,7 +197,6 @@ header h1 {
     border-radius: 10px;
     transform: rotate(-2deg);
     transition: all 0.3s ease;
-    z-index: 100;
 }
 
 .back-button:hover {
@@ -203,7 +214,6 @@ header h1 {
     font-weight: bold;
     font-family: var(--font-body);
     border-radius: 8px;
-    margin-top: 2rem;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
