@@ -54,9 +54,9 @@
     --font-scrap: "Patrick Hand", "Shadows Into Light", "Handjet", "Comic Sans MS", cursive;
 
     /* Cursors */
-    --cursor-default: url('./images/pencil_2280532.png'), auto;
-    --cursor-link: url('./images/sketched-left-arrow_39375.png'), pointer;
-    --cursor-drag: url('./images/hand_16535664.png'), grab;
+    --cursor-default: url('../images/pencil_2280532.png'), auto;
+    --cursor-link: url('../images/sketched-left-arrow_39375.png'), pointer;
+    --cursor-drag: url('../images/hand_16535664.png'), grab;
 }
 
 * {

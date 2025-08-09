@@ -1,24 +1,61 @@
+:root {
+    /* Colors */
+    --color-bg-main: #f7f2e8;
+    --color-bg-paper: #fffdf3;
+    --color-bg-paper-strip: #f3e2c7;
+    --color-bg-back-btn: #fcf0c3;
+    --color-bg-back-btn-hover: #fff8e1;
+    --color-bg-download-btn: #fdf3d4;
+    --color-bg-download-btn-hover: #fff9e6;
+
+    --color-text-main: #333;
+    --color-text-title: #2c2c2c;
+    --color-text-subtitle: #666;
+    --color-text-contact: #444;
+    --color-text-link: #2c3e50;
+    --color-text-section-title: #222;
+    --color-text-signature: #555;
+    --color-text-btn: #000;
+
+    /* Borders & Shadows */
+    --border-color-paper: #cbbf9d;
+    --border-color-back-btn: #caa100;
+    --border-color-download-btn: #c89b05;
+
+    /* Fonts */
+    --font-body: 'Signika Negative', sans-serif;
+    --font-heading: 'Zeyada', cursive;
+
+    /* Images */
+    --cursor-default: url('../images/pencil_2280532.png'), auto;
+    --cursor-pointer: url('../images/sketched-left-arrow_39375.png'), pointer;
+
+    /* Sizes */
+    --max-width-paper: 800px;
+}
+
 body {
-  background: #f7f2e8;
-  font-family: 'Signika Negative', sans-serif;
-  color: #333;
-  margin: 0;
-  padding: 2rem;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-  background-size: 20px 20px;
-  animation: flipIn 1s ease;
-  cursor: url('./images/pencil_2280532.png'), auto;
+    background: var(--color-bg-main);
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    margin: 0;
+    padding: 2rem;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: flipIn 1s ease;
+    cursor: var(--cursor-default);
 }
 
 @keyframes flipIn {
-  0% {
-    transform: rotateY(-90deg);
-    opacity: 0;
-  }
-  100% {
-    transform: rotateY(0);
-    opacity: 1;
-  }
+    0% {
+        transform: rotateY(-90deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: rotateY(0);
+        opacity: 1;
+    }
 }
 
 a,
@@ -27,150 +64,151 @@ button,
 button:hover,
 input[type="button"],
 input[type="submit"],
-.paper-button{
-    cursor: url('./images/sketched-left-arrow_39375.png'), pointer !important;
+.paper-button {
+    cursor: var(--cursor-pointer) !important;
 }
 
 .resume-paper {
-  max-width: 800px;
-  margin: auto;
-  background: #fffdf3;
-  padding: 3rem 4rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  border: 1px dashed #cbbf9d;
-  position: relative;
+    max-width: var(--max-width-paper);
+    margin: auto;
+    background: var(--color-bg-paper);
+    padding: 3rem 4rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    border: 1px dashed var(--border-color-paper);
+    position: relative;
 }
 
 .resume-paper::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 30px;
-  width: 100px;
-  height: 30px;
-  background: #f3e2c7;
-  transform: rotate(-3deg);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    width: 100px;
+    height: 30px;
+    background: var(--color-bg-paper-strip);
+    transform: rotate(-3deg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header {
-  text-align: center;
-  margin-bottom: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
 }
 
 header h1 {
-  font-size: 2.8rem;
-  margin: 0;
-  font-weight: bold;
-  font-family: 'Zeyada', cursive;
-  color: #2c2c2c;
+    font-size: 2.8rem;
+    margin: 0;
+    font-weight: bold;
+    font-family: var(--font-heading);
+    color: var(--color-text-title);
 }
 
 .title {
-  font-size: 1.2rem;
-  margin-top: 0.2rem;
-  font-weight: 600;
-  color: #666;
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    font-weight: 600;
+    color: var(--color-text-subtitle);
 }
 
 .contact {
-  margin-top: 0.6rem;
-  font-size: 0.95rem;
-  color: #444;
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--color-text-contact);
 }
 
 .contact a {
-  color: #2c3e50;
-  text-decoration: none;
-  margin: 0 0.5rem;
+    color: var(--color-text-link);
+    text-decoration: none;
+    margin: 0 0.5rem;
 }
 
 .contact a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .section {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .section h2 {
-  font-size: 1.5rem;
-  border-bottom: 1px dashed #cbbf9d;
-  padding-bottom: 0.4rem;
-  margin-bottom: 0.6rem;
-  color: #222;
+    font-size: 1.5rem;
+    border-bottom: 1px dashed var(--border-color-paper);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
+    color: var(--color-text-section-title);
 }
 
 .section p {
-  font-size: 1rem;
-  margin: 0.4rem 0;
-  line-height: 1.6;
+    font-size: 1rem;
+    margin: 0.4rem 0;
+    line-height: 1.6;
 }
 
 .section ul {
-  padding-left: 1.2rem;
+    padding-left: 1.2rem;
 }
 
 .section ul li {
-  list-style: square;
-  margin: 0.3rem 0;
-  font-size: 1rem;
+    list-style: square;
+    margin: 0.3rem 0;
+    font-size: 1rem;
 }
 
 .signature {
-  text-align: right;
-  margin-top: 3rem;
-  font-family: 'Zeyada', cursive;
-  font-size: 1.8rem;
-  color: #555;
+    text-align: right;
+    margin-top: 3rem;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-text-signature);
 }
 
 .signature span {
-  display: inline-block;
-  margin-top: 0.5rem;
+    display: inline-block;
+    margin-top: 0.5rem;
 }
 
+
 .back-button {
-  display: inline-block;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #fcf0c3;
-  border: 2px dashed #caa100;
-  padding: 0.6rem 1rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  font-family: 'Signika Negative', sans-serif;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  transform: rotate(-2deg);
-  transition: all 0.3s ease;
-  z-index: 100;
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--color-bg-back-btn);
+    border: 2px dashed var(--border-color-back-btn);
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    color: var(--color-text-main);
+    font-weight: bold;
+    font-family: var(--font-body);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    transform: rotate(-2deg);
+    transition: all 0.3s ease;
+    z-index: 100;
 }
 
 .back-button:hover {
-  background: #fff8e1;
-  transform: rotate(0deg) scale(1.05);
+    background: var(--color-bg-back-btn-hover);
+    transform: rotate(0deg) scale(1.05);
 }
 
 .download-resume {
-  display: inline-block;
-  background: #fdf3d4;
-  border: 2px dashed #c89b05;
-  padding: 0.6rem 1.2rem;
-  text-decoration: none;
-  color: #000;
-  font-weight: bold;
-  font-family: 'Signika Negative', sans-serif;
-  border-radius: 8px;
-  margin-top: 2rem;
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+    display: inline-block;
+    background: var(--color-bg-download-btn);
+    border: 2px dashed var(--border-color-download-btn);
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    color: var(--color-text-btn);
+    font-weight: bold;
+    font-family: var(--font-body);
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .download-resume:hover {
-  background: #fff9e6;
-  transform: scale(1.05);
+    background: var(--color-bg-download-btn-hover);
+    transform: scale(1.05);
 }
