@@ -42,13 +42,21 @@
             <a href="resume.html">Resume</a>
         </nav>
 
-        <section id="about" class="section ripped-edge">
-            <h2>About Me</h2>
-            <p>
-                I'm a Computer Science and Engineering student with a wild love for Web Development and AIML. I blend code with
-                creativity to build quirky, functional, and unforgettable experiences on the web.
-            </p>
+        <section id="about" class="section about-pinned">
+            <div class="about-card torn-foot">
+                <h2>About Me</h2>
+                <p>I’m a Computer Science and Engineering student who blends code with creativity to build quirky, functional, and unforgettable web experiences.</p>
+                <ul class="about-highlights">
+                    <li>Web dev + AIML focus</li>
+                    <li>Love interactive canvases and modular animations</li>
+                    <li>Fast prototypes, polished UX</li>
+                </ul>
+                <div class="pencil-notes">ship small • iterate fast</div>
+            </div>
+            <div class="tape-strip tl"></div>
+            <div class="tape-strip tr"></div>
         </section>
+
 
         <section id="projects" class="section notebook-lines">
             <h2>Featured Projects</h2>
@@ -66,16 +74,44 @@
             </div>
         </section>
 
-        <section id="skills" class="section taped-section">
+        <section id="skills" class="section skills-tabs">
             <h2>Skills</h2>
-            <ul>
-                <li>HTML, CSS, JS (obviously)</li>
-                <li>React, Three.js</li>
-                <li>TensorFlow, PyTorch</li>
-                <li>Prompt Engineering</li>
-                <li>Pythonic Wizardry</li>
-            </ul>
+            <div class="tab-row">
+                <button class="tab active" data-target="#tab-web">Web</button>
+                <button class="tab" data-target="#tab-aiml">AIML</button>
+                <button class="tab" data-target="#tab-tools">Tools</button>
+            </div>
+
+            <div class="cards">
+                <article id="tab-web" class="card active">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li>HTML, CSS, JS</li>
+                        <li>Animations & Canvas</li>
+                        <li>Responsive UI</li>
+                    </ul>
+                </article>
+
+                <article id="tab-aiml" class="card">
+                    <h3>AIML</h3>
+                    <ul>
+                        <li>NLP basics</li>
+                        <li>Inference workflows</li>
+                        <li>Data preprocessing</li>
+                    </ul>
+                </article>
+
+                <article id="tab-tools" class="card">
+                    <h3>Tooling</h3>
+                    <ul>
+                        <li>Prototyping & iterations</li>
+                        <li>Git & Dev tooling</li>
+                        <li>Theming with CSS vars</li>
+                    </ul>
+                </article>
+            </div>
         </section>
+
 
         <section id="contact" class="section paper-fold">
             <h2>Let's Talk</h2>
@@ -87,10 +123,18 @@
             </div>
             <a href="mailto:akshad@example.com" class="paper-button">Send Email</a>
         </section>
-
-        <footer class="footer-sketch">
-            <p>&copy; 2025 Akshad Agrawal</p>
+        
+        <footer class="footer-sketch enhanced">
+            <div class="footer-inner">
+                <div class="stamp">
+                    <span class="stamp-text">Posted from my desk</span>
+                </div>
+                <div class="foot-meta">
+                    &copy; <span id="year"></span> &nbsp;&nbsp;Akshad Agrawal
+                </div>
+            </div>
         </footer>
+
     </div>
     <button id="scrollToTop" title="Back to top">↑</button>
     <script src="./script/script.js"></script>

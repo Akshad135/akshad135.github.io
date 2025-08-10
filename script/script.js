@@ -234,3 +234,21 @@ function showRandomFact() {
 
 setInterval(showRandomFact, 15000);
 setTimeout(showRandomFact, 3500);
+
+  const r = document.documentElement;
+  addEventListener('scroll', () => {
+    r.style.setProperty('--scroll', String(scrollY));
+  }, {passive:true});
+
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab');
+    if (!btn) return;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cards .card').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const tgt = document.querySelector(btn.dataset.target);
+    if (tgt) tgt.classList.add('active');
+  });
+
+document.getElementById('year').textContent = new Date().getFullYear();

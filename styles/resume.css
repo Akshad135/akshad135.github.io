@@ -35,15 +35,36 @@
 }
 
 body {
-    background: var(--color-bg-main);
+    background-color: var(--color-bg-main);
     font-family: var(--font-body);
+    animation: flipIn 1s ease;
+    /* warm base */
+    background-image:
+        radial-gradient(1200px 600px at 50% 0%, rgba(0, 0, 0, 0.06), transparent 60%),
+        /* top vignette */
+        radial-gradient(1200px 600px at 50% 100%, rgba(0, 0, 0, 0.05), transparent 60%),
+        /* bottom vignette */
+        url('images/paper-fibers.png');
+    /* fibers */
+    background-repeat: no-repeat, no-repeat, repeat;
+    background-size: 100% 60%, 100% 60%, auto;
     color: var(--color-text-main);
+    overflow-x: hidden;
+    cursor: var(--cursor-default);
     margin: 0;
     padding: 2rem;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-    background-size: 20px 20px;
-    animation: flipIn 1s ease;
-    cursor: var(--cursor-default);
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('images/noise-pattern-with-subtle-cross-lines.png');
+    opacity: 0.5;
+    /* keep subtle */
+    mix-blend-mode: multiply;
+    z-index: -1;
 }
 
 @keyframes flipIn {
