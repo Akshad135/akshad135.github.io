@@ -251,6 +251,10 @@
         transition-delay: 0.3s;
       }
 
+      .mobile-menu-overlay.open .mobile-link:nth-child(4) {
+        transition-delay: 0.4s;
+      }
+
       .hamburger-line {
         transition: all 0.3s ease;
         transform-origin: center;
@@ -337,6 +341,11 @@
             >Work</a
           >
           <a
+            href="resume.html"
+            class="hover:text-blue-400 transition-colors duration-200"
+            >Resume</a
+          >
+          <a
             href="#contact"
             class="hover:text-white transition-colors duration-200"
             >Contact</a
@@ -364,6 +373,9 @@
       <div class="flex flex-col gap-8 text-center">
         <a href="#about" class="mobile-link" onclick="toggleMenu()">About</a>
         <a href="#work" class="mobile-link" onclick="toggleMenu()">Work</a>
+        <a href="resume.html" class="mobile-link" onclick="toggleMenu()"
+          >Resume</a
+        >
         <a href="#contact" class="mobile-link" onclick="toggleMenu()"
           >Contact</a
         >
