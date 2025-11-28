@@ -76,17 +76,6 @@
         }
       }
 
-      .timeline-dot {
-        position: absolute;
-        left: -29px;
-        top: 6px;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #3b82f6;
-        box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-      }
-
       ::-webkit-scrollbar {
         width: 8px;
       }
@@ -147,33 +136,44 @@
           Computer Science & Engineering (AIML)
         </p>
 
+        <!-- UPDATED CONTACT SECTION -->
         <div
-          class="flex flex-wrap justify-center gap-4 md:gap-8 text-sm text-gray-400 bg-gray-900/40 inline-flex px-8 py-4 rounded-full border border-gray-800 backdrop-blur-sm"
+          class="flex flex-col md:flex-row md:inline-flex md:items-center justify-center gap-4 md:gap-8 text-sm text-gray-400 bg-gray-900/40 p-6 md:px-8 md:py-4 rounded-2xl md:rounded-full border border-gray-800 backdrop-blur-sm w-full md:w-auto"
         >
           <a
             href="mailto:akshad.contact@gmail.com"
-            class="hover:text-white transition flex items-center"
-            ><i class="fas fa-envelope mr-2 text-blue-500"></i
-            >akshad.contact@gmail.com</a
+            class="hover:text-white transition flex items-center justify-center md:justify-start"
           >
+            <i class="fas fa-envelope mr-2 text-blue-500"></i>
+            akshad.contact@gmail.com
+          </a>
+
           <span class="hidden md:inline text-gray-700">|</span>
-          <span class="flex items-center"
-            ><i class="fas fa-phone mr-2 text-blue-500"></i>+91 9998054685</span
-          >
+
+          <span class="flex items-center justify-center md:justify-start">
+            <i class="fas fa-phone mr-2 text-blue-500"></i>
+            +91 9998054685
+          </span>
+
           <span class="hidden md:inline text-gray-700">|</span>
-          <a
-            href="https://linkedin.com/in/akshad135"
-            target="_blank"
-            class="hover:text-white transition flex items-center"
-            ><i class="fab fa-linkedin mr-2 text-blue-500"></i>LinkedIn</a
-          >
-          <span class="hidden md:inline text-gray-700">|</span>
-          <a
-            href="https://github.com/akshad135"
-            target="_blank"
-            class="hover:text-white transition flex items-center"
-            ><i class="fab fa-github mr-2 text-blue-500"></i>GitHub</a
-          >
+
+          <div class="flex items-center justify-center gap-6 md:gap-8">
+            <a
+              href="https://linkedin.com/in/akshad135"
+              target="_blank"
+              class="hover:text-white transition flex items-center"
+            >
+              <i class="fab fa-linkedin mr-2 text-blue-500"></i>LinkedIn
+            </a>
+            <span class="hidden md:inline text-gray-700">|</span>
+            <a
+              href="https://github.com/akshad135"
+              target="_blank"
+              class="hover:text-white transition flex items-center"
+            >
+              <i class="fab fa-github mr-2 text-blue-500"></i>GitHub
+            </a>
+          </div>
         </div>
       </header>
 
@@ -457,43 +457,65 @@
             </div>
           </section>
 
-          <!-- Experience / Extra-Curricular -->
+          <!-- UPDATED: Clubs & Extra Curricular (Consistent Layout) -->
           <section class="resume-section" style="animation-delay: 0.6s">
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
-              <i class="fas fa-users-cog"></i> Experience & Leadership
+              <i class="fas fa-users"></i> Clubs & Extra Curricular
             </h3>
 
-            <div class="relative pl-8 border-l border-gray-800 space-y-10">
+            <div class="grid sm:grid-cols-2 gap-4">
               <!-- Role 1 -->
-              <div class="relative group">
-                <div
-                  class="timeline-dot bg-gray-700 shadow-none group-hover:bg-gray-500 transition-colors"
-                ></div>
-                <h4 class="text-lg font-bold text-white">Web Team Co-Lead</h4>
-                <div class="text-blue-400 font-mono text-xs mb-2">
-                  Data Science Club
+              <div class="glass-card p-6 hover:bg-gray-900/40 transition">
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <h4 class="text-lg font-bold text-white mb-1">
+                      Web Team Co-Lead
+                    </h4>
+                    <div class="text-blue-400 text-xs font-mono">
+                      Data Science Club
+                    </div>
+                  </div>
+                  <div
+                    class="inline-block px-2 py-0.5 bg-gray-800 text-gray-500 text-[10px] uppercase tracking-wider rounded flex-shrink-0"
+                  >
+                    Former Member
+                  </div>
                 </div>
               </div>
 
               <!-- Role 2 -->
-              <div class="relative group">
-                <div
-                  class="timeline-dot bg-gray-700 shadow-none group-hover:bg-gray-500 transition-colors"
-                ></div>
-                <h4 class="text-lg font-bold text-white">Web Team</h4>
-                <div class="text-blue-400 font-mono text-xs mb-2">AI Club</div>
+              <div class="glass-card p-6 hover:bg-gray-900/40 transition">
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <h4 class="text-lg font-bold text-white mb-1">Web Team</h4>
+                    <div class="text-blue-400 text-xs font-mono">AI Club</div>
+                  </div>
+                  <div
+                    class="inline-block px-2 py-0.5 bg-gray-800 text-gray-500 text-[10px] uppercase tracking-wider rounded flex-shrink-0"
+                  >
+                    Former Member
+                  </div>
+                </div>
               </div>
 
               <!-- Role 3 -->
-              <div class="relative group">
-                <div
-                  class="timeline-dot bg-gray-700 shadow-none group-hover:bg-gray-500 transition-colors"
-                ></div>
-                <h4 class="text-lg font-bold text-white">Tech Lead</h4>
-                <div class="text-blue-400 font-mono text-xs mb-2">
-                  Meraki: The Fine Arts Club
+              <div
+                class="glass-card p-6 hover:bg-gray-900/40 transition sm:col-span-2"
+              >
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <h4 class="text-lg font-bold text-white mb-1">Tech Lead</h4>
+                    <div class="text-blue-400 text-xs font-mono">
+                      Meraki: The Fine Arts Club
+                    </div>
+                  </div>
+                  <div
+                    class="inline-block px-2 py-0.5 bg-gray-800 text-gray-500 text-[10px] uppercase tracking-wider rounded flex-shrink-0"
+                  >
+                    Former Member
+                  </div>
                 </div>
               </div>
             </div>
