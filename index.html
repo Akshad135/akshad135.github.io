@@ -404,7 +404,7 @@
               href="#work"
               class="px-8 py-3.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition-colors text-center shadow-[0_0_20px_rgba(255,255,255,0.15)]"
             >
-              View Selected Work
+              See What I've Built
             </a>
             <a
               href="https://github.com/akshad135"
@@ -594,6 +594,7 @@
         <h2 class="text-4xl font-bold text-white mb-16">Stuff I've Built</h2>
 
         <div class="space-y-24 md:space-y-32">
+          <!-- PROJECT 1: AGENTIC AUDITOR (Card Left, Text Right) -->
           <div
             class="grid md:grid-cols-2 gap-8 md:gap-12 items-center group reveal-text"
           >
@@ -603,47 +604,134 @@
               <div
                 class="w-full h-full max-w-sm flex items-center justify-center relative"
               >
+                <!-- Custom SVG for Agentic Auditor: Drafter-Critic Loop -->
                 <svg
                   viewBox="0 0 400 300"
                   class="w-full h-full"
                   preserveAspectRatio="xMidYMid meet"
                 >
+                  <!-- Connecting Path (Loop) -->
                   <path
-                    d="M200 100 L 80 180"
-                    stroke="rgba(255,255,255,0.2)"
+                    d="M100 150 Q 200 50 300 150 T 100 150"
+                    fill="none"
+                    stroke="rgba(59, 130, 246, 0.2)"
                     stroke-width="2"
+                    stroke-dasharray="5,5"
+                    class="animate-pulse"
                   />
                   <path
-                    d="M200 100 L 200 180"
-                    stroke="rgba(255,255,255,0.2)"
+                    d="M300 150 Q 200 250 100 150"
+                    fill="none"
+                    stroke="rgba(239, 68, 68, 0.2)"
                     stroke-width="2"
-                  />
-                  <path
-                    d="M200 100 L 320 180"
-                    stroke="rgba(255,255,255,0.2)"
-                    stroke-width="2"
+                    stroke-dasharray="5,5"
+                    class="animate-pulse"
                   />
 
+                  <!-- Drafter Agent Node -->
                   <circle
-                    cx="200"
-                    cy="100"
-                    r="8"
-                    fill="white"
-                    filter="drop-shadow(0 0 10px rgba(255,255,255,0.8))"
+                    cx="100"
+                    cy="150"
+                    r="30"
+                    fill="rgba(16, 185, 129, 0.1)"
+                    stroke="#10b981"
+                    stroke-width="2"
+                  />
+                  <text
+                    x="100"
+                    y="155"
+                    text-anchor="middle"
+                    fill="#10b981"
+                    font-size="10"
+                    font-family="monospace"
+                  >
+                    DRAFTER
+                  </text>
+
+                  <!-- Critic Agent Node -->
+                  <circle
+                    cx="300"
+                    cy="150"
+                    r="30"
+                    fill="rgba(239, 68, 68, 0.1)"
+                    stroke="#ef4444"
+                    stroke-width="2"
+                  />
+                  <text
+                    x="300"
+                    y="155"
+                    text-anchor="middle"
+                    fill="#ef4444"
+                    font-size="10"
+                    font-family="monospace"
+                  >
+                    CRITIC
+                  </text>
+
+                  <!-- Document Icon Center -->
+                  <rect
+                    x="185"
+                    y="130"
+                    width="30"
+                    height="40"
+                    rx="4"
+                    fill="#1e293b"
+                    stroke="#94a3b8"
+                    stroke-width="1.5"
+                  />
+                  <line
+                    x1="192"
+                    y1="140"
+                    x2="208"
+                    y2="140"
+                    stroke="#94a3b8"
+                    stroke-width="1.5"
+                  />
+                  <line
+                    x1="192"
+                    y1="148"
+                    x2="208"
+                    y2="148"
+                    stroke="#94a3b8"
+                    stroke-width="1.5"
+                  />
+                  <line
+                    x1="192"
+                    y1="156"
+                    x2="202"
+                    y2="156"
+                    stroke="#94a3b8"
+                    stroke-width="1.5"
                   />
 
-                  <circle cx="80" cy="180" r="6" fill="#3b82f6" />
-                  <circle cx="200" cy="180" r="6" fill="#a855f7" />
-                  <circle cx="320" cy="180" r="6" fill="#22c55e" />
+                  <!-- Status Badges -->
+                  <rect
+                    x="270"
+                    y="100"
+                    width="60"
+                    height="16"
+                    rx="4"
+                    fill="#ef4444"
+                  />
+                  <text
+                    x="300"
+                    y="111"
+                    text-anchor="middle"
+                    fill="white"
+                    font-size="8"
+                    font-weight="bold"
+                  >
+                    RISK FOUND
+                  </text>
                 </svg>
 
                 <div class="absolute bottom-4 left-0 w-full px-4">
                   <div
                     class="p-4 border border-gray-800 bg-black/90 rounded text-[10px] sm:text-xs font-mono text-gray-400 backdrop-blur-md"
                   >
-                    > Task Decomposed<br />
-                    > Agents Assigned: 8<br />
-                    > Status: Collaborative Mode
+                    > Parsing Contract...<br />
+                    > Critic: "Clause 3 violates policy"<br />
+                    > Drafter: Revising...
                   </div>
                 </div>
               </div>
@@ -652,24 +740,26 @@
             <div class="space-y-6">
               <span
                 class="text-blue-500 font-mono text-xs uppercase tracking-widest"
-                >Autonomous Systems</span
+                >Legal AI Agent</span
               >
               <h3 class="text-2xl md:text-3xl font-bold text-white">
-                Multi-Agent Architecture
+                Agentic Auditor
               </h3>
               <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                A Python-based system that autonomously breaks down complex user
-                queries. It orchestrates 8 specialized agents (Decomposer,
-                Tester, Editor, etc.) in a structured workflow to generate,
-                test, and refine code solutions without human intervention.
+                An AI-driven contract reviewer that minimizes hallucinations
+                using a specialized Drafter–Critic agent loop. It autonomously
+                ingests PDFs, retrieves company policies via Qdrant vector
+                search, and produces structured risk reports by iteratively
+                refining its own analysis.
               </p>
               <div class="flex flex-wrap gap-4 text-sm text-gray-500">
-                <span>Python</span> &bull; <span>LLM APIs</span> &bull;
-                <span>Agent Orchestration</span>
+                <span>LangGraph</span> &bull; <span>Groq</span> &bull;
+                <span>Qdrant</span> &bull;
+                <span>Streamlit</span>
               </div>
               <div class="pt-4">
                 <a
-                  href="https://github.com/akshad135/multi-agent-system"
+                  href="https://github.com/Akshad135/agentic-auditor"
                   class="text-white hover:text-blue-400 transition inline-flex items-center gap-2 border-b border-gray-700 pb-1 hover:border-blue-400"
                 >
                   View Repository
@@ -681,31 +771,32 @@
             </div>
           </div>
 
+          <!-- PROJECT 2: DILBERT-O-MATIC (Moved from #3, now Text Left, Card Right) -->
           <div
             class="grid md:grid-cols-2 gap-8 md:gap-12 items-center group reveal-text"
           >
             <div class="space-y-6 order-2 md:order-1">
               <span
                 class="text-blue-500 font-mono text-xs uppercase tracking-widest"
-                >Natural Language Processing</span
+                >MLOps Infrastructure</span
               >
               <h3 class="text-2xl md:text-3xl font-bold text-white">
-                Smart Resume Screener
+                Dilbert-o-Matic
               </h3>
               <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                A high-throughput recruitment tool powered by a 5-stage
-                asynchronous LLM pipeline. It parses PDF resumes, deconstructs
-                job descriptions, and performs evidence-based skill matching
-                using Groq API for rapid inference.
+                An end-to-end MLOps pipeline for T5 language translation models.
+                This project establishes a robust lifecycle for data versioning,
+                training orchestration, and experiment tracking, ensuring
+                reproducibility in ML research.
               </p>
               <div class="flex flex-wrap gap-4 text-sm text-gray-500">
-                <span>FastAPI</span> &bull; <span>React</span> &bull;
-                <span>PostgreSQL</span> &bull;
-                <span>Groq</span>
+                <span>Dagster</span> &bull; <span>DVC</span> &bull;
+                <span>MLflow</span> &bull;
+                <span>PyTorch</span>
               </div>
               <div class="pt-4">
                 <a
-                  href="https://github.com/akshad135/resume-screener"
+                  href="https://github.com/akshad135/dilbert-o-matic"
                   class="text-white hover:text-blue-400 transition inline-flex items-center gap-2 border-b border-gray-700 pb-1 hover:border-blue-400"
                 >
                   View Repository
@@ -717,7 +808,45 @@
             </div>
 
             <div
-              class="project-card bg-gray-900/50 rounded-xl overflow-hidden h-64 md:h-80 flex items-center justify-center p-8 order-1 md:order-2"
+              class="project-card bg-gray-900/50 rounded-xl overflow-hidden h-64 md:h-80 flex items-center justify-center p-4 md:p-8 order-1 md:order-2"
+            >
+              <div
+                class="grid grid-cols-3 gap-2 md:gap-4 w-full max-w-md text-center transform scale-90 md:scale-100"
+              >
+                <div
+                  class="p-3 md:p-4 border border-gray-700 rounded bg-gray-800/30"
+                >
+                  <i class="fas fa-database text-gray-400 mb-2"></i>
+                  <div class="text-[10px] md:text-xs font-mono text-gray-500">
+                    DVC
+                  </div>
+                </div>
+                <div
+                  class="p-3 md:p-4 border border-blue-500/30 rounded bg-blue-900/10"
+                >
+                  <i class="fas fa-network-wired text-blue-400 mb-2"></i>
+                  <div class="text-[10px] md:text-xs font-mono text-blue-400">
+                    Dagster
+                  </div>
+                </div>
+                <div
+                  class="p-3 md:p-4 border border-gray-700 rounded bg-gray-800/30"
+                >
+                  <i class="fas fa-chart-bar text-gray-400 mb-2"></i>
+                  <div class="text-[10px] md:text-xs font-mono text-gray-500">
+                    MLflow
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROJECT 3: SMART RESUME SCREENER (Moved from #2, now Card Left, Text Right) -->
+          <div
+            class="grid md:grid-cols-2 gap-8 md:gap-12 items-center group reveal-text"
+          >
+            <div
+              class="project-card bg-gray-900/50 rounded-xl overflow-hidden h-64 md:h-80 flex items-center justify-center p-8"
             >
               <div class="w-full max-w-xs space-y-4">
                 <div
@@ -751,66 +880,29 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div
-            class="grid md:grid-cols-2 gap-8 md:gap-12 items-center group reveal-text"
-          >
-            <div
-              class="project-card bg-gray-900/50 rounded-xl overflow-hidden h-64 md:h-80 flex items-center justify-center p-4 md:p-8"
-            >
-              <div
-                class="grid grid-cols-3 gap-2 md:gap-4 w-full max-w-md text-center transform scale-90 md:scale-100"
-              >
-                <div
-                  class="p-3 md:p-4 border border-gray-700 rounded bg-gray-800/30"
-                >
-                  <i class="fas fa-database text-gray-400 mb-2"></i>
-                  <div class="text-[10px] md:text-xs font-mono text-gray-500">
-                    DVC
-                  </div>
-                </div>
-                <div
-                  class="p-3 md:p-4 border border-blue-500/30 rounded bg-blue-900/10"
-                >
-                  <i class="fas fa-network-wired text-blue-400 mb-2"></i>
-                  <div class="text-[10px] md:text-xs font-mono text-blue-400">
-                    Dagster
-                  </div>
-                </div>
-                <div
-                  class="p-3 md:p-4 border border-gray-700 rounded bg-gray-800/30"
-                >
-                  <i class="fas fa-chart-bar text-gray-400 mb-2"></i>
-                  <div class="text-[10px] md:text-xs font-mono text-gray-500">
-                    MLflow
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="space-y-6">
               <span
                 class="text-blue-500 font-mono text-xs uppercase tracking-widest"
-                >MLOps Infrastructure</span
+                >Natural Language Processing</span
               >
               <h3 class="text-2xl md:text-3xl font-bold text-white">
-                Dilbert-o-Matic
+                Smart Resume Screener
               </h3>
               <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                An end-to-end MLOps pipeline for T5 language translation models.
-                This project establishes a robust lifecycle for data versioning,
-                training orchestration, and experiment tracking, ensuring
-                reproducibility in ML research.
+                A high-throughput recruitment tool powered by a 5-stage
+                asynchronous LLM pipeline. It parses PDF resumes, deconstructs
+                job descriptions, and performs evidence-based skill matching
+                using Groq API for rapid inference.
               </p>
               <div class="flex flex-wrap gap-4 text-sm text-gray-500">
-                <span>Dagster</span> &bull; <span>DVC</span> &bull;
-                <span>MLflow</span> &bull;
-                <span>PyTorch</span>
+                <span>FastAPI</span> &bull; <span>React</span> &bull;
+                <span>PostgreSQL</span> &bull;
+                <span>Groq</span>
               </div>
               <div class="pt-4">
                 <a
-                  href="https://github.com/akshad135/dilbert-o-matic"
+                  href="https://github.com/akshad135/resume-screener"
                   class="text-white hover:text-blue-400 transition inline-flex items-center gap-2 border-b border-gray-700 pb-1 hover:border-blue-400"
                 >
                   View Repository
