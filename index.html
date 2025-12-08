@@ -15,13 +15,23 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="icon" type="image/jpg" sizes="32x32" href="logo.jpg" />
-    <link rel="icon" type="image/jpg" sizes="16x16" href="logo.jpg" />
+    <link rel="icon" type="image/jpg" sizes="32x32" href="./assets/logo.jpg" />
+    <link rel="icon" type="image/jpg" sizes="16x16" href="./assets/logo.jpg" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.jpg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo.jpg" />
 
-    <link rel="icon" type="image/jpg" sizes="192x192" href="logo.jpg" />
-    <link rel="icon" type="image/jpg" sizes="512x512" href="logo.jpg" />
+    <link
+      rel="icon"
+      type="image/jpg"
+      sizes="192x192"
+      href="./assets/logo.jpg"
+    />
+    <link
+      rel="icon"
+      type="image/jpg"
+      sizes="512x512"
+      href="./assets/logo.jpg"
+    />
 
     <style>
       :root {
@@ -319,7 +329,7 @@
       >
         <a href="#" class="flex items-center gap-3 group">
           <img
-            src="logo.png"
+            src="./assets/logo.png"
             alt="AA Logo"
             class="w-16 h-16 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
           />
@@ -382,7 +392,9 @@
       </div>
     </div>
 
-    <section class="min-h-screen flex items-center px-6 pt-20 relative">
+    <section
+      class="min-h-screen flex items-start md:items-center px-6 pt-32 md:pt-20 relative"
+    >
       <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12">
         <div class="space-y-8">
           <div class="reveal-text" style="transition-delay: 100ms">
@@ -427,12 +439,70 @@
             </a>
           </div>
         </div>
-      </div>
 
-      <div
-        class="absolute bottom-20 left-1/2 -translate-x-1/2 text-gray-600 animate-bounce"
-      >
-        <i class="fas fa-arrow-down"></i>
+        <div
+          class="flex items-center justify-center relative reveal-text mt-10 md:mt-0"
+          style="transition-delay: 400ms"
+        >
+          <div
+            class="absolute inset-0 bg-blue-500/10 blur-[80px] rounded-full opacity-50"
+          ></div>
+
+          <a
+            href="https://anime-wrap.vercel.app"
+            target="_blank"
+            class="relative group cursor-pointer perspective-1000"
+          >
+            <div
+              class="w-72 h-[480px] bg-gray-950 border border-gray-800 rounded-2xl overflow-hidden shadow-2xl transform transition duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_0_40px_rgba(255,102,0,0.3)] relative z-10"
+            >
+              <img
+                src="./assets/anime.png"
+                alt="Anime Wrapped NERV UI"
+                class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500 group-hover:scale-105"
+              />
+
+              <div
+                class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent p-6 pt-24"
+              >
+                <span
+                  class="text-orange-500 font-mono text-[10px] uppercase tracking-widest mb-3 inline-block border border-orange-500/30 px-2 py-0.5 rounded bg-orange-500/10"
+                >
+                  Project 2025
+                </span>
+
+                <h3
+                  class="text-2xl font-bold text-white leading-none mb-2 font-['Space_Grotesk']"
+                >
+                  Anime Wrapped
+                </h3>
+
+                <div
+                  class="flex items-center gap-2 text-gray-400 text-xs font-mono"
+                >
+                  <span
+                    class="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+                  ></span>
+                  System Online
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="absolute -right-8 top-16 bg-black/80 backdrop-blur border border-gray-700 p-3 rounded-lg shadow-xl transform rotate-6 group-hover:rotate-12 transition duration-500 z-20"
+            >
+              <span class="text-2xl">⛩️</span>
+            </div>
+
+            <div
+              class="absolute -left-6 bottom-32 bg-black/80 backdrop-blur border border-gray-700 px-3 py-2 rounded-lg shadow-xl transform -rotate-6 group-hover:-rotate-12 transition duration-500 z-20"
+            >
+              <span class="font-mono text-xs text-blue-300 font-bold"
+                >GSAP<br />POWERED</span
+              >
+            </div>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -699,7 +769,7 @@
                 </div>
 
                 <a
-                  href="aoc-2025.png"
+                  href="./assets/aoc-2025.png"
                   target="_blank"
                   class="h-9 w-9 rounded-lg bg-gray-800 hover:bg-gray-700 flex items-center justify-center text-blue-400 hover:text-white transition-all border border-gray-700 ml-0 md:ml-2"
                 >
@@ -717,6 +787,167 @@
         <h2 class="text-4xl font-bold text-white mb-16">Stuff I've Built</h2>
 
         <div class="space-y-24 md:space-y-32">
+          <!-- ! uncomment this when removing the header anime -->
+          <!-- <div
+            class="grid md:grid-cols-2 gap-8 md:gap-12 items-center group reveal-text"
+          >
+            <div class="space-y-6 order-2 md:order-1">
+              <span
+                class="text-red-500 font-mono text-xs uppercase tracking-widest"
+                >Interactive Experience</span
+              >
+              <h3 class="text-2xl md:text-3xl font-bold text-white">
+                Anime Wrapped
+              </h3>
+              <p class="text-gray-400 leading-relaxed text-sm md:text-base">
+                A cinematic year-in-review application that turns viewing
+                history into a visual journey. It fetches data from AniList/MAL
+                and generates dynamic reports across 10+ themes (Evangelion,
+                JJK, Persona). Features an AI-powered "Roast" system that
+                analyzes user taste to generate witty, personalized commentary.
+              </p>
+              <div class="flex flex-wrap gap-4 text-sm text-gray-500">
+                <span>GSAP</span> &bull; <span>Flask</span> &bull;
+                <span>AniList API</span> &bull;
+                <span>Groq LLM</span>
+              </div>
+              <div class="pt-4 flex flex-wrap items-center gap-4">
+                <a
+                  href="https://github.com/akshad135"
+                  target="_blank"
+                  class="text-white hover:text-red-500 transition inline-flex items-center gap-2 border-b border-gray-700 pb-1 hover:border-red-500"
+                >
+                  View Repository
+                  <i
+                    class="fas fa-arrow-right text-xs transform -rotate-45"
+                  ></i>
+                </a>
+                <a
+                  href="https://anime-wrap.vercel.app"
+                  target="_blank"
+                  class="text-white hover:text-red-500 transition inline-flex items-center gap-2 border-b border-gray-700 pb-1 hover:border-red-500"
+                >
+                  Live Demo
+                  <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="project-card bg-gray-900/50 rounded-xl overflow-hidden h-64 md:h-80 flex items-center justify-center p-4 order-1 md:order-2 group-hover:border-red-500/30 transition-colors relative"
+            >
+              <div
+                class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/40 via-gray-900 to-transparent animate-pulse"
+              ></div>
+
+              <div class="relative w-64 h-64 flex items-center justify-center">
+                <div
+                  class="absolute inset-0 flex items-center justify-center opacity-60"
+                >
+                  <svg
+                    class="w-full h-full animate-[spin_10s_linear_infinite]"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="48"
+                      fill="none"
+                      stroke="#ef4444"
+                      stroke-width="0.5"
+                      stroke-dasharray="4 2"
+                      opacity="0.5"
+                    />
+                    <path
+                      d="M50 2 A48 48 0 0 1 98 50"
+                      fill="none"
+                      stroke="#ef4444"
+                      stroke-width="1"
+                    />
+                    <path
+                      d="M50 98 A48 48 0 0 1 2 50"
+                      fill="none"
+                      stroke="#ef4444"
+                      stroke-width="1"
+                    />
+                  </svg>
+                  <svg
+                    class="absolute w-40 h-40 animate-[spin_15s_linear_infinite_reverse]"
+                    viewBox="0 0 100 100"
+                  >
+                    <rect
+                      x="18"
+                      y="18"
+                      width="64"
+                      height="64"
+                      fill="none"
+                      stroke="#ef4444"
+                      stroke-width="0.5"
+                      transform="rotate(45 50 50)"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="30"
+                      fill="none"
+                      stroke="#ef4444"
+                      stroke-width="0.5"
+                      stroke-dasharray="10 5"
+                    />
+                  </svg>
+                </div>
+
+                <div
+                  class="relative z-10 flex flex-col items-center justify-center"
+                >
+                  <span
+                    class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 filter drop-shadow-[0_0_10px_rgba(239,68,68,0.5)] transform transition duration-500 group-hover:scale-110 select-none"
+                  >
+                    鬼
+                  </span>
+                  <span
+                    class="text-[10px] text-red-500/80 font-mono tracking-[0.3em] mt-2 uppercase"
+                    >Demon Mode</span
+                  >
+                </div>
+
+                <div
+                  class="absolute -top-2 -right-4 bg-red-950/80 border-l-2 border-red-500 px-3 py-1 backdrop-blur-sm transform rotate-12 group-hover:rotate-6 transition duration-500 shadow-[0_0_15px_rgba(220,38,38,0.3)]"
+                >
+                  <div class="text-[8px] text-red-300 font-mono">
+                    POWER LEVEL
+                  </div>
+                  <div class="text-xs font-bold text-white font-mono">
+                    9000+
+                  </div>
+                </div>
+
+                <div
+                  class="absolute bottom-4 -left-6 bg-gray-950/90 border border-red-500/30 px-3 py-2 rounded backdrop-blur-sm transform -rotate-6 group-hover:-rotate-3 transition duration-500"
+                >
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-2 h-2 bg-red-500 rounded-full animate-pulse"
+                    ></div>
+                    <span class="text-[10px] text-gray-300 font-mono"
+                      >THREAT: DETECTED</span
+                    >
+                  </div>
+                  <div
+                    class="h-1 w-full bg-gray-800 mt-1 rounded-full overflow-hidden"
+                  >
+                    <div
+                      class="h-full bg-red-600 w-3/4 animate-[pulse_2s_infinite]"
+                    ></div>
+                  </div>
+                </div>
+
+                <div
+                  class="absolute inset-0 bg-red-500/5 mix-blend-overlay animate-pulse pointer-events-none"
+                ></div>
+              </div>
+            </div>
+          </div> -->
           <!-- PROJECT 1: AGENTIC AUDITOR (Card Left, Text Right) -->
           <div
             class="grid md:grid-cols-2 gap-8 md:gap-12 items-center group reveal-text"
