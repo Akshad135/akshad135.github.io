@@ -142,22 +142,78 @@ document.querySelectorAll(".reveal-text").forEach((el) => observer.observe(el));
 
 // --- Projects Logic ---
 
-function getVisualIcon(project) {
-    // Return icon class and color based on category
-    switch (project.category) {
-        case "AI/ML":
-            return { icon: "fa-brain", color: "text-blue-400" };
-        case "MLOps":
-            return { icon: "fa-cogs", color: "text-purple-400" };
-        case "Web":
-            return { icon: "fa-globe", color: "text-red-400" };
+function getVisualHTML(project) {
+    const v = project.visual;
+
+    switch (v.type) {
+        case "emoji":
+            return `
+        <span class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
+               filter drop-shadow-[0_0_15px_rgba(239,68,68,0.4)] select-none">
+          ${v.content}
+        </span>
+      `;
+
+        case "icon-pair":
+            return `
+        <div class="flex items-center gap-6">
+          <div class="w-12 h-12 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center">
+            <i class="fas ${v.icons[0]} ${v.colors[0]} text-xl"></i>
+          </div>
+          <i class="fas fa-arrows-alt-h text-gray-600 text-sm"></i>
+          <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+            <i class="fas ${v.icons[1]} ${v.colors[1]} text-xl"></i>
+          </div>
+        </div>
+      `;
+
+        case "pipeline":
+            return `
+        <div class="flex items-center gap-3">
+          ${v.steps.map((step, i) => `
+            <div class="px-3 py-2 rounded bg-gray-800/50 border border-gray-700 text-xs font-mono text-gray-400">
+              ${step}
+            </div>
+            ${i < v.steps.length - 1 ? '<i class="fas fa-chevron-right text-gray-600 text-xs"></i>' : ''}
+          `).join('')}
+        </div>
+      `;
+
+        case "progress":
+            return `
+        <div class="w-40 space-y-2">
+          <div class="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-blue-500 to-green-500 w-[92%]"></div>
+          </div>
+          <div class="text-xs font-mono text-green-400 text-center">${v.label}</div>
+        </div>
+      `;
+
+        case "document":
+            return `
+        <div class="w-20 h-28 bg-white rounded shadow-lg relative transform -rotate-3">
+          <div class="p-2 border-b border-gray-200">
+            <div class="w-10 h-1.5 bg-gray-800 rounded mb-1"></div>
+            <div class="w-14 h-1 bg-gray-400 rounded"></div>
+          </div>
+          <div class="p-2 space-y-1.5">
+            <div class="w-full h-1 bg-gray-300 rounded"></div>
+            <div class="w-full h-1 bg-gray-300 rounded"></div>
+            <div class="w-3/4 h-1 bg-gray-300 rounded"></div>
+            <div class="w-full h-1 bg-gray-300 rounded mt-2"></div>
+            <div class="w-2/3 h-1 bg-gray-300 rounded"></div>
+          </div>
+        </div>
+      `;
+
         default:
-            return { icon: "fa-code", color: "text-green-400" };
+            return `<i class="fas fa-code text-4xl text-gray-500"></i>`;
     }
 }
 
 function createProjectCard(project) {
-    const visual = getVisualIcon(project);
+    const visualHTML = getVisualHTML(project);
+    const bgGradient = project.visual.bgGradient || "from-gray-900/30 to-transparent";
 
     const githubLink = project.links.github
         ? `<a href="${project.links.github}" target="_blank" class="card-link-btn">
@@ -178,8 +234,10 @@ function createProjectCard(project) {
 
     return `
     <div class="project-card-compact reveal-text">
-        <div class="card-visual" data-category="${project.category}">
-            <i class="fas ${visual.icon} card-visual-icon ${visual.color}"></i>
+        <div class="card-visual bg-gradient-to-br ${bgGradient}">
+            <div class="card-visual-content">
+                ${visualHTML}
+            </div>
         </div>
         <div class="card-content">
             <div class="card-category">${project.category}</div>
@@ -214,20 +272,58 @@ function renderProjects(filter = "All") {
     document.querySelectorAll(".reveal-text").forEach((el) => observer.observe(el));
 }
 
-// Initial Render
-if (typeof projects !== "undefined") {
-    renderProjects("All");
+function setupFilters() {
+    const filtersContainer = document.getElementById("project-filters");
+    const allBtn = filtersContainer.querySelector('[data-filter="All"]');
+    const buttons = filtersContainer.querySelectorAll(".filter-btn");
+
+    const isMobile = window.innerWidth < 768;
+
+    // On mobile, hide "All" button and get first category
+    if (isMobile && allBtn) {
+        allBtn.style.display = "none";
+
+        // Find first non-All button and activate it
+        const firstCategoryBtn = filtersContainer.querySelector('.filter-btn:not([data-filter="All"])');
+        if (firstCategoryBtn) {
+            buttons.forEach((b) => b.classList.remove("active"));
+            firstCategoryBtn.classList.add("active");
+            renderProjects(firstCategoryBtn.getAttribute("data-filter"));
+        }
+    } else {
+        // Desktop - show all and default to All
+        if (allBtn) allBtn.style.display = "";
+        renderProjects("All");
+    }
 
     // Event Listeners for Filters
-    const buttons = document.querySelectorAll(".filter-btn");
     buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
-            // Remove active class from all
             buttons.forEach((b) => b.classList.remove("active"));
-            // Add active to clicked
             btn.classList.add("active");
-            // Render
             renderProjects(btn.getAttribute("data-filter"));
         });
+    });
+}
+
+// Initial Setup
+if (typeof projects !== "undefined") {
+    setupFilters();
+
+    // Re-setup on resize (in case user rotates device)
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const filtersContainer = document.getElementById("project-filters");
+            const allBtn = filtersContainer.querySelector('[data-filter="All"]');
+            const isMobile = window.innerWidth < 768;
+
+            if (isMobile && allBtn) {
+                allBtn.style.display = "none";
+            } else if (allBtn) {
+                allBtn.style.display = "";
+            }
+        }, 200);
     });
 }

@@ -8,7 +8,12 @@ const projects = [
             github: "https://github.com/akshad135",
             demo: "https://anime-wrap.vercel.app"
         },
-        visual: "anime" // Marker for custom visual logic if needed
+        visual: {
+            type: "emoji",
+            content: "鬼",
+            color: "from-red-500 to-red-900",
+            bgGradient: "from-red-900/30 to-transparent"
+        }
     },
     {
         title: "Agentic Auditor",
@@ -19,7 +24,12 @@ const projects = [
             github: "https://github.com/Akshad135/agentic-auditor",
             demo: null
         },
-        visual: "agentic"
+        visual: {
+            type: "icon-pair",
+            icons: ["fa-pen-fancy", "fa-search"],
+            colors: ["text-green-400", "text-red-400"],
+            bgGradient: "from-blue-900/30 to-transparent"
+        }
     },
     {
         title: "Dilbert-o-Matic",
@@ -30,7 +40,11 @@ const projects = [
             github: "https://github.com/akshad135/dilbert-o-matic",
             demo: null
         },
-        visual: "mlops"
+        visual: {
+            type: "pipeline",
+            steps: ["DVC", "Dagster", "MLflow"],
+            bgGradient: "from-purple-900/30 to-transparent"
+        }
     },
     {
         title: "Smart Resume Screener",
@@ -41,7 +55,11 @@ const projects = [
             github: "https://github.com/akshad135/resume-screener",
             demo: null
         },
-        visual: "screener"
+        visual: {
+            type: "progress",
+            label: "Match: 92%",
+            bgGradient: "from-blue-900/30 to-transparent"
+        }
     },
     {
         title: "Live Resume Builder",
@@ -52,6 +70,9 @@ const projects = [
             github: "https://github.com/akshad135/resume_builder",
             demo: "https://akshad135.github.io/resume_builder/"
         },
-        visual: "builder"
+        visual: {
+            type: "document",
+            bgGradient: "from-green-900/30 to-transparent"
+        }
     }
 ];
