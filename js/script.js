@@ -138,6 +138,96 @@ const observer = new IntersectionObserver((entries) => {
         }
     });
 }, observerOptions);
-document
-    .querySelectorAll(".reveal-text")
-    .forEach((el) => observer.observe(el));
+document.querySelectorAll(".reveal-text").forEach((el) => observer.observe(el));
+
+// --- Projects Logic ---
+
+function getVisualIcon(project) {
+    // Return icon class and color based on category
+    switch (project.category) {
+        case "AI/ML":
+            return { icon: "fa-brain", color: "text-blue-400" };
+        case "MLOps":
+            return { icon: "fa-cogs", color: "text-purple-400" };
+        case "Web":
+            return { icon: "fa-globe", color: "text-red-400" };
+        default:
+            return { icon: "fa-code", color: "text-green-400" };
+    }
+}
+
+function createProjectCard(project) {
+    const visual = getVisualIcon(project);
+
+    const githubLink = project.links.github
+        ? `<a href="${project.links.github}" target="_blank" class="card-link-btn">
+         <i class="fab fa-github"></i>
+         <span>Code</span>
+       </a>`
+        : "";
+    const demoLink = project.links.demo
+        ? `<a href="${project.links.demo}" target="_blank" class="card-link-btn">
+         <i class="fas fa-external-link-alt"></i>
+         <span>Demo</span>
+       </a>`
+        : "";
+
+    const tagsHTML = project.tags
+        .map((tag) => `<span class="tag">${tag}</span>`)
+        .join("");
+
+    return `
+    <div class="project-card-compact reveal-text">
+        <div class="card-visual" data-category="${project.category}">
+            <i class="fas ${visual.icon} card-visual-icon ${visual.color}"></i>
+        </div>
+        <div class="card-content">
+            <div class="card-category">${project.category}</div>
+            <h3 class="card-title">${project.title}</h3>
+            <p class="card-desc">${project.description}</p>
+            <div class="card-tags">
+                ${tagsHTML}
+            </div>
+            <div class="card-links">
+                ${githubLink}
+                ${demoLink}
+            </div>
+        </div>
+    </div>
+  `;
+}
+
+function renderProjects(filter = "All") {
+    const grid = document.getElementById("projects-grid");
+    grid.innerHTML = "";
+
+    const filtered =
+        filter === "All"
+            ? projects
+            : projects.filter((p) => p.category === filter);
+
+    filtered.forEach((p) => {
+        grid.innerHTML += createProjectCard(p);
+    });
+
+    // Re-observe new elements for animation
+    document.querySelectorAll(".reveal-text").forEach((el) => observer.observe(el));
+}
+
+// Initial Render
+if (typeof projects !== "undefined") {
+    renderProjects("All");
+
+    // Event Listeners for Filters
+    const buttons = document.querySelectorAll(".filter-btn");
+    buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            // Remove active class from all
+            buttons.forEach((b) => b.classList.remove("active"));
+            // Add active to clicked
+            btn.classList.add("active");
+            // Render
+            renderProjects(btn.getAttribute("data-filter"));
+        });
+    });
+}
