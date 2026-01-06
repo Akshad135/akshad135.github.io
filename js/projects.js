@@ -1,5 +1,21 @@
 const projects = [
     {
+        title: "Bloom",
+        description: "An aesthetic daily journal app where memories grow like a garden. Built for Android with a focus on mindfulness and nature-themed visuals.",
+        category: "Android",
+        tags: ["Kotlin", "Jetpack Compose", "Room DB", "Widgets"],
+        links: {
+            github: "https://github.com/akshad135/plantmemory",
+            demo: "https://github.com/akshad135/plantmemory/releases"
+        },
+        visual: {
+            type: "emoji",
+            content: "🌻",
+            color: "from-yellow-400 to-orange-500",
+            bgGradient: "from-green-900/40 to-transparent"
+        }
+    },
+    {
         title: "Anime Wrapped",
         description: "A cinematic year-in-review application that turns viewing history into a visual journey. Features dynamic reports and an AI-powered 'Roast' system.",
         category: "Web",
