@@ -516,3 +516,32 @@ html {
     transform: rotate(360deg);
   }
 }
+
+/* Pipeline Flow Animation */
+@keyframes flow-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-flow-right {
+  animation: flow-right 1.5s linear infinite;
+}
+
+/* REC Blink */
+@keyframes blink-red {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-pulse-fast {
+  animation: blink-red 1s step-start infinite;
+}

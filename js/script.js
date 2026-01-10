@@ -208,6 +208,64 @@ function getVisualHTML(project) {
         </div>
       `;
 
+    case "mlops-pipeline":
+      return `
+        <div class="flex items-center gap-0.5 relative">
+           <!-- Node 1: Data -->
+           <div class="flex flex-col items-center gap-1.5 z-10">
+              <div class="w-10 h-10 rounded bg-gray-800 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                 <i class="fas fa-database text-purple-400 text-sm"></i>
+              </div>
+           </div>
+
+           <!-- Connector 1 -->
+           <div class="w-10 h-1 bg-gray-800 relative overflow-hidden">
+               <div class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent w-full h-full opacity-60 animate-flow-right"></div>
+           </div>
+
+           <!-- Node 2: Train -->
+           <div class="flex flex-col items-center gap-1.5 z-10">
+              <div class="w-10 h-10 rounded bg-gray-800 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                 <i class="fas fa-cogs text-purple-300 text-sm animate-spin-slow" style="animation-duration: 4s;"></i>
+              </div>
+           </div>
+
+           <!-- Connector 2 -->
+           <div class="w-10 h-1 bg-gray-800 relative overflow-hidden">
+               <div class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent w-full h-full opacity-60 animate-flow-right" style="animation-delay: 0.5s;"></div>
+           </div>
+
+           <!-- Node 3: Model -->
+           <div class="flex flex-col items-center gap-1.5 z-10">
+              <div class="w-10 h-10 rounded bg-gray-800 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                 <i class="fas fa-cube text-purple-200 text-sm"></i>
+              </div>
+           </div>
+        </div>
+      `;
+
+    case "anime-card":
+      return `
+          <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
+             <!-- REC Indicator -->
+             <div class="absolute top-4 right-4 flex items-center gap-1.5 opacity-80">
+                 <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse-fast"></div>
+                 <span class="text-[10px] font-mono text-red-500 font-bold tracking-widest">REC</span>
+             </div>
+
+             <!-- Main Content -->
+             <div class="relative z-10 transform hover:scale-105 transition-transform duration-500">
+                <span class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
+                       filter drop-shadow-[0_0_20px_rgba(220,38,38,0.5)] select-none">
+                  ${v.content}
+                </span>
+             </div>
+             
+             <!-- Subtle Vignette/Overlay -->
+             <div class="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent pointer-events-none"></div>
+          </div>
+        `;
+
     case "icon-pair":
       return `
         <div class="flex items-center gap-6">

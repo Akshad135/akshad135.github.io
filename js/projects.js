@@ -43,8 +43,8 @@ const projects = [
       demo: null,
     },
     visual: {
-      type: "pipeline",
-      steps: ["DVC", "Dagster", "MLflow"],
+      type: "mlops-pipeline",
+      steps: ["Data", "Train", "Model"],
       bgGradient: "from-purple-900/30 to-transparent",
     },
   },
@@ -80,7 +80,7 @@ const projects = [
       demo: "https://anime-wrap.vercel.app",
     },
     visual: {
-      type: "emoji",
+      type: "anime-card",
       content: "鬼",
       color: "from-red-500 to-red-900",
       bgGradient: "from-red-900/30 to-transparent",
