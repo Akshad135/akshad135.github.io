@@ -21,11 +21,14 @@
   </head>
   <body class="antialiased">
     <canvas id="vector-canvas" style="opacity: 0.4"></canvas>
+
+    <!-- Updated Navigation Bar to match index.html styling -->
     <nav
-      class="fixed w-full z-50 glass-card rounded-none border-t-0 border-x-0"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+      id="navbar"
     >
       <div
-        class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between"
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50"
       >
         <a
           href="index.html"
@@ -45,6 +48,7 @@
         </a>
       </div>
     </nav>
+
     <div class="max-w-5xl mx-auto px-6 py-32">
       <header
         class="mb-16 text-center resume-section"
