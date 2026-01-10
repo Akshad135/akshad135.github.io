@@ -5,7 +5,11 @@ function toggleMenu() {
   btn.classList.toggle("nav-open");
 }
 
-document.getElementById("menu-btn").addEventListener("click", toggleMenu);
+// FIX: Only add listener if the button actually exists (prevents error on resume.html)
+const menuBtn = document.getElementById("menu-btn");
+if (menuBtn) {
+  menuBtn.addEventListener("click", toggleMenu);
+}
 
 const terminalLines = [
   {
@@ -22,7 +26,7 @@ const loaderContent = document.getElementById("loader-content");
 const loaderOverlay = document.getElementById("loader-overlay");
 
 async function runLoader() {
-  // Guard clause in case elements are missing
+  // Guard clause in case elements are missing (e.g., on resume page)
   if (!loaderContent || !loaderOverlay) return;
 
   for (let i = 0; i < terminalLines.length; i++) {
@@ -50,6 +54,7 @@ async function runLoader() {
 
 window.addEventListener("load", runLoader);
 
+// Shared Canvas Animation Logic
 const canvas = document.getElementById("vector-canvas");
 if (canvas) {
   const ctx = canvas.getContext("2d");
