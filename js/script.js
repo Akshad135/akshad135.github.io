@@ -22,6 +22,9 @@ const loaderContent = document.getElementById("loader-content");
 const loaderOverlay = document.getElementById("loader-overlay");
 
 async function runLoader() {
+  // Guard clause in case elements are missing
+  if (!loaderContent || !loaderOverlay) return;
+
   for (let i = 0; i < terminalLines.length; i++) {
     const lineData = terminalLines[i];
     const lineDiv = document.createElement("div");
@@ -48,441 +51,83 @@ async function runLoader() {
 window.addEventListener("load", runLoader);
 
 const canvas = document.getElementById("vector-canvas");
-const ctx = canvas.getContext("2d");
-let width, height;
-let mouseX = 0,
-  mouseY = 0;
-let time = 0;
+if (canvas) {
+  const ctx = canvas.getContext("2d");
+  let width, height;
+  let mouseX = 0,
+    mouseY = 0;
+  let time = 0;
 
-const spacing = 30;
-const length = 10;
+  const spacing = 30;
+  const length = 10;
 
-function resize() {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
-}
-
-window.addEventListener("resize", resize);
-resize();
-
-document.addEventListener("mousemove", (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-document.addEventListener(
-  "touchmove",
-  (e) => {
-    if (e.touches.length > 0) {
-      mouseX = e.touches[0].clientX;
-      mouseY = e.touches[0].clientY;
-    }
-  },
-  { passive: true }
-);
-
-function draw() {
-  ctx.clearRect(0, 0, width, height);
-
-  if (window.innerWidth < 768) {
-    time += 0.008;
-    mouseX = width / 2 + Math.sin(time) * (width / 3);
-    mouseY = height / 2 + Math.cos(time * 1.3) * (height / 4);
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
   }
 
-  for (let x = 0; x < width; x += spacing) {
-    for (let y = 0; y < height; y += spacing) {
-      const dx = mouseX - x;
-      const dy = mouseY - y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const maxDist = 400;
+  window.addEventListener("resize", resize);
+  resize();
 
-      let angle = 0;
-      let lineLen = 2;
-      let opacity = 0.1;
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
 
-      if (distance < maxDist) {
-        angle = Math.atan2(dy, dx);
-        const intensity = 1 - distance / maxDist;
-        lineLen = length + intensity * 10;
-        opacity = 0.1 + intensity * 0.4;
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      if (e.touches.length > 0) {
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
       }
+    },
+    { passive: true }
+  );
 
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.beginPath();
-      ctx.moveTo(-lineLen / 2, 0);
-      ctx.lineTo(lineLen / 2, 0);
-      ctx.strokeStyle = `rgba(100, 149, 237, ${opacity})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.restore();
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    if (window.innerWidth < 768) {
+      time += 0.008;
+      mouseX = width / 2 + Math.sin(time) * (width / 3);
+      mouseY = height / 2 + Math.cos(time * 1.3) * (height / 4);
     }
-  }
-  requestAnimationFrame(draw);
-}
 
-draw();
+    for (let x = 0; x < width; x += spacing) {
+      for (let y = 0; y < height; y += spacing) {
+        const dx = mouseX - x;
+        const dy = mouseY - y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 400;
 
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: "0px",
-};
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
-  });
-}, observerOptions);
-document.querySelectorAll(".reveal-text").forEach((el) => observer.observe(el));
+        let angle = 0;
+        let lineLen = 2;
+        let opacity = 0.1;
 
-// --- Projects Logic ---
+        if (distance < maxDist) {
+          angle = Math.atan2(dy, dx);
+          const intensity = 1 - distance / maxDist;
+          lineLen = length + intensity * 10;
+          opacity = 0.1 + intensity * 0.4;
+        }
 
-function getVisualHTML(project) {
-  const v = project.visual;
-
-  switch (v.type) {
-    case "emoji":
-      return `
-        <span class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
-               filter drop-shadow-[0_0_15px_rgba(239,68,68,0.4)] select-none">
-          ${v.content}
-        </span>
-      `;
-
-    case "agent-loop":
-      return `
-        <div class="relative w-full h-full flex items-center justify-center gap-8">
-            <!-- Connecting Cycle Background (Fixed to be a circle) -->
-            <div class="absolute w-40 h-40 border-2 border-gray-700/50 rounded-full animate-spin-slow opacity-40" style="border-right-color: transparent; border-left-color: transparent;"></div>
-            
-            <!-- Drafter Agent (Left) -->
-            <div class="relative z-10 flex flex-col items-center gap-2 group">
-                 <div class="w-14 h-14 rounded-full bg-green-900/20 border border-green-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.15)] group-hover:scale-110 transition-transform duration-300">
-                    <i class="fas ${v.icons[0]} ${v.colors[0]} text-xl"></i>
-                 </div>
-                 <div class="absolute -bottom-6 text-[9px] font-mono text-green-500/60 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Drafter</div>
-            </div>
-
-            <!-- Loop Icon -->
-            <div class="absolute z-0 text-gray-600 animate-pulse">
-                <i class="fas fa-sync-alt text-sm opacity-50"></i>
-            </div>
-
-            <!-- Critic Agent (Right) -->
-            <div class="relative z-10 flex flex-col items-center gap-2 group">
-                 <div class="w-14 h-14 rounded-full bg-red-900/20 border border-red-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.15)] group-hover:scale-110 transition-transform duration-300">
-                    <i class="fas ${v.icons[1]} ${v.colors[1]} text-xl"></i>
-                 </div>
-                 <div class="absolute -bottom-6 text-[9px] font-mono text-red-500/60 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Critic</div>
-            </div>
-        </div>
-      `;
-
-    case "resume-scan":
-      return `
-        <div class="relative w-24 h-32 bg-gray-900 border border-gray-700 rounded-lg overflow-hidden flex flex-col items-center pt-4 shadow-xl group hover:border-blue-500/30 transition-colors duration-500">
-            <!-- Header Block -->
-             <div class="w-16 h-2 bg-gray-800 rounded-sm mb-3"></div>
-            
-            <!-- Content Lines -->
-            <div class="space-y-2 w-16 opacity-40">
-                <div class="w-full h-1 bg-gray-500 rounded-full"></div>
-                <div class="w-10 h-1 bg-gray-500 rounded-full"></div>
-                <div class="w-14 h-1 bg-gray-500 rounded-full"></div>
-                <div class="w-full h-1 bg-gray-500 rounded-full"></div>
-                <div class="w-8 h-1 bg-gray-500 rounded-full"></div>
-            </div>
-
-            <!-- Scanning Beam Animation -->
-            <div class="absolute top-0 w-full h-12 bg-gradient-to-b from-blue-500/0 via-blue-500/20 to-blue-500/0 border-b border-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] animate-scan z-20 pointer-events-none"></div>
-
-            <!-- Result Badge -->
-             <div class="absolute bottom-3 bg-blue-950/90 border border-blue-500/40 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-mono text-blue-300 shadow-lg z-30">
-                ${v.label}
-            </div>
-        </div>
-      `;
-
-    case "mlops-pipeline":
-      return `
-        <div class="flex items-center gap-0.5 relative">
-           <!-- Node 1: Data -->
-           <div class="flex flex-col items-center gap-1.5 z-10">
-              <div class="w-10 h-10 rounded bg-gray-800 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                 <i class="fas fa-database text-purple-400 text-sm"></i>
-              </div>
-           </div>
-
-           <!-- Connector 1 -->
-           <div class="w-10 h-1 bg-gray-800 relative overflow-hidden">
-               <div class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent w-full h-full opacity-60 animate-flow-right"></div>
-           </div>
-
-           <!-- Node 2: Train -->
-           <div class="flex flex-col items-center gap-1.5 z-10">
-              <div class="w-10 h-10 rounded bg-gray-800 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                 <i class="fas fa-cogs text-purple-300 text-sm animate-spin-slow" style="animation-duration: 4s;"></i>
-              </div>
-           </div>
-
-           <!-- Connector 2 -->
-           <div class="w-10 h-1 bg-gray-800 relative overflow-hidden">
-               <div class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent w-full h-full opacity-60 animate-flow-right" style="animation-delay: 0.5s;"></div>
-           </div>
-
-           <!-- Node 3: Model -->
-           <div class="flex flex-col items-center gap-1.5 z-10">
-              <div class="w-10 h-10 rounded bg-gray-800 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                 <i class="fas fa-cube text-purple-200 text-sm"></i>
-              </div>
-           </div>
-        </div>
-      `;
-
-    case "anime-card":
-      return `
-          <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
-             <!-- REC Indicator -->
-             <div class="absolute top-4 right-4 flex items-center gap-1.5 opacity-80 z-20">
-                 <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse-fast"></div>
-                 <span class="text-[10px] font-mono text-red-500 font-bold tracking-widest">REC</span>
-             </div>
-
-             <!-- Smoke Effect - Centered behind the logo -->
-             <div class="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-                <!-- Mist Blue color, higher opacity, centered -->
-                <div class="w-20 h-20 bg-cyan-400/30 rounded-full blur-xl absolute animate-smoke" style="animation-delay: 0s;"></div>
-                <div class="w-24 h-24 bg-blue-300/20 rounded-full blur-xl absolute animate-smoke" style="animation-delay: 1s; transform: translateX(10px);"></div>
-                <div class="w-16 h-16 bg-cyan-200/20 rounded-full blur-lg absolute animate-smoke" style="animation-delay: 2s; transform: translateX(-10px);"></div>
-             </div>
-
-             <!-- Main Content -->
-             <div class="relative z-10 transform hover:scale-105 transition-transform duration-500">
-                <span class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
-                       filter drop-shadow-[0_0_20px_rgba(220,38,38,0.5)] select-none">
-                  ${v.content}
-                </span>
-             </div>
-             
-             <!-- Subtle Vignette/Overlay -->
-             <div class="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent pointer-events-none z-10"></div>
-          </div>
-        `;
-
-    case "icon-pair":
-      return `
-        <div class="flex items-center gap-6">
-          <div class="w-12 h-12 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center">
-            <i class="fas ${v.icons[0]} ${v.colors[0]} text-xl"></i>
-          </div>
-          <i class="fas fa-arrows-alt-h text-gray-600 text-sm"></i>
-          <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
-            <i class="fas ${v.icons[1]} ${v.colors[1]} text-xl"></i>
-          </div>
-        </div>
-      `;
-
-    case "pipeline":
-      return `
-        <div class="flex items-center gap-3">
-          ${v.steps
-            .map(
-              (step, i) => `
-            <div class="px-3 py-2 rounded bg-gray-800/50 border border-gray-700 text-xs font-mono text-gray-400">
-              ${step}
-            </div>
-            ${
-              i < v.steps.length - 1
-                ? '<i class="fas fa-chevron-right text-gray-600 text-xs"></i>'
-                : ""
-            }
-          `
-            )
-            .join("")}
-        </div>
-      `;
-
-    case "progress":
-      return `
-        <div class="w-40 space-y-2">
-          <div class="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-blue-500 to-green-500 w-[92%]"></div>
-          </div>
-          <div class="text-xs font-mono text-green-400 text-center">${v.label}</div>
-        </div>
-      `;
-
-    case "document":
-      return `
-        <div class="w-20 h-28 bg-white rounded shadow-lg relative transform -rotate-3">
-          <div class="p-2 border-b border-gray-200">
-            <div class="w-10 h-1.5 bg-gray-800 rounded mb-1"></div>
-            <div class="w-14 h-1 bg-gray-400 rounded"></div>
-          </div>
-          <div class="p-2 space-y-1.5">
-            <div class="w-full h-1 bg-gray-300 rounded"></div>
-            <div class="w-full h-1 bg-gray-300 rounded"></div>
-            <div class="w-3/4 h-1 bg-gray-300 rounded"></div>
-            <div class="w-full h-1 bg-gray-300 rounded mt-2"></div>
-            <div class="w-2/3 h-1 bg-gray-300 rounded"></div>
-          </div>
-        </div>
-      `;
-
-    case "sync-network":
-      return `
-        <div class="relative w-full h-full flex items-center justify-center pt-2">
-          <!-- Pulse Ring (Scaled up) -->
-          <div class="absolute w-24 h-24 border border-cyan-500/20 rounded-full animate-ping opacity-20"></div>
-          
-          <!-- Connections Ring (Scaled up) -->
-          <div class="absolute w-28 h-28 border border-dashed border-cyan-500/30 rounded-full" style="animation: spin 10s linear infinite;"></div>
-          
-          <!-- Center Shield (Larger) -->
-          <div class="relative z-10 w-12 h-12 bg-gray-900 rounded-xl border border-cyan-500/50 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.3)]">
-            <i class="fas ${v.center.icon} ${
-        v.center.color
-      } text-xl drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"></i>
-          </div>
-          
-          <!-- Orbiting Nodes (Larger & Radius increased) -->
-          ${v.nodes
-            .map((node, i) => {
-              const radius = 54;
-              const angles = [-90, 30, 150]; // Top, Bottom Right, Bottom Left
-              const rad = angles[i] * (Math.PI / 180);
-              const x = Math.cos(rad) * radius;
-              const y = Math.sin(rad) * radius;
-
-              return `
-               <div class="absolute w-10 h-10 bg-gray-800/90 rounded-full border border-gray-600 flex items-center justify-center shadow-lg z-20 group hover:border-cyan-400 hover:scale-110 transition-all duration-300" 
-                    style="transform: translate(${x}px, ${y}px);">
-                 <i class="fas ${node.icon} ${node.color} text-sm group-hover:text-white transition-colors"></i>
-               </div>
-             `;
-            })
-            .join("")}
-        </div>
-      `;
-
-    default:
-      return `<i class="fas fa-code text-4xl text-gray-500"></i>`;
-  }
-}
-
-function createProjectCard(project) {
-  const visualHTML = getVisualHTML(project);
-  const bgGradient =
-    project.visual.bgGradient || "from-gray-900/30 to-transparent";
-
-  const githubLink = project.links.github
-    ? `<a href="${project.links.github}" target="_blank" class="card-link-btn">
-         <i class="fab fa-github"></i>
-         <span>Code</span>
-       </a>`
-    : "";
-  const demoLink = project.links.demo
-    ? `<a href="${project.links.demo}" target="_blank" class="card-link-btn">
-         <i class="fas fa-external-link-alt"></i>
-         <span>Demo</span>
-       </a>`
-    : "";
-
-  const tagsHTML = project.tags
-    .map((tag) => `<span class="tag">${tag}</span>`)
-    .join("");
-
-  return `
-    <div class="project-card-compact reveal-text">
-        <div class="card-visual bg-gradient-to-br ${bgGradient}">
-            <div class="card-visual-content w-full h-full flex items-center justify-center relative">
-                ${visualHTML}
-            </div>
-        </div>
-        <div class="card-content">
-            <div class="card-category">${project.category}</div>
-            <h3 class="card-title">${project.title}</h3>
-            <p class="card-desc">${project.description}</p>
-            <div class="card-tags">
-                ${tagsHTML}
-            </div>
-            <div class="card-links">
-                ${githubLink}
-                ${demoLink}
-            </div>
-        </div>
-    </div>
-  `;
-}
-
-function renderProjects(filter = "All") {
-  const grid = document.getElementById("projects-grid");
-  grid.innerHTML = "";
-
-  const filtered =
-    filter === "All" ? projects : projects.filter((p) => p.category === filter);
-
-  filtered.forEach((p) => {
-    grid.innerHTML += createProjectCard(p);
-  });
-
-  document
-    .querySelectorAll(".reveal-text")
-    .forEach((el) => observer.observe(el));
-}
-
-function setupFilters() {
-  const filtersContainer = document.getElementById("project-filters");
-  const allBtn = filtersContainer.querySelector('[data-filter="All"]');
-  const buttons = filtersContainer.querySelectorAll(".filter-btn");
-
-  const isMobile = window.innerWidth < 768;
-
-  if (isMobile && allBtn) {
-    allBtn.style.display = "none";
-    const firstCategoryBtn = filtersContainer.querySelector(
-      '.filter-btn:not([data-filter="All"])'
-    );
-    if (firstCategoryBtn) {
-      buttons.forEach((b) => b.classList.remove("active"));
-      firstCategoryBtn.classList.add("active");
-      renderProjects(firstCategoryBtn.getAttribute("data-filter"));
-    }
-  } else {
-    if (allBtn) allBtn.style.display = "";
-    renderProjects("All");
-  }
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderProjects(btn.getAttribute("data-filter"));
-    });
-  });
-}
-
-if (typeof projects !== "undefined") {
-  setupFilters();
-
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      const filtersContainer = document.getElementById("project-filters");
-      const allBtn = filtersContainer.querySelector('[data-filter="All"]');
-      const isMobile = window.innerWidth < 768;
-
-      if (isMobile && allBtn) {
-        allBtn.style.display = "none";
-      } else if (allBtn) {
-        allBtn.style.display = "";
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(-lineLen / 2, 0);
+        ctx.lineTo(lineLen / 2, 0);
+        ctx.strokeStyle = `rgba(100, 149, 237, ${opacity})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
       }
-    }, 200);
-  });
+    }
+    requestAnimationFrame(draw);
+  }
+
+  draw();
 }

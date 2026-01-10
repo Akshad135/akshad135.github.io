@@ -7,25 +7,6 @@
   --card-border: rgba(255, 255, 255, 0.08);
 }
 
-/* Smoke Animation - More Visible & Targeted */
-@keyframes smoke-rise {
-  0% {
-    transform: translateY(10px) scale(0.5);
-    opacity: 0;
-  }
-  40% {
-    opacity: 0.7;
-  } /* Increased opacity for visibility */
-  100% {
-    transform: translateY(-40px) scale(1.5);
-    opacity: 0;
-  }
-}
-
-.animate-smoke {
-  animation: smoke-rise 3s ease-out infinite;
-}
-
 body {
   background-color: var(--bg-color);
   color: var(--text-primary);
@@ -565,40 +546,19 @@ html {
   animation: blink-red 1s step-start infinite;
 }
 
-/* Smoke Animation */
-@keyframes smoke-rise {
-  0% {
-    transform: translateY(20px) scale(0.8);
-    opacity: 0;
-  }
-  40% {
-    opacity: 0.3;
-  }
+/* --- NEW RED BREATHING ANIMATION --- */
+@keyframes breathe-red {
+  0%,
   100% {
-    transform: translateY(-50px) scale(1.8);
-    opacity: 0;
-  }
-}
-
-.animate-smoke {
-  animation: smoke-rise 6s ease-out infinite;
-}
-
-/* Smoke Animation - Made more visible */
-@keyframes smoke-rise {
-  0% {
-    transform: translateY(20px) scale(0.8);
-    opacity: 0;
+    opacity: 0.2;
+    transform: scale(0.9);
   }
   50% {
     opacity: 0.5;
-  } /* Increased opacity peak */
-  100% {
-    transform: translateY(-60px) scale(2);
-    opacity: 0;
+    transform: scale(1.1);
   }
 }
 
-.animate-smoke {
-  animation: smoke-rise 4s ease-out infinite; /* Slightly faster for better visibility */
+.animate-breathe-red {
+  animation: breathe-red 4s ease-in-out infinite;
 }
