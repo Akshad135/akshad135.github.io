@@ -10,10 +10,10 @@ const projects = [
       demo: null,
     },
     visual: {
-      type: "icon-pair",
+      type: "agent-loop",
       icons: ["fa-pen-fancy", "fa-search"],
       colors: ["text-green-400", "text-red-400"],
-      bgGradient: "from-emerald-900/30 to-transparent",
+      bgGradient: "from-emerald-900/30 to-red-900/30",
     },
   },
   {
@@ -27,8 +27,8 @@ const projects = [
       demo: null,
     },
     visual: {
-      type: "progress",
-      label: "Match: 92%",
+      type: "resume-scan",
+      label: "92% Match",
       bgGradient: "from-blue-900/30 to-transparent",
     },
   },

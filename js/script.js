@@ -154,6 +154,60 @@ function getVisualHTML(project) {
         </span>
       `;
 
+    case "agent-loop":
+      return `
+        <div class="relative w-full h-full flex items-center justify-center gap-8">
+            <!-- Connecting Cycle Background (Fixed to be a circle) -->
+            <div class="absolute w-40 h-40 border-2 border-gray-700/50 rounded-full animate-spin-slow opacity-40" style="border-right-color: transparent; border-left-color: transparent;"></div>
+            
+            <!-- Drafter Agent (Left) -->
+            <div class="relative z-10 flex flex-col items-center gap-2 group">
+                 <div class="w-14 h-14 rounded-full bg-green-900/20 border border-green-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(34,197,94,0.15)] group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas ${v.icons[0]} ${v.colors[0]} text-xl"></i>
+                 </div>
+                 <div class="absolute -bottom-6 text-[9px] font-mono text-green-500/60 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Drafter</div>
+            </div>
+
+            <!-- Loop Icon -->
+            <div class="absolute z-0 text-gray-600 animate-pulse">
+                <i class="fas fa-sync-alt text-sm opacity-50"></i>
+            </div>
+
+            <!-- Critic Agent (Right) -->
+            <div class="relative z-10 flex flex-col items-center gap-2 group">
+                 <div class="w-14 h-14 rounded-full bg-red-900/20 border border-red-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.15)] group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas ${v.icons[1]} ${v.colors[1]} text-xl"></i>
+                 </div>
+                 <div class="absolute -bottom-6 text-[9px] font-mono text-red-500/60 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Critic</div>
+            </div>
+        </div>
+      `;
+
+    case "resume-scan":
+      return `
+        <div class="relative w-24 h-32 bg-gray-900 border border-gray-700 rounded-lg overflow-hidden flex flex-col items-center pt-4 shadow-xl group hover:border-blue-500/30 transition-colors duration-500">
+            <!-- Header Block -->
+             <div class="w-16 h-2 bg-gray-800 rounded-sm mb-3"></div>
+            
+            <!-- Content Lines -->
+            <div class="space-y-2 w-16 opacity-40">
+                <div class="w-full h-1 bg-gray-500 rounded-full"></div>
+                <div class="w-10 h-1 bg-gray-500 rounded-full"></div>
+                <div class="w-14 h-1 bg-gray-500 rounded-full"></div>
+                <div class="w-full h-1 bg-gray-500 rounded-full"></div>
+                <div class="w-8 h-1 bg-gray-500 rounded-full"></div>
+            </div>
+
+            <!-- Scanning Beam Animation -->
+            <div class="absolute top-0 w-full h-12 bg-gradient-to-b from-blue-500/0 via-blue-500/20 to-blue-500/0 border-b border-blue-400/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] animate-scan z-20 pointer-events-none"></div>
+
+            <!-- Result Badge -->
+             <div class="absolute bottom-3 bg-blue-950/90 border border-blue-500/40 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-mono text-blue-300 shadow-lg z-30">
+                ${v.label}
+            </div>
+        </div>
+      `;
+
     case "icon-pair":
       return `
         <div class="flex items-center gap-6">
@@ -214,7 +268,6 @@ function getVisualHTML(project) {
         </div>
       `;
 
-    // Updated Sync Network Visual (Larger, Expanded & Shifted Down)
     case "sync-network":
       return `
         <div class="relative w-full h-full flex items-center justify-center pt-2">
@@ -278,7 +331,6 @@ function createProjectCard(project) {
     .map((tag) => `<span class="tag">${tag}</span>`)
     .join("");
 
-  // Flex container to center content
   return `
     <div class="project-card-compact reveal-text">
         <div class="card-visual bg-gradient-to-br ${bgGradient}">
@@ -313,7 +365,6 @@ function renderProjects(filter = "All") {
     grid.innerHTML += createProjectCard(p);
   });
 
-  // Re-observe new elements for animation
   document
     .querySelectorAll(".reveal-text")
     .forEach((el) => observer.observe(el));
@@ -326,11 +377,8 @@ function setupFilters() {
 
   const isMobile = window.innerWidth < 768;
 
-  // On mobile, hide "All" button and get first category
   if (isMobile && allBtn) {
     allBtn.style.display = "none";
-
-    // Find first non-All button and activate it
     const firstCategoryBtn = filtersContainer.querySelector(
       '.filter-btn:not([data-filter="All"])'
     );
@@ -340,12 +388,10 @@ function setupFilters() {
       renderProjects(firstCategoryBtn.getAttribute("data-filter"));
     }
   } else {
-    // Desktop - show all and default to All
     if (allBtn) allBtn.style.display = "";
     renderProjects("All");
   }
 
-  // Event Listeners for Filters
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       buttons.forEach((b) => b.classList.remove("active"));
@@ -355,11 +401,9 @@ function setupFilters() {
   });
 }
 
-// Initial Setup
 if (typeof projects !== "undefined") {
   setupFilters();
 
-  // Re-setup on resize (in case user rotates device)
   let resizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
