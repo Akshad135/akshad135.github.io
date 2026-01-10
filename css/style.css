@@ -620,3 +620,52 @@ html {
 .animate-type-line {
   animation: type-width 2.5s ease-in-out infinite;
 }
+
+.animate-type-line {
+  animation: type-width 2.5s ease-in-out infinite;
+}
+
+/* Back to Top Button */
+#back-to-top {
+  position: fixed;
+  bottom: 50px;
+  right: 24px;
+  z-index: 99;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#back-to-top:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+@media (min-width: 640px) {
+  #back-to-top {
+    bottom: 60px;
+    right: 30px;
+  }
+}

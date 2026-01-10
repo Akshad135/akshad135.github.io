@@ -386,22 +386,13 @@ function setupFilters() {
   const allBtn = filtersContainer.querySelector('[data-filter="All"]');
   const buttons = filtersContainer.querySelectorAll(".filter-btn");
 
-  const isMobile = window.innerWidth < 768;
-
-  if (isMobile && allBtn) {
-    allBtn.style.display = "none";
-    const firstCategoryBtn = filtersContainer.querySelector(
-      '.filter-btn:not([data-filter="All"])'
-    );
-    if (firstCategoryBtn) {
-      buttons.forEach((b) => b.classList.remove("active"));
-      firstCategoryBtn.classList.add("active");
-      renderProjects(firstCategoryBtn.getAttribute("data-filter"));
-    }
-  } else {
-    if (allBtn) allBtn.style.display = "";
-    renderProjects("All");
+  // Removed logic that hid 'All' button on mobile
+  if (allBtn) {
+    allBtn.style.display = ""; // Ensure it's always visible
   }
+
+  // Default to showing 'All' projects
+  renderProjects("All");
 
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -418,22 +409,4 @@ if (typeof projects !== "undefined") {
   } else {
     setupFilters();
   }
-
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      const filtersContainer = document.getElementById("project-filters");
-      if (filtersContainer) {
-        const allBtn = filtersContainer.querySelector('[data-filter="All"]');
-        const isMobile = window.innerWidth < 768;
-
-        if (isMobile && allBtn) {
-          allBtn.style.display = "none";
-        } else if (allBtn) {
-          allBtn.style.display = "";
-        }
-      }
-    }, 200);
-  });
 }
