@@ -127,8 +127,8 @@ function getVisualHTML(project) {
   switch (v.type) {
     case "emoji":
       return `
-        <span class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
-               filter drop-shadow-[0_0_15px_rgba(239,68,68,0.4)] select-none">
+        <span class="text-6xl animate-sway font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
+               filter drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] select-none">
           ${v.content}
         </span>
       `;
@@ -278,7 +278,12 @@ function getVisualHTML(project) {
 
     case "document":
       return `
-        <div class="w-20 h-28 bg-white rounded shadow-lg relative transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+        <div class="w-20 h-28 bg-white rounded shadow-lg relative animate-float-paper group hover:rotate-0 transition-transform duration-300 overflow-hidden">
+          <!-- Live Indicator -->
+          <div class="absolute top-2 right-2">
+            <div class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
+          </div>
+          
           <div class="p-2 border-b border-gray-200">
             <div class="w-10 h-1.5 bg-gray-800 rounded mb-1"></div>
             <div class="w-14 h-1 bg-gray-400 rounded"></div>
@@ -286,7 +291,8 @@ function getVisualHTML(project) {
           <div class="p-2 space-y-1.5">
             <div class="w-full h-1 bg-gray-300 rounded"></div>
             <div class="w-full h-1 bg-gray-300 rounded"></div>
-            <div class="w-3/4 h-1 bg-gray-300 rounded"></div>
+            <!-- Typing Animation Line -->
+            <div class="h-1 bg-blue-400 rounded animate-type-line w-1/2"></div>
             <div class="w-full h-1 bg-gray-300 rounded mt-2"></div>
             <div class="w-2/3 h-1 bg-gray-300 rounded"></div>
           </div>

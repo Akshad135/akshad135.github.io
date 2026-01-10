@@ -562,3 +562,61 @@ html {
 .animate-breathe-red {
   animation: breathe-red 4s ease-in-out infinite;
 }
+
+/* --- NEW ANIMATIONS FOR BLOOM & RESUME BUILDER --- */
+
+/* Gentle swaying animation for Bloom emoji */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 3.5s ease-in-out infinite;
+  display: inline-block;
+  transform-origin: bottom center;
+}
+
+/* Floating animation for Resume Document */
+@keyframes float-paper {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+.animate-float-paper {
+  animation: float-paper 5s ease-in-out infinite;
+}
+
+/* Typing width animation */
+@keyframes type-width {
+  0% {
+    width: 0%;
+    opacity: 0.5;
+  }
+  50% {
+    width: 80%;
+    opacity: 1;
+  }
+  90% {
+    width: 80%;
+    opacity: 1;
+  }
+  100% {
+    width: 0%;
+    opacity: 0.5;
+  }
+}
+
+.animate-type-line {
+  animation: type-width 2.5s ease-in-out infinite;
+}
