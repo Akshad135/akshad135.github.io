@@ -248,9 +248,17 @@ function getVisualHTML(project) {
       return `
           <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
              <!-- REC Indicator -->
-             <div class="absolute top-4 right-4 flex items-center gap-1.5 opacity-80">
+             <div class="absolute top-4 right-4 flex items-center gap-1.5 opacity-80 z-20">
                  <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse-fast"></div>
                  <span class="text-[10px] font-mono text-red-500 font-bold tracking-widest">REC</span>
+             </div>
+
+             <!-- Smoke Effect - Centered behind the logo -->
+             <div class="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
+                <!-- Mist Blue color, higher opacity, centered -->
+                <div class="w-20 h-20 bg-cyan-400/30 rounded-full blur-xl absolute animate-smoke" style="animation-delay: 0s;"></div>
+                <div class="w-24 h-24 bg-blue-300/20 rounded-full blur-xl absolute animate-smoke" style="animation-delay: 1s; transform: translateX(10px);"></div>
+                <div class="w-16 h-16 bg-cyan-200/20 rounded-full blur-lg absolute animate-smoke" style="animation-delay: 2s; transform: translateX(-10px);"></div>
              </div>
 
              <!-- Main Content -->
@@ -262,7 +270,7 @@ function getVisualHTML(project) {
              </div>
              
              <!-- Subtle Vignette/Overlay -->
-             <div class="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent pointer-events-none"></div>
+             <div class="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent pointer-events-none z-10"></div>
           </div>
         `;
 
