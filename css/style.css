@@ -39,7 +39,6 @@ h4 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Added from Resume Page for reusability */
 .glass-card {
   background: rgba(10, 10, 10, 0.7);
   backdrop-filter: blur(12px);
@@ -65,7 +64,6 @@ h4 {
     transform: translateY(0);
   }
 }
-/* End Resume Specific Styles */
 
 .reveal-text {
   opacity: 0;
@@ -85,7 +83,6 @@ h4 {
   -webkit-text-fill-color: transparent;
 }
 
-/* Filter Buttons */
 .filter-btn {
   padding: 10px 20px;
   border-radius: 8px;
@@ -109,7 +106,6 @@ h4 {
   color: #3b82f6;
 }
 
-/* Project Card - Improved */
 .project-card-compact {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -130,7 +126,6 @@ h4 {
     0 0 30px rgba(59, 130, 246, 0.1);
 }
 
-/* Card Visual - Themed Patterns */
 .card-visual {
   height: 160px;
   display: flex;
@@ -157,7 +152,6 @@ h4 {
     );
 }
 
-/* Category-specific visual backgrounds */
 .card-visual[data-category="AI/ML"] {
   background: linear-gradient(
     135deg,
@@ -195,7 +189,6 @@ h4 {
   opacity: 1;
 }
 
-/* Decorative grid pattern */
 .card-visual::after {
   content: "";
   position: absolute;
@@ -256,7 +249,6 @@ h4 {
   color: #a1a1aa;
 }
 
-/* Always visible card links - bottom of card */
 .card-links {
   display: flex;
   gap: 12px;
@@ -291,7 +283,6 @@ h4 {
   font-size: 0.9rem;
 }
 
-/* Loader & Utilities */
 #loader-overlay {
   position: fixed;
   top: 0;
@@ -493,7 +484,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fix for contact section gap - extend background */
 #contact {
   background: linear-gradient(
     to bottom,
@@ -503,13 +493,11 @@ html {
   position: relative;
 }
 
-/* Ensure work section has proper background continuation */
 #work {
   background: transparent;
   position: relative;
 }
 
-/* Scanner Animation for Resume Screener */
 @keyframes scan {
   0% {
     top: -20%;
@@ -531,7 +519,6 @@ html {
   animation: scan 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* Slow Spin for Auditor Loop */
 .animate-spin-slow {
   animation: spin 8s linear infinite;
 }
@@ -545,7 +532,6 @@ html {
   }
 }
 
-/* Pipeline Flow Animation */
 @keyframes flow-right {
   0% {
     transform: translateX(-100%);
@@ -559,7 +545,6 @@ html {
   animation: flow-right 1.5s linear infinite;
 }
 
-/* REC Blink */
 @keyframes blink-red {
   0%,
   100% {
@@ -574,7 +559,6 @@ html {
   animation: blink-red 1s step-start infinite;
 }
 
-/* --- NEW RED BREATHING ANIMATION --- */
 @keyframes breathe-red {
   0%,
   100% {
@@ -591,9 +575,6 @@ html {
   animation: breathe-red 4s ease-in-out infinite;
 }
 
-/* --- NEW ANIMATIONS FOR BLOOM & RESUME BUILDER --- */
-
-/* Gentle swaying animation for Bloom emoji */
 @keyframes sway {
   0%,
   100% {
@@ -610,7 +591,6 @@ html {
   transform-origin: bottom center;
 }
 
-/* Floating animation for Resume Document */
 @keyframes float-paper {
   0%,
   100% {
@@ -625,7 +605,6 @@ html {
   animation: float-paper 5s ease-in-out infinite;
 }
 
-/* Typing width animation */
 @keyframes type-width {
   0% {
     width: 0%;
@@ -649,11 +628,6 @@ html {
   animation: type-width 2.5s ease-in-out infinite;
 }
 
-.animate-type-line {
-  animation: type-width 2.5s ease-in-out infinite;
-}
-
-/* Back to Top Button */
 #back-to-top {
   position: fixed;
   bottom: 50px;
