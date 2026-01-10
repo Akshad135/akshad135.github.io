@@ -170,12 +170,20 @@ function getVisualHTML(project) {
     case "pipeline":
       return `
         <div class="flex items-center gap-3">
-          ${v.steps.map((step, i) => `
+          ${v.steps
+            .map(
+              (step, i) => `
             <div class="px-3 py-2 rounded bg-gray-800/50 border border-gray-700 text-xs font-mono text-gray-400">
               ${step}
             </div>
-            ${i < v.steps.length - 1 ? '<i class="fas fa-chevron-right text-gray-600 text-xs"></i>' : ''}
-          `).join('')}
+            ${
+              i < v.steps.length - 1
+                ? '<i class="fas fa-chevron-right text-gray-600 text-xs"></i>'
+                : ""
+            }
+          `
+            )
+            .join("")}
         </div>
       `;
 
@@ -206,6 +214,45 @@ function getVisualHTML(project) {
         </div>
       `;
 
+    // Updated Sync Network Visual (Fixed Positioning)
+    case "sync-network":
+      return `
+        <div class="relative w-full h-full flex items-center justify-center">
+          <!-- Pulse Ring -->
+          <div class="absolute w-24 h-24 border border-cyan-500/20 rounded-full animate-ping opacity-20"></div>
+          
+          <!-- Connections Ring -->
+          <div class="absolute w-32 h-32 border border-dashed border-cyan-500/30 rounded-full" style="animation: spin 10s linear infinite;"></div>
+          
+          <!-- Center Shield -->
+          <div class="relative z-10 w-12 h-12 bg-gray-900 rounded-xl border border-cyan-500/50 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+            <i class="fas ${v.center.icon} ${
+        v.center.color
+      } text-xl drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"></i>
+          </div>
+          
+          <!-- Orbiting Nodes -->
+          ${v.nodes
+            .map((node, i) => {
+              // Position nodes in a perfect triangle using fixed radius from center
+              // Radius = 60px
+              const radius = 60;
+              const angles = [-90, 30, 150]; // Top, Bottom Right, Bottom Left
+              const rad = angles[i] * (Math.PI / 180);
+              const x = Math.cos(rad) * radius;
+              const y = Math.sin(rad) * radius;
+
+              return `
+               <div class="absolute w-9 h-9 bg-gray-800/90 rounded-full border border-gray-600 flex items-center justify-center shadow-lg z-20 group hover:border-cyan-400 hover:scale-110 transition-all duration-300" 
+                    style="transform: translate(${x}px, ${y}px);">
+                 <i class="fas ${node.icon} ${node.color} text-sm group-hover:text-white transition-colors"></i>
+               </div>
+             `;
+            })
+            .join("")}
+        </div>
+      `;
+
     default:
       return `<i class="fas fa-code text-4xl text-gray-500"></i>`;
   }
@@ -213,7 +260,8 @@ function getVisualHTML(project) {
 
 function createProjectCard(project) {
   const visualHTML = getVisualHTML(project);
-  const bgGradient = project.visual.bgGradient || "from-gray-900/30 to-transparent";
+  const bgGradient =
+    project.visual.bgGradient || "from-gray-900/30 to-transparent";
 
   const githubLink = project.links.github
     ? `<a href="${project.links.github}" target="_blank" class="card-link-btn">
@@ -232,10 +280,11 @@ function createProjectCard(project) {
     .map((tag) => `<span class="tag">${tag}</span>`)
     .join("");
 
+  // Fix: Added 'flex items-center justify-center' to wrapper so icons stay centered
   return `
     <div class="project-card-compact reveal-text">
         <div class="card-visual bg-gradient-to-br ${bgGradient}">
-            <div class="card-visual-content">
+            <div class="card-visual-content w-full h-full flex items-center justify-center relative">
                 ${visualHTML}
             </div>
         </div>
@@ -260,16 +309,16 @@ function renderProjects(filter = "All") {
   grid.innerHTML = "";
 
   const filtered =
-    filter === "All"
-      ? projects
-      : projects.filter((p) => p.category === filter);
+    filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   filtered.forEach((p) => {
     grid.innerHTML += createProjectCard(p);
   });
 
   // Re-observe new elements for animation
-  document.querySelectorAll(".reveal-text").forEach((el) => observer.observe(el));
+  document
+    .querySelectorAll(".reveal-text")
+    .forEach((el) => observer.observe(el));
 }
 
 function setupFilters() {
@@ -284,7 +333,9 @@ function setupFilters() {
     allBtn.style.display = "none";
 
     // Find first non-All button and activate it
-    const firstCategoryBtn = filtersContainer.querySelector('.filter-btn:not([data-filter="All"])');
+    const firstCategoryBtn = filtersContainer.querySelector(
+      '.filter-btn:not([data-filter="All"])'
+    );
     if (firstCategoryBtn) {
       buttons.forEach((b) => b.classList.remove("active"));
       firstCategoryBtn.classList.add("active");

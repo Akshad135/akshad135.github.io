@@ -13,7 +13,7 @@ const projects = [
       type: "icon-pair",
       icons: ["fa-pen-fancy", "fa-search"],
       colors: ["text-green-400", "text-red-400"],
-      bgGradient: "from-blue-900/30 to-transparent",
+      bgGradient: "from-emerald-900/30 to-transparent",
     },
   },
   {
@@ -100,7 +100,7 @@ const projects = [
       type: "emoji",
       content: "🌻",
       color: "from-yellow-400 to-orange-500",
-      bgGradient: "from-green-900/40 to-transparent",
+      bgGradient: "from-orange-900/30 to-transparent",
     },
   },
   {
@@ -115,7 +115,7 @@ const projects = [
     },
     visual: {
       type: "document",
-      bgGradient: "from-green-900/30 to-transparent",
+      bgGradient: "from-gray-700/30 to-transparent",
     },
   },
 ];
