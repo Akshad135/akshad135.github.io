@@ -214,36 +214,34 @@ function getVisualHTML(project) {
         </div>
       `;
 
-    // Updated Sync Network Visual (Fixed Positioning)
+    // Updated Sync Network Visual (Larger, Expanded & Shifted Down)
     case "sync-network":
       return `
-        <div class="relative w-full h-full flex items-center justify-center">
-          <!-- Pulse Ring -->
+        <div class="relative w-full h-full flex items-center justify-center pt-2">
+          <!-- Pulse Ring (Scaled up) -->
           <div class="absolute w-24 h-24 border border-cyan-500/20 rounded-full animate-ping opacity-20"></div>
           
-          <!-- Connections Ring -->
-          <div class="absolute w-32 h-32 border border-dashed border-cyan-500/30 rounded-full" style="animation: spin 10s linear infinite;"></div>
+          <!-- Connections Ring (Scaled up) -->
+          <div class="absolute w-28 h-28 border border-dashed border-cyan-500/30 rounded-full" style="animation: spin 10s linear infinite;"></div>
           
-          <!-- Center Shield -->
+          <!-- Center Shield (Larger) -->
           <div class="relative z-10 w-12 h-12 bg-gray-900 rounded-xl border border-cyan-500/50 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.3)]">
             <i class="fas ${v.center.icon} ${
         v.center.color
       } text-xl drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"></i>
           </div>
           
-          <!-- Orbiting Nodes -->
+          <!-- Orbiting Nodes (Larger & Radius increased) -->
           ${v.nodes
             .map((node, i) => {
-              // Position nodes in a perfect triangle using fixed radius from center
-              // Radius = 60px
-              const radius = 60;
+              const radius = 54;
               const angles = [-90, 30, 150]; // Top, Bottom Right, Bottom Left
               const rad = angles[i] * (Math.PI / 180);
               const x = Math.cos(rad) * radius;
               const y = Math.sin(rad) * radius;
 
               return `
-               <div class="absolute w-9 h-9 bg-gray-800/90 rounded-full border border-gray-600 flex items-center justify-center shadow-lg z-20 group hover:border-cyan-400 hover:scale-110 transition-all duration-300" 
+               <div class="absolute w-10 h-10 bg-gray-800/90 rounded-full border border-gray-600 flex items-center justify-center shadow-lg z-20 group hover:border-cyan-400 hover:scale-110 transition-all duration-300" 
                     style="transform: translate(${x}px, ${y}px);">
                  <i class="fas ${node.icon} ${node.color} text-sm group-hover:text-white transition-colors"></i>
                </div>
@@ -280,7 +278,7 @@ function createProjectCard(project) {
     .map((tag) => `<span class="tag">${tag}</span>`)
     .join("");
 
-  // Fix: Added 'flex items-center justify-center' to wrapper so icons stay centered
+  // Flex container to center content
   return `
     <div class="project-card-compact reveal-text">
         <div class="card-visual bg-gradient-to-br ${bgGradient}">
