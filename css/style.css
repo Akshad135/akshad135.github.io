@@ -671,3 +671,65 @@ html {
     right: 30px;
   }
 }
+
+/* Neural Network Simulation Styles */
+.speech-bubble {
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent #1f2937;
+}
+
+@media (max-width: 768px) {
+  .speech-bubble::after {
+    right: 50%;
+    top: 100%;
+    transform: translateX(50%) rotate(90deg);
+    border-width: 10px 0 10px 10px;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Flash Overlay Animation */
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.flash-active .flash-overlay {
+  animation: flash 1s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Hide text when resetting */
+.flash-active .reset-text {
+  opacity: 0 !important;
+  transition: opacity 0.2s ease;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}

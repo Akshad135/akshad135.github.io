@@ -134,3 +134,233 @@ if (backToTopBtn) {
     });
   });
 }
+
+// Neural Network Simulation Logic
+(function () {
+  const canvas = document.getElementById("neuralCanvas");
+  if (!canvas) return;
+  const card = document.getElementById("simulationCard");
+  const ctx = canvas.getContext("2d");
+  let width, height;
+
+  // --- 1. SETUP ---
+  function initSize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+  }
+
+  const resizeObserver = new ResizeObserver(() => initSize());
+  resizeObserver.observe(canvas.parentElement);
+  initSize();
+
+  // --- 2. CONFIG: NEURAL TOPOLOGY ---
+  // Increased density for wider card
+  const structure = [6, 8, 8, 6, 4];
+  const nodes = [];
+  const pulses = [];
+
+  class Node {
+    constructor(x, y, layerIndex) {
+      this.x = x;
+      this.y = y;
+      this.baseY = y;
+      this.layer = layerIndex;
+      this.activation = 0;
+      this.bias = Math.random() * Math.PI * 2;
+    }
+
+    draw(time) {
+      this.y = this.baseY + Math.sin(time + this.bias) * 3;
+
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 3.5, 0, Math.PI * 2);
+
+      // Dynamic Coloring
+      const r = 30 + this.activation * 200;
+      const g = 60 + this.activation * 200;
+      const b = 100 + this.activation * 155;
+
+      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+
+      if (this.activation > 0.1) {
+        ctx.shadowBlur = this.activation * 15;
+        ctx.shadowColor = `rgba(96, 165, 250, ${this.activation})`;
+      } else {
+        ctx.shadowBlur = 0;
+      }
+
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      this.activation *= 0.92;
+    }
+  }
+
+  class Pulse {
+    constructor(startNode, endNode, speedMultiplier = 1, isGradient = false) {
+      this.start = startNode;
+      this.end = endNode;
+      this.progress = 0;
+      this.speed = (Math.random() * 0.02 + 0.015) * speedMultiplier;
+      this.done = false;
+      this.isGradient = isGradient; // Is this a backward propagation pulse?
+    }
+
+    update() {
+      this.progress += this.speed;
+      if (this.progress >= 1) {
+        this.progress = 1;
+        this.done = true;
+        this.end.activation = Math.min(this.end.activation + 0.8, 1.0);
+      }
+    }
+
+    draw() {
+      // Linear interpolation
+      const currX = this.start.x + (this.end.x - this.start.x) * this.progress;
+      const currY = this.start.y + (this.end.y - this.start.y) * this.progress;
+
+      ctx.beginPath();
+      ctx.arc(currX, currY, 2, 0, Math.PI * 2);
+
+      // Color Logic: Gradients are Purple/Pink, Inference is White
+      if (this.isGradient) {
+        ctx.fillStyle = "#d8b4fe"; // Purple-300
+        ctx.shadowColor = "#a855f7";
+      } else {
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "#ffffff";
+      }
+
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Tail logic
+      const tailLen = 0.1;
+      if (this.progress > tailLen) {
+        const tailX =
+          this.start.x +
+          (this.end.x - this.start.x) * (this.progress - tailLen);
+        const tailY =
+          this.start.y +
+          (this.end.y - this.start.y) * (this.progress - tailLen);
+        ctx.beginPath();
+        ctx.moveTo(currX, currY);
+        ctx.lineTo(tailX, tailY);
+
+        if (this.isGradient) {
+          ctx.strokeStyle = "rgba(216, 180, 254, 0.4)";
+        } else {
+          ctx.strokeStyle = "rgba(255,255,255,0.3)";
+        }
+
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+    }
+  }
+
+  function initNetwork() {
+    nodes.length = 0;
+    const paddingX = 60; // Increased padding for wider look
+    const paddingY = 60;
+    const usableWidth = width - paddingX * 2;
+    const usableHeight = height - paddingY * 2;
+    const layerSpacing = usableWidth / (structure.length - 1);
+
+    structure.forEach((nodeCount, layerIdx) => {
+      const x = paddingX + layerIdx * layerSpacing;
+      const nodeSpacing = usableHeight / (nodeCount - 1 || 1);
+      const columnHeight = (nodeCount - 1) * nodeSpacing;
+      const startY = (height - columnHeight) / 2;
+
+      for (let i = 0; i < nodeCount; i++) {
+        const y = nodeCount > 1 ? startY + i * nodeSpacing : height / 2;
+        nodes.push(new Node(x, y, layerIdx));
+      }
+    });
+  }
+
+  setTimeout(initNetwork, 100);
+
+  // --- 3. ANIMATION LOOP ---
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    const time = Date.now() * 0.002;
+
+    ctx.lineWidth = 1;
+    nodes.forEach((nodeA) => {
+      nodes.forEach((nodeB) => {
+        // Forward connections (Drawing the wires)
+        if (nodeB.layer === nodeA.layer + 1) {
+          const activeFactor = (nodeA.activation + nodeB.activation) / 2;
+          const alpha = 0.05 + activeFactor * 0.2;
+
+          ctx.beginPath();
+          ctx.moveTo(nodeA.x, nodeA.y);
+          ctx.lineTo(nodeB.x, nodeB.y);
+          ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
+          ctx.stroke();
+
+          // Random forward inference traffic
+          const spawnChance = 0.002 + nodeA.activation * 0.01;
+          if (Math.random() < spawnChance) {
+            pulses.push(new Pulse(nodeA, nodeB));
+          }
+        }
+      });
+    });
+
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      const p = pulses[i];
+      p.update();
+      p.draw();
+      if (p.done) pulses.splice(i, 1);
+    }
+
+    nodes.forEach((node) => node.draw(time));
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // --- 4. BACKPROPAGATION LOGIC ---
+  if (card) {
+    card.addEventListener("click", () => {
+      card.classList.remove("flash-active");
+      void card.offsetWidth;
+      card.classList.add("flash-active");
+
+      // Start from the LAST layer (Output)
+      const lastLayerIdx = structure.length - 1;
+
+      // Iterate backwards through layers
+      for (let i = lastLayerIdx; i > 0; i--) {
+        const currentLayerNodes = nodes.filter((n) => n.layer === i);
+        const prevLayerNodes = nodes.filter((n) => n.layer === i - 1);
+
+        // Delay based on depth (reverse flow timing)
+        const delay = (lastLayerIdx - i) * 120; // Slightly faster for denser network
+
+        setTimeout(() => {
+          currentLayerNodes.forEach((sourceNode) => {
+            // Light up the source
+            sourceNode.activation = 1.0;
+
+            // Send pulses BACKWARDS to previous layer
+            prevLayerNodes.forEach((targetNode) => {
+              // Note: Pulse direction is Source -> Target
+              // Since we are iterating i -> i-1, the visual will naturally go Right -> Left
+              pulses.push(new Pulse(sourceNode, targetNode, 2.0, true)); // Faster backprop
+            });
+          });
+        }, delay);
+      }
+    });
+  }
+})();
