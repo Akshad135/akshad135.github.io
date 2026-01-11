@@ -279,7 +279,7 @@ if (backToTopBtn) {
       const x = paddingX + layerIdx * layerSpacing;
       const nodeSpacing = usableHeight / (nodeCount - 1 || 1);
       const columnHeight = (nodeCount - 1) * nodeSpacing;
-      const startY = (height - columnHeight) / 2;
+      const startY = (height - columnHeight) / 2 - 20;
 
       for (let i = 0; i < nodeCount; i++) {
         const y = nodeCount > 1 ? startY + i * nodeSpacing : height / 2;
