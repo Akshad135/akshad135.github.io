@@ -152,13 +152,35 @@ if (backToTopBtn) {
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     ctx.scale(dpr, dpr);
+
+    // Re-initialize network on resize to fit new dimensions
+    initNetwork();
   }
 
   const resizeObserver = new ResizeObserver(() => initSize());
   resizeObserver.observe(canvas.parentElement);
-  initSize();
 
-  const structure = [6, 8, 8, 6, 4];
+  // Initial size setup
+  const rect = canvas.parentElement.getBoundingClientRect();
+  width = rect.width;
+  height = rect.height;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  ctx.scale(dpr, dpr);
+
+  // Dynamic structure based on screen width
+  function getStructure() {
+    if (window.innerWidth < 480) {
+      return [4, 5, 5, 4, 2]; // Mobile: Less nodes
+    } else if (window.innerWidth < 768) {
+      return [5, 6, 6, 5, 3]; // Tablet: Medium nodes
+    } else {
+      return [6, 8, 8, 6, 4]; // Desktop: Full complexity
+    }
+  }
+
+  let structure = getStructure();
   const nodes = [];
   const pulses = [];
 
@@ -173,20 +195,30 @@ if (backToTopBtn) {
     }
 
     draw(time) {
-      this.y = this.baseY + Math.sin(time + this.bias) * 3;
+      // Only animate vertical movement on larger screens (desktop/tablet)
+      if (window.innerWidth >= 768) {
+        this.y = this.baseY + Math.sin(time + this.bias) * 3;
+      } else {
+        // Static position on mobile to prevent "dangling" look
+        this.y = this.baseY;
+      }
 
       ctx.beginPath();
       ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
 
-      const r = 59 + (255 - 59) * this.activation;
-      const g = 130 + (255 - 130) * this.activation;
-      const b = 246 + (255 - 246) * this.activation;
+      // Clamp activation for safety
+      const safeActivation = Math.max(0, Math.min(1, this.activation));
 
-      const alpha = 0.6 + this.activation * 0.4;
+      const r = Math.floor(59 + (255 - 59) * safeActivation);
+      const g = Math.floor(130 + (255 - 130) * safeActivation);
+      const b = Math.floor(246 + (255 - 246) * safeActivation);
 
-      ctx.fillStyle = `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(
-        b
-      )}, ${alpha})`;
+      const alpha = 0.6 + safeActivation * 0.4;
+
+      ctx.fillStyle = `rgba(${Math.min(255, r)}, ${Math.min(
+        255,
+        g
+      )}, ${Math.min(255, b)}, ${Math.min(1, alpha)})`;
 
       if (this.activation > 0.1) {
         ctx.shadowBlur = this.activation * 15;
@@ -268,9 +300,16 @@ if (backToTopBtn) {
   }
 
   function initNetwork() {
+    structure = getStructure(); // Update structure based on current width
     nodes.length = 0;
-    const paddingX = 60;
-    const paddingY = 50;
+    pulses.length = 0; // Fix: clear pulses on resize to prevent floating particles
+
+    // Responsive padding
+    const isMobile = window.innerWidth < 768;
+    // UPDATED: Increased padding on mobile to visually shrink the net
+    const paddingX = isMobile ? 60 : 60;
+    const paddingY = isMobile ? 45 : 50;
+
     const usableWidth = width - paddingX * 2;
     const usableHeight = height - paddingY * 2;
     const layerSpacing = usableWidth / (structure.length - 1);
@@ -279,9 +318,10 @@ if (backToTopBtn) {
       const x = paddingX + layerIdx * layerSpacing;
       const nodeSpacing = usableHeight / (nodeCount - 1 || 1);
       const columnHeight = (nodeCount - 1) * nodeSpacing;
-      const startY = (height - columnHeight) / 2 - 20;
+      const startY = (height - columnHeight) / 2 - (isMobile ? 25 : 20); // Center vertically better on mobile
 
       for (let i = 0; i < nodeCount; i++) {
+        // Just center single nodes, otherwise spread them out
         const y = nodeCount > 1 ? startY + i * nodeSpacing : height / 2;
         nodes.push(new Node(x, y, layerIdx));
       }
