@@ -135,15 +135,15 @@ if (backToTopBtn) {
   });
 }
 
-// Neural Network Simulation Logic
 (function () {
   const canvas = document.getElementById("neuralCanvas");
   if (!canvas) return;
   const card = document.getElementById("simulationCard");
+  const tensorCounter = document.getElementById("tensorCounter");
   const ctx = canvas.getContext("2d");
   let width, height;
+  let tensorCount = 410294;
 
-  // --- 1. SETUP ---
   function initSize() {
     const rect = canvas.parentElement.getBoundingClientRect();
     width = rect.width;
@@ -158,8 +158,6 @@ if (backToTopBtn) {
   resizeObserver.observe(canvas.parentElement);
   initSize();
 
-  // --- 2. CONFIG: NEURAL TOPOLOGY ---
-  // Increased density for wider card
   const structure = [6, 8, 8, 6, 4];
   const nodes = [];
   const pulses = [];
@@ -178,14 +176,17 @@ if (backToTopBtn) {
       this.y = this.baseY + Math.sin(time + this.bias) * 3;
 
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 3.5, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
 
-      // Dynamic Coloring
-      const r = 30 + this.activation * 200;
-      const g = 60 + this.activation * 200;
-      const b = 100 + this.activation * 155;
+      const r = 59 + (255 - 59) * this.activation;
+      const g = 130 + (255 - 130) * this.activation;
+      const b = 246 + (255 - 246) * this.activation;
 
-      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      const alpha = 0.6 + this.activation * 0.4;
+
+      ctx.fillStyle = `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(
+        b
+      )}, ${alpha})`;
 
       if (this.activation > 0.1) {
         ctx.shadowBlur = this.activation * 15;
@@ -207,7 +208,7 @@ if (backToTopBtn) {
       this.progress = 0;
       this.speed = (Math.random() * 0.02 + 0.015) * speedMultiplier;
       this.done = false;
-      this.isGradient = isGradient; // Is this a backward propagation pulse?
+      this.isGradient = isGradient;
     }
 
     update() {
@@ -216,20 +217,22 @@ if (backToTopBtn) {
         this.progress = 1;
         this.done = true;
         this.end.activation = Math.min(this.end.activation + 0.8, 1.0);
+
+        if (!this.isGradient) {
+          tensorCount += Math.floor(Math.random() * 64) + 64;
+        }
       }
     }
 
     draw() {
-      // Linear interpolation
       const currX = this.start.x + (this.end.x - this.start.x) * this.progress;
       const currY = this.start.y + (this.end.y - this.start.y) * this.progress;
 
       ctx.beginPath();
       ctx.arc(currX, currY, 2, 0, Math.PI * 2);
 
-      // Color Logic: Gradients are Purple/Pink, Inference is White
       if (this.isGradient) {
-        ctx.fillStyle = "#d8b4fe"; // Purple-300
+        ctx.fillStyle = "#d8b4fe";
         ctx.shadowColor = "#a855f7";
       } else {
         ctx.fillStyle = "#ffffff";
@@ -240,7 +243,6 @@ if (backToTopBtn) {
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // Tail logic
       const tailLen = 0.1;
       if (this.progress > tailLen) {
         const tailX =
@@ -267,8 +269,8 @@ if (backToTopBtn) {
 
   function initNetwork() {
     nodes.length = 0;
-    const paddingX = 60; // Increased padding for wider look
-    const paddingY = 60;
+    const paddingX = 60;
+    const paddingY = 50;
     const usableWidth = width - paddingX * 2;
     const usableHeight = height - paddingY * 2;
     const layerSpacing = usableWidth / (structure.length - 1);
@@ -288,7 +290,6 @@ if (backToTopBtn) {
 
   setTimeout(initNetwork, 100);
 
-  // --- 3. ANIMATION LOOP ---
   function animate() {
     ctx.clearRect(0, 0, width, height);
     const time = Date.now() * 0.002;
@@ -296,7 +297,6 @@ if (backToTopBtn) {
     ctx.lineWidth = 1;
     nodes.forEach((nodeA) => {
       nodes.forEach((nodeB) => {
-        // Forward connections (Drawing the wires)
         if (nodeB.layer === nodeA.layer + 1) {
           const activeFactor = (nodeA.activation + nodeB.activation) / 2;
           const alpha = 0.05 + activeFactor * 0.2;
@@ -307,7 +307,6 @@ if (backToTopBtn) {
           ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
           ctx.stroke();
 
-          // Random forward inference traffic
           const spawnChance = 0.002 + nodeA.activation * 0.01;
           if (Math.random() < spawnChance) {
             pulses.push(new Pulse(nodeA, nodeB));
@@ -324,39 +323,38 @@ if (backToTopBtn) {
     }
 
     nodes.forEach((node) => node.draw(time));
+
+    if (tensorCounter) {
+      tensorCounter.innerText = tensorCount.toLocaleString();
+    }
+
     requestAnimationFrame(animate);
   }
 
   animate();
 
-  // --- 4. BACKPROPAGATION LOGIC ---
   if (card) {
     card.addEventListener("click", () => {
       card.classList.remove("flash-active");
       void card.offsetWidth;
       card.classList.add("flash-active");
 
-      // Start from the LAST layer (Output)
+      tensorCount = Math.max(0, tensorCount - 50000);
+
       const lastLayerIdx = structure.length - 1;
 
-      // Iterate backwards through layers
       for (let i = lastLayerIdx; i > 0; i--) {
         const currentLayerNodes = nodes.filter((n) => n.layer === i);
         const prevLayerNodes = nodes.filter((n) => n.layer === i - 1);
 
-        // Delay based on depth (reverse flow timing)
-        const delay = (lastLayerIdx - i) * 120; // Slightly faster for denser network
+        const delay = (lastLayerIdx - i) * 120;
 
         setTimeout(() => {
           currentLayerNodes.forEach((sourceNode) => {
-            // Light up the source
             sourceNode.activation = 1.0;
 
-            // Send pulses BACKWARDS to previous layer
             prevLayerNodes.forEach((targetNode) => {
-              // Note: Pulse direction is Source -> Target
-              // Since we are iterating i -> i-1, the visual will naturally go Right -> Left
-              pulses.push(new Pulse(sourceNode, targetNode, 2.0, true)); // Faster backprop
+              pulses.push(new Pulse(sourceNode, targetNode, 2.0, true));
             });
           });
         }, delay);
