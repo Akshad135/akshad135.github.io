@@ -323,12 +323,10 @@ function createProjectCard(project) {
 function renderProjects(filter = "All") {
   const grid = document.getElementById("projects-grid");
   if (!grid) return;
-  grid.innerHTML = "";
   const filtered =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
-  filtered.forEach((p) => {
-    grid.innerHTML += createProjectCard(p);
-  });
+  // Build HTML string first, then assign once (avoids multiple DOM reflows)
+  grid.innerHTML = filtered.map((p) => createProjectCard(p)).join("");
   document
     .querySelectorAll(".reveal-text")
     .forEach((el) => observer.observe(el));

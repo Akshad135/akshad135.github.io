@@ -160,6 +160,11 @@ if (backToTopBtn) {
   const resizeObserver = new ResizeObserver(() => initSize());
   resizeObserver.observe(canvas.parentElement);
 
+  // Cleanup ResizeObserver on page unload to prevent memory leak
+  window.addEventListener("beforeunload", () => {
+    resizeObserver.disconnect();
+  });
+
   // Initial size setup
   const rect = canvas.parentElement.getBoundingClientRect();
   width = rect.width;
@@ -328,6 +333,7 @@ if (backToTopBtn) {
     });
   }
 
+  // Initialize network after a short delay to ensure DOM is ready
   setTimeout(initNetwork, 100);
 
   function animate() {
