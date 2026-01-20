@@ -1,556 +1,300 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Akshad Agrawal</title>
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Akshad Agrawal" />
-    <meta property="og:url" content="https://akshad.github.io/" />
-    <meta
-      property="og:image"
-      content="https://akshad135.vercel.app/assets/og.webp"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akshad Agrawal</title>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Akshad Agrawal" />
-    <meta
-      name="twitter:image"
-      content="https://akshad135.vercel.app/assets/og.webp"
-    />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Akshad Agrawal" />
+  <meta property="og:url" content="https://akshad.github.io/" />
+  <meta property="og:image" content="https://akshad135.vercel.app/assets/og.webp" />
 
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo.png" />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body class="antialiased selection:bg-white selection:text-black">
-    <div id="loader-overlay">
-      <div class="terminal-loader-card">
-        <div class="terminal-header">
-          <div class="dot dot-red"></div>
-          <div class="dot dot-yellow"></div>
-          <div class="dot dot-green"></div>
-          <div class="ml-2 text-xs text-gray-500 font-mono">system_boot</div>
-        </div>
-        <div class="loader-content" id="loader-content"></div>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Akshad Agrawal" />
+  <meta name="twitter:image" content="https://akshad135.vercel.app/assets/og.webp" />
+
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="antialiased selection:bg-white selection:text-black">
+  <div id="loader-overlay">
+    <div class="terminal-loader-card">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <div class="ml-2 text-xs text-gray-500 font-mono">system_boot</div>
       </div>
+      <div class="loader-content" id="loader-content"></div>
     </div>
-    <canvas id="vector-canvas"></canvas>
-    <nav
-      class="fixed w-full z-50 glass-nav transition-all duration-300"
-      id="navbar"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50"
-      >
-        <a href="#" class="flex items-center gap-3 group">
-          <img
-            src="./assets/logo.png"
-            alt="AA Logo"
-            class="w-16 h-16 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
-          />
-          <span class="text-xl font-bold tracking-tight text-white">
-            Akshad Agrawal<span class="text-blue-500">.</span>
-          </span>
-        </a>
-        <div class="hidden md:flex gap-10 text-sm font-medium text-gray-400">
-          <a
-            href="resume.html"
-            class="hover:text-blue-400 transition-colors duration-200"
-            >Resume</a
-          >
-          <a
-            href="#about"
-            class="hover:text-white transition-colors duration-200"
-            >About</a
-          >
-          <a
-            href="#work"
-            class="hover:text-white transition-colors duration-200"
-            >Work</a
-          >
-          <a
-            href="#contact"
-            class="hover:text-white transition-colors duration-200"
-            >Contact</a
-          >
-        </div>
-        <button
-          id="menu-btn"
-          class="md:hidden text-white focus:outline-none z-50 w-8 h-8 flex flex-col justify-center gap-1.5"
-        >
-          <span
-            class="hamburger-line line-1 w-full h-0.5 bg-white block"
-          ></span>
-          <span
-            class="hamburger-line line-2 w-full h-0.5 bg-white block"
-          ></span>
-          <span
-            class="hamburger-line line-3 w-full h-0.5 bg-white block"
-          ></span>
-        </button>
+  </div>
+  <canvas id="vector-canvas"></canvas>
+  <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="./assets/logo.png" alt="AA Logo"
+          class="w-16 h-16 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]" />
+        <span class="text-xl font-bold tracking-tight text-white">
+          Akshad Agrawal<span class="text-blue-500">.</span>
+        </span>
+      </a>
+      <div class="hidden md:flex gap-10 text-sm font-medium text-gray-400">
+        <a href="resume.html" class="hover:text-blue-400 transition-colors duration-200">Resume</a>
+        <a href="#about" class="hover:text-white transition-colors duration-200">About</a>
+        <a href="#work" class="hover:text-white transition-colors duration-200">Work</a>
+        <a href="#contact" class="hover:text-white transition-colors duration-200">Contact</a>
       </div>
-    </nav>
-    <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden">
-      <div class="flex flex-col gap-8 text-center">
-        <a href="resume.html" class="mobile-link" onclick="toggleMenu()"
-          >Resume</a
-        >
-        <a href="#about" class="mobile-link" onclick="toggleMenu()">About</a>
-        <a href="#work" class="mobile-link" onclick="toggleMenu()">Work</a>
-
-        <a href="#contact" class="mobile-link" onclick="toggleMenu()"
-          >Contact</a
-        >
-      </div>
+      <button id="menu-btn"
+        class="md:hidden text-white focus:outline-none z-50 w-8 h-8 flex flex-col justify-center gap-1.5">
+        <span class="hamburger-line line-1 w-full h-0.5 bg-white block"></span>
+        <span class="hamburger-line line-2 w-full h-0.5 bg-white block"></span>
+        <span class="hamburger-line line-3 w-full h-0.5 bg-white block"></span>
+      </button>
     </div>
-    <section
-      class="min-h-screen flex items-start md:items-center px-6 pt-32 md:pt-20 relative"
-    >
-      <div
-        class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center"
-      >
-        <div class="space-y-8">
-          <div class="reveal-text" style="transition-delay: 100ms">
-            <p
-              class="text-blue-400 font-medium mb-4 tracking-wide text-xs md:text-sm uppercase"
-            >
-              AI & Machine Learning Engineer
-            </p>
-            <h1
-              class="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight tracking-tight gradient-text"
-            >
-              Notebooks to<br />
-              Real Systems.
-            </h1>
-          </div>
-          <p
-            class="text-lg md:text-xl text-gray-400 max-w-lg leading-relaxed reveal-text"
-            style="transition-delay: 300ms"
-          >
-            Making LLMs do useful things. Sometimes they listen. I work on
-            getting AI out of notebooks and into production. The messy middle
-            between a cool demo and something you'd trust with real data.
+  </nav>
+  <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden">
+    <div class="flex flex-col gap-8 text-center">
+      <a href="resume.html" class="mobile-link" onclick="toggleMenu()">Resume</a>
+      <a href="#about" class="mobile-link" onclick="toggleMenu()">About</a>
+      <a href="#work" class="mobile-link" onclick="toggleMenu()">Work</a>
+
+      <a href="#contact" class="mobile-link" onclick="toggleMenu()">Contact</a>
+    </div>
+  </div>
+  <section class="min-h-screen flex items-start md:items-center px-6 pt-32 md:pt-20 relative">
+    <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <div class="reveal-text" style="transition-delay: 100ms">
+          <p class="text-blue-400 font-medium mb-4 tracking-wide text-xs md:text-sm uppercase">
+            AI & Machine Learning Engineer
           </p>
-          <div
-            class="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4 reveal-text"
-            style="transition-delay: 500ms"
-          >
-            <a
-              href="#work"
-              class="px-8 py-3.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition-colors text-center shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-            >
-              See What I've Built
-            </a>
-            <a
-              href="https://github.com/akshad135"
-              target="_blank"
-              class="px-8 py-3.5 border border-gray-700 text-white rounded hover:border-blue-500/50 hover:bg-blue-500/10 hover:text-blue-400 transition-colors flex items-center justify-center gap-2 bg-black/40 backdrop-blur-sm"
-            >
-              <i class="fab fa-github"></i> GitHub
-            </a>
-          </div>
+          <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight tracking-tight gradient-text">
+            Notebooks to<br />
+            Real Systems.
+          </h1>
         </div>
-
-        <!-- UPDATED: Reduced height for mobile to h-56 (224px) -->
-        <div
-          class="block w-full h-56 sm:h-72 md:h-[360px] mt-8 md:-mt-16 reveal-text"
-          style="transition-delay: 400ms"
-        >
-          <div
-            id="simulationCard"
-            class="w-full h-full relative border border-gray-800 rounded-xl bg-gray-900/20 backdrop-blur-sm overflow-hidden group cursor-pointer hover:border-gray-700 transition-all duration-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]"
-          >
-            <div
-              class="flash-overlay absolute inset-0 bg-purple-500 mix-blend-overlay opacity-0 z-20 pointer-events-none"
-            ></div>
-
-            <canvas
-              id="neuralCanvas"
-              class="absolute inset-0 w-full h-full block z-10"
-            ></canvas>
-
-            <div
-              class="absolute bottom-4 left-4 flex items-center gap-3 text-gray-500 text-[10px] font-mono z-30 bg-gray-900/50 px-3 py-1.5 rounded border border-gray-800 backdrop-blur-md"
-            >
-              <span class="relative flex h-1.5 w-1.5">
-                <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-                ></span>
-                <span
-                  class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"
-                ></span>
-              </span>
-              <span class="text-gray-400">
-                <span id="tensorCounter" class="text-blue-400 font-bold"
-                  >410,294</span
-                >
-                TENSORS PROCESSED
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section
-      id="about"
-      class="py-24 md:py-32 px-6 bg-gradient-to-b from-transparent to-black/50"
-    >
-      <div class="max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-12 gap-12 md:gap-16">
-          <div class="md:col-span-5 space-y-8 reveal-text">
-            <h2 class="text-3xl font-bold text-white">The Engineer</h2>
-            <div class="h-1 w-12 bg-blue-500"></div>
-            <p class="text-gray-400 leading-relaxed">
-              UnderGrad from VIT doing CSE (AIML). I spend most of my time
-              getting LLMs to work outside of notebooks. Built a resume screener
-              with a 5-stage async pipeline. Working on a multi-agent auditor
-              using LangGraph that actually checks its own work. Also set up
-              MLOps stuff so models don't just live on my laptop forever.
-            </p>
-            <p class="text-gray-400 leading-relaxed">
-              Co-lead the Data Science Club's web team. Organized some events
-              that turned out pretty well. Mostly trying to build things that
-              solve actual problems instead of just looking cool in a demo.
-            </p>
-            <div class="pt-4">
-              <h4 class="text-white font-medium mb-3">Certifications</h4>
-              <ul class="space-y-3 text-sm text-gray-500 font-mono">
-                <li class="flex items-start gap-2">
-                  <span
-                    class="w-1.5 h-1.5 mt-1.5 bg-green-500 rounded-full flex-shrink-0"
-                  ></span>
-                  <span>Oracle Cloud Infrastructure GenAI Professional</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span
-                    class="w-1.5 h-1.5 mt-1.5 bg-blue-500 rounded-full flex-shrink-0"
-                  ></span>
-                  <span>Oracle Cloud Infrastructure Foundations</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="md:col-span-7 reveal-text"
-            style="transition-delay: 200ms"
-          >
-            <h3
-              class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-8"
-            >
-              Technology Stack
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-              <div
-                class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition"
-              >
-                <div class="text-blue-400 mb-4 text-xl">
-                  <i class="fas fa-brain"></i>
-                </div>
-                <h4 class="text-lg font-bold text-white mb-4">
-                  Machine Learning
-                </h4>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >LangChain</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >TensorFlow</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >PyTorch</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >Transformers</span
-                  >
-                </div>
-              </div>
-              <div
-                class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition"
-              >
-                <div class="text-purple-400 mb-4 text-xl">
-                  <i class="fas fa-cogs"></i>
-                </div>
-                <h4 class="text-lg font-bold text-white mb-4">MLOps & Cloud</h4>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >Dagster</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >MLflow</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >DVC</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >Streamlit</span
-                  >
-                </div>
-              </div>
-              <div
-                class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition"
-              >
-                <div class="text-green-400 mb-4 text-xl">
-                  <i class="fas fa-server"></i>
-                </div>
-                <h4 class="text-lg font-bold text-white mb-4">
-                  Backend Engineering
-                </h4>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >FastAPI</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >PostgreSQL</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >Python</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >SQLAlchemy</span
-                  >
-                </div>
-              </div>
-              <div
-                class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition"
-              >
-                <div class="text-yellow-400 mb-4 text-xl">
-                  <i class="fas fa-layer-group"></i>
-                </div>
-                <h4 class="text-lg font-bold text-white mb-4">Agentic AI</h4>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >LangGraph</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >LangChain</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300"
-                    >RAG Systems</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-full mt-6 reveal-text">
-          <div class="w-full md:w-[90%] mx-auto mt-6 reveal-text">
-            <h4 class="text-white font-medium mb-3 text-sm ml-1">
-              Seasonal Challenges
-            </h4>
-            <div
-              class="w-full h-auto md:h-24 border border-yellow-500/30 rounded-xl bg-gray-900/40 backdrop-blur-sm overflow-hidden flex flex-col md:flex-row items-center justify-between p-4 md:px-8 gap-4 group hover:border-yellow-500/50 transition-all relative shadow-[0_0_20px_rgba(234,179,8,0.05)]"
-            >
-              <div
-                class="absolute inset-0 opacity-10 pointer-events-none"
-                style="
-                  background-image: linear-gradient(
-                    45deg,
-                    #333 25%,
-                    transparent 25%,
-                    transparent 50%,
-                    #333 50%,
-                    #333 75%,
-                    transparent 75%,
-                    transparent
-                  );
-                  background-size: 20px 20px;
-                "
-              ></div>
-              <div
-                class="flex flex-row md:flex-col justify-between md:justify-center w-full md:w-fit md:min-w-fit z-10 items-center md:items-start"
-              >
-                <div class="flex items-center gap-3">
-                  <i class="fas fa-tree text-green-500 text-xl"></i>
-                  <span class="text-lg text-white font-bold tracking-tight"
-                    >AoC 2025</span
-                  >
-                </div>
-                <span
-                  class="text-[10px] text-green-400 font-mono tracking-widest uppercase mt-0 md:mt-1 md:pl-8 flex items-center gap-1.5"
-                >
-                  <span
-                    class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"
-                  ></span>
-                  Caught Up
-                </span>
-              </div>
-              <div
-                class="w-full md:flex-1 flex flex-col items-center justify-center z-10 border-t md:border-t-0 md:border-l md:border-r border-gray-800/50 py-4 md:py-0"
-              >
-                <div class="flex items-baseline gap-2">
-                  <span
-                    class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-600 drop-shadow-sm"
-                  >
-                    24/24
-                  </span>
-                  <span
-                    class="text-sm text-yellow-500 font-mono font-bold tracking-wider"
-                    >STARS</span
-                  >
-                </div>
-                <div
-                  class="mt-1 px-3 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-[10px] font-mono uppercase tracking-widest"
-                >
-                  Day 12 Complete
-                </div>
-              </div>
-              <div
-                class="flex items-center justify-between md:justify-end gap-8 md:gap-12 w-full md:w-fit z-10 h-auto border-t md:border-t-0 border-gray-800/50 pt-4 md:pt-0"
-              >
-                <div class="flex items-end gap-8 font-mono">
-                  <div class="flex flex-col items-center gap-1">
-                    <span
-                      class="text-gray-500 text-[10px] uppercase font-bold tracking-wider"
-                      >2024</span
-                    >
-                    <span
-                      class="text-blue-400 font-bold text-2xl md:text-3xl leading-none drop-shadow-sm"
-                    >
-                      19<i
-                        class="fas fa-star text-xs ml-1 text-blue-900 align-top"
-                      ></i>
-                    </span>
-                  </div>
-                  <div class="flex flex-col items-center gap-1">
-                    <span
-                      class="text-gray-600 text-[10px] uppercase font-bold tracking-wider"
-                      >2023</span
-                    >
-                    <span
-                      class="text-gray-400 font-bold text-xl md:text-2xl leading-none"
-                    >
-                      04<i
-                        class="fas fa-star text-[10px] ml-1 text-gray-700 align-top"
-                      ></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="w-px h-10 bg-gray-800 hidden md:block"></div>
-                <div class="flex items-center gap-4 pl-0 md:pl-2">
-                  <div class="text-right">
-                    <div class="flex items-center justify-end gap-2">
-                      <span
-                        class="text-3xl md:text-4xl font-bold text-white leading-none drop-shadow-[0_0_15px_rgba(234,179,8,0.2)]"
-                        >47</span
-                      >
-                      <i class="fas fa-star text-yellow-500 text-base mb-1"></i>
-                    </div>
-                    <div
-                      class="text-[10px] text-gray-500 font-mono text-right uppercase mt-1 tracking-widest"
-                    >
-                      Total
-                    </div>
-                  </div>
-                  <a
-                    href="./assets/aoc-2025.webp"
-                    target="_blank"
-                    class="h-10 w-10 rounded-lg bg-gray-800 hover:bg-gray-700 flex items-center justify-center text-yellow-500 hover:text-white transition-all border border-gray-700 hover:border-yellow-500/50"
-                  >
-                    <i class="fas fa-external-link-alt text-xs"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="work" class="py-24 md:py-32 px-6">
-      <div class="max-w-7xl mx-auto">
-        <h2 class="text-4xl font-bold text-white mb-8">Stuff I've Built</h2>
-        <div class="flex flex-wrap gap-4 mb-12" id="project-filters">
-          <button class="filter-btn active" data-filter="All">All</button>
-          <button class="filter-btn" data-filter="AI/ML">AI/ML</button>
-          <button class="filter-btn" data-filter="MLOps">MLOps</button>
-          <button class="filter-btn" data-filter="Android">Android</button>
-          <button class="filter-btn" data-filter="Web">Web Dev</button>
-        </div>
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          id="projects-grid"
-        ></div>
-      </div>
-    </section>
-    <section id="contact" class="py-24 md:py-32 px-6 mb-10">
-      <div class="max-w-3xl mx-auto text-center reveal-text">
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 md:mb-8">
-          Ready to Collaborate?
-        </h2>
-        <p class="text-lg md:text-xl text-gray-400 mb-8 md:mb-12">
-          I am currently open to opportunities in AI Engineering and Backend
-          Development.
+        <p class="text-lg md:text-xl text-gray-400 max-w-lg leading-relaxed reveal-text"
+          style="transition-delay: 300ms">
+          Making LLMs do useful things. Sometimes they listen. I work on
+          getting AI out of notebooks and into production. The messy middle
+          between a cool demo and something you'd trust with real data.
         </p>
-        <a
-          href="mailto:akshad.contact@gmail.com"
-          class="inline-block px-8 md:px-10 py-3 md:py-4 bg-white text-black font-bold text-base md:text-lg rounded hover:bg-blue-50 transition transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-        >
-          akshad.contact@gmail.com
-        </a>
-        <div
-          class="mt-12 md:mt-16 flex justify-center gap-8 text-2xl text-gray-500"
-        >
-          <a
-            href="https://linkedin.com/in/akshad135"
-            class="hover:text-white transition"
-            ><i class="fab fa-linkedin"></i
-          ></a>
-          <a
-            href="https://github.com/akshad135"
-            class="hover:text-white transition"
-            ><i class="fab fa-github"></i
-          ></a>
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4 reveal-text" style="transition-delay: 500ms">
+          <a href="#work"
+            class="px-8 py-3.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition-colors text-center shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+            See What I've Built
+          </a>
+          <a href="https://github.com/akshad135" target="_blank"
+            class="px-8 py-3.5 border border-gray-700 text-white rounded hover:border-blue-500/50 hover:bg-blue-500/10 hover:text-blue-400 transition-colors flex items-center justify-center gap-2 bg-black/40 backdrop-blur-sm">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
-        <footer class="mt-16 md:mt-20 text-sm text-gray-600">
-          &copy; 2025 Akshad Agrawal. Built with Precision.
-        </footer>
       </div>
-    </section>
-    <div class="status-footer">
-      <div class="status-item">
-        <i class="fas fa-code-branch text-blue-500"></i>
-        <span>main*</span>
-      </div>
-      <div class="status-item">
-        <i class="fas fa-check-circle text-green-500"></i>
-        <span>build: passing</span>
-      </div>
-      <div class="status-item">
-        <i class="fas fa-database text-yellow-600"></i>
-        <span>v2.4.0-stable</span>
+
+      <!-- UPDATED: Reduced height for mobile to h-56 (224px) -->
+      <div class="block w-full h-56 sm:h-72 md:h-[360px] mt-8 md:-mt-16 reveal-text" style="transition-delay: 400ms">
+        <div id="simulationCard"
+          class="w-full h-full relative border border-gray-800 rounded-xl bg-gray-900/20 backdrop-blur-sm overflow-hidden group cursor-pointer hover:border-gray-700 transition-all duration-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]">
+          <div
+            class="flash-overlay absolute inset-0 bg-purple-500 mix-blend-overlay opacity-0 z-20 pointer-events-none">
+          </div>
+
+          <canvas id="neuralCanvas" class="absolute inset-0 w-full h-full block z-10"></canvas>
+
+          <div
+            class="absolute bottom-4 left-4 flex items-center gap-3 text-gray-500 text-[10px] font-mono z-30 bg-gray-900/50 px-3 py-1.5 rounded border border-gray-800 backdrop-blur-md">
+            <span class="relative flex h-1.5 w-1.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
+            </span>
+            <span class="text-gray-400">
+              <span id="tensorCounter" class="text-blue-400 font-bold">410,294</span>
+              TENSORS PROCESSED
+            </span>
+          </div>
+        </div>
       </div>
     </div>
-    <button id="back-to-top" aria-label="Back to Top">
-      <i class="fas fa-arrow-up"></i>
-    </button>
-    <script src="js/projects.js"></script>
-    <script src="js/script.js"></script>
-  </body>
+  </section>
+  <section id="about" class="py-24 md:py-32 px-6 bg-gradient-to-b from-transparent to-black/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-12 gap-12 md:gap-16">
+        <div class="md:col-span-5 space-y-8 reveal-text">
+          <h2 class="text-3xl font-bold text-white">The Engineer</h2>
+          <div class="h-1 w-12 bg-blue-500"></div>
+          <p class="text-gray-400 leading-relaxed">
+            UnderGrad from VIT doing CSE (AIML). I spend most of my time
+            getting LLMs to work outside of notebooks. Built a resume screener
+            with a 5-stage async pipeline. Working on a multi-agent auditor
+            using LangGraph that actually checks its own work. Also set up
+            MLOps stuff so models don't just live on my laptop forever.
+          </p>
+          <p class="text-gray-400 leading-relaxed">
+            Co-lead the Data Science Club's web team. Organized some events
+            that turned out pretty well. Mostly trying to build things that
+            solve actual problems instead of just looking cool in a demo.
+          </p>
+
+          <div class="pt-4">
+            <h4 class="text-white font-medium mb-3">Certifications</h4>
+            <ul class="space-y-3 text-sm text-gray-500 font-mono">
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 mt-1.5 bg-green-500 rounded-full flex-shrink-0"></span>
+                <span>Oracle Cloud Infrastructure GenAI Professional</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 mt-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
+                <span>Oracle Cloud Infrastructure Foundations</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Simplified AoC Section with STAR ICON -->
+          <div class="pt-4">
+            <h4 class="text-white font-medium mb-3">Seasonal Challenges</h4>
+            <ul class="space-y-3 text-sm text-gray-500 font-mono">
+              <li class="flex items-center gap-2">
+                <!-- Changed to a Star Icon -->
+                <i class="fas fa-star text-yellow-500 text-xs"></i>
+                <span class="text-gray-400">AoC 2025</span>
+                <span class="text-gray-600">|</span>
+                <span class="text-yellow-500 font-bold">24/24 Stars</span>
+                <a href="./assets/aoc-2025.webp" target="_blank"
+                  class="ml-1 text-gray-500 hover:text-white transition-colors" title="View Progress">
+                  <i class="fas fa-external-link-alt text-[10px]"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="md:col-span-7 reveal-text" style="transition-delay: 200ms">
+          <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-8">
+            Technology Stack
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
+              <div class="text-blue-400 mb-4 text-xl">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-4">
+                Machine Learning
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">LangChain</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">TensorFlow</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">PyTorch</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Transformers</span>
+              </div>
+            </div>
+            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
+              <div class="text-purple-400 mb-4 text-xl">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-4">MLOps & Cloud</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Dagster</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">MLflow</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">DVC</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Streamlit</span>
+              </div>
+            </div>
+            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
+              <div class="text-green-400 mb-4 text-xl">
+                <i class="fas fa-server"></i>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-4">
+                Backend Engineering
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">FastAPI</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">PostgreSQL</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Python</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">SQLAlchemy</span>
+              </div>
+            </div>
+            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
+              <div class="text-yellow-400 mb-4 text-xl">
+                <i class="fas fa-layer-group"></i>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-4">Agentic AI</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">LangGraph</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">LangChain</span>
+                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">RAG Systems</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="work" class="py-24 md:py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl font-bold text-white mb-8">Stuff I've Built</h2>
+      <div class="flex flex-wrap gap-4 mb-12" id="project-filters">
+        <button class="filter-btn active" data-filter="All">All</button>
+        <button class="filter-btn" data-filter="AI/ML">AI/ML</button>
+        <button class="filter-btn" data-filter="MLOps">MLOps</button>
+        <button class="filter-btn" data-filter="Android">Android</button>
+        <button class="filter-btn" data-filter="Web">Web Dev</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="projects-grid"></div>
+    </div>
+  </section>
+  <section id="contact" class="py-24 md:py-32 px-6 mb-10">
+    <div class="max-w-3xl mx-auto text-center reveal-text">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 md:mb-8">
+        Ready to Collaborate?
+      </h2>
+      <p class="text-lg md:text-xl text-gray-400 mb-8 md:mb-12">
+        I am currently open to opportunities in AI Engineering and Backend
+        Development.
+      </p>
+      <a href="mailto:akshad.contact@gmail.com"
+        class="inline-block px-8 md:px-10 py-3 md:py-4 bg-white text-black font-bold text-base md:text-lg rounded hover:bg-blue-50 transition transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+        akshad.contact@gmail.com
+      </a>
+      <div class="mt-12 md:mt-16 flex justify-center gap-8 text-2xl text-gray-500">
+        <a href="https://linkedin.com/in/akshad135" class="hover:text-white transition"><i
+            class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/akshad135" class="hover:text-white transition"><i class="fab fa-github"></i></a>
+      </div>
+      <footer class="mt-16 md:mt-20 text-sm text-gray-600">
+        &copy; 2026 Akshad Agrawal. Built with Precision.
+      </footer>
+    </div>
+  </section>
+  <div class="status-footer">
+    <div class="status-item">
+      <i class="fas fa-code-branch text-blue-500"></i>
+      <span>main*</span>
+    </div>
+    <div class="status-item">
+      <i class="fas fa-check-circle text-green-500"></i>
+      <span>build: passing</span>
+    </div>
+    <div class="status-item">
+      <i class="fas fa-database text-yellow-600"></i>
+      <span>v2.4.0-stable</span>
+    </div>
+  </div>
+  <button id="back-to-top" aria-label="Back to Top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script src="js/projects.js"></script>
+  <script src="js/script.js"></script>
+</body>
+
 </html>
