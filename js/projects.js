@@ -141,57 +141,59 @@ function getVisualHTML(project) {
     case "bookmark-dashboard":
       return `
         <div class="w-full h-full flex items-center justify-center">
-            <div class="relative w-[90%] h-[75%] bg-zinc-950 border border-zinc-800 rounded-lg shadow-2xl flex flex-col overflow-hidden group hover:border-orange-500/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]">
+            <!-- Main dashboard container with glass tint and subtle float hover -->
+            <div class="relative w-[90%] h-[75%] bg-black/40 backdrop-blur-md border border-white/10 rounded-lg shadow-2xl flex flex-col overflow-hidden group hover:border-orange-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] hover:scale-[1.02]">
                 <!-- Browser Header -->
-                <div class="h-4 bg-zinc-900 border-b border-zinc-800 flex items-center px-2 gap-1.5">
+                <div class="h-4 bg-white/5 border-b border-white/5 flex items-center px-2 gap-1.5">
                     <div class="w-1.5 h-1.5 rounded-full bg-red-500/50"></div>
                     <div class="w-1.5 h-1.5 rounded-full bg-yellow-500/50"></div>
                     <div class="w-1.5 h-1.5 rounded-full bg-green-500/50"></div>
-                    <div class="ml-2 flex-1 h-2 bg-zinc-800 rounded-full opacity-50"></div>
+                    <div class="ml-2 flex-1 h-2 bg-white/10 rounded-full opacity-50"></div>
                 </div>
                 <!-- App Body -->
                 <div class="flex-1 flex overflow-hidden">
                     <!-- Sidebar -->
-                    <div class="w-12 bg-zinc-900/50 border-r border-zinc-800/50 flex flex-col items-center py-3 gap-2">
+                    <div class="w-12 bg-white/5 border-r border-white/5 flex flex-col items-center py-3 gap-2">
                          <div class="w-6 h-6 rounded bg-orange-500/20 flex items-center justify-center text-orange-500 mb-1">
                             <i class="fas fa-bookmark text-[10px]"></i>
                          </div>
-                         <div class="w-6 h-1 bg-zinc-800 rounded-full"></div>
-                         <div class="w-4 h-1 bg-zinc-800 rounded-full opacity-50"></div>
-                         <div class="w-5 h-1 bg-zinc-800 rounded-full opacity-50"></div>
+                         <div class="w-6 h-1 bg-white/10 rounded-full"></div>
+                         <div class="w-4 h-1 bg-white/10 rounded-full opacity-50"></div>
+                         <div class="w-5 h-1 bg-white/10 rounded-full opacity-50"></div>
                     </div>
                     <!-- Main Content Grid -->
-                    <div class="flex-1 p-3 bg-zinc-950/80">
+                    <div class="flex-1 p-3 bg-transparent">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="w-16 h-1.5 bg-zinc-800 rounded-full"></div>
+                            <div class="w-16 h-1.5 bg-white/10 rounded-full"></div>
                             <div class="flex gap-1">
-                                <div class="w-3 h-3 rounded bg-zinc-800"></div>
+                                <div class="w-3 h-3 rounded bg-white/10"></div>
                                 <div class="w-3 h-3 rounded bg-orange-600/80"></div>
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-2">
-                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                             <!-- Grid items with subtle hover scale/glow -->
+                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-blue-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-purple-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-green-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-red-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-yellow-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video border border-dashed border-zinc-800 rounded flex items-center justify-center opacity-50">
-                                <div class="text-[8px] text-zinc-600">+</div>
+                             <div class="aspect-video border border-dashed border-white/10 rounded flex items-center justify-center opacity-50 hover:opacity-80 hover:border-white/30 transition-all duration-300">
+                                <div class="text-[8px] text-zinc-400">+</div>
                              </div>
                         </div>
                     </div>
