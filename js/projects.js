@@ -1,5 +1,20 @@
 const projects = [
   {
+    title: "Bookmarks",
+    description:
+      "A free, self-hostable bookmark manager to organize your web life. Features Supabase auth, OG metadata extraction, and PWA support.",
+    category: "Web",
+    tags: ["React", "Supabase", "Tailwind", "PWA"],
+    links: {
+      github: "https://github.com/Akshad135/bookmarks",
+      demo: null,
+    },
+    visual: {
+      type: "bookmark-dashboard",
+      bgGradient: "from-orange-900/30 to-transparent",
+    },
+  },
+  {
     title: "Agentic Auditor",
     description:
       "An AI-driven contract reviewer using a Drafter–Critic agent loop. Minimizes hallucinations by iteratively refining analysis against company policies.",
@@ -123,6 +138,67 @@ const projects = [
 function getVisualHTML(project) {
   const v = project.visual;
   switch (v.type) {
+    case "bookmark-dashboard":
+      return `
+        <div class="w-full h-full flex items-center justify-center">
+            <div class="relative w-[90%] h-[75%] bg-zinc-950 border border-zinc-800 rounded-lg shadow-2xl flex flex-col overflow-hidden group hover:border-orange-500/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]">
+                <!-- Browser Header -->
+                <div class="h-4 bg-zinc-900 border-b border-zinc-800 flex items-center px-2 gap-1.5">
+                    <div class="w-1.5 h-1.5 rounded-full bg-red-500/50"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-yellow-500/50"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-green-500/50"></div>
+                    <div class="ml-2 flex-1 h-2 bg-zinc-800 rounded-full opacity-50"></div>
+                </div>
+                <!-- App Body -->
+                <div class="flex-1 flex overflow-hidden">
+                    <!-- Sidebar -->
+                    <div class="w-12 bg-zinc-900/50 border-r border-zinc-800/50 flex flex-col items-center py-3 gap-2">
+                         <div class="w-6 h-6 rounded bg-orange-500/20 flex items-center justify-center text-orange-500 mb-1">
+                            <i class="fas fa-bookmark text-[10px]"></i>
+                         </div>
+                         <div class="w-6 h-1 bg-zinc-800 rounded-full"></div>
+                         <div class="w-4 h-1 bg-zinc-800 rounded-full opacity-50"></div>
+                         <div class="w-5 h-1 bg-zinc-800 rounded-full opacity-50"></div>
+                    </div>
+                    <!-- Main Content Grid -->
+                    <div class="flex-1 p-3 bg-zinc-950/80">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="w-16 h-1.5 bg-zinc-800 rounded-full"></div>
+                            <div class="flex gap-1">
+                                <div class="w-3 h-3 rounded bg-zinc-800"></div>
+                                <div class="w-3 h-3 rounded bg-orange-600/80"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-blue-500/30"></div>
+                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                             </div>
+                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-purple-500/30"></div>
+                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                             </div>
+                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-green-500/30"></div>
+                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                             </div>
+                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-red-500/30"></div>
+                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                             </div>
+                             <div class="aspect-video bg-zinc-900 rounded border border-zinc-800 hover:border-orange-500/50 transition-colors group/item relative overflow-hidden">
+                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-yellow-500/30"></div>
+                                <div class="mt-4 mx-2 h-1 bg-zinc-700/50 rounded-full"></div>
+                             </div>
+                             <div class="aspect-video border border-dashed border-zinc-800 rounded flex items-center justify-center opacity-50">
+                                <div class="text-[8px] text-zinc-600">+</div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      `;
     case "emoji":
       return `
         <span class="text-6xl animate-sway font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
@@ -222,25 +298,24 @@ function getVisualHTML(project) {
           <div class="absolute w-24 h-24 border border-cyan-500/20 rounded-full animate-ping opacity-20"></div>
           <div class="absolute w-28 h-28 border border-dashed border-cyan-500/30 rounded-full" style="animation: spin 10s linear infinite;"></div>
           <div class="relative z-10 w-12 h-12 bg-gray-900 rounded-xl border border-cyan-500/50 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.3)]">
-            <i class="fas ${v.center.icon} ${
-        v.center.color
-      } text-xl drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"></i>
+            <i class="fas ${v.center.icon} ${v.center.color
+        } text-xl drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]"></i>
           </div>
           ${v.nodes
-            .map((node, i) => {
-              const radius = 54;
-              const angles = [-90, 30, 150];
-              const rad = angles[i] * (Math.PI / 180);
-              const x = Math.cos(rad) * radius;
-              const y = Math.sin(rad) * radius;
-              return `
+          .map((node, i) => {
+            const radius = 54;
+            const angles = [-90, 30, 150];
+            const rad = angles[i] * (Math.PI / 180);
+            const x = Math.cos(rad) * radius;
+            const y = Math.sin(rad) * radius;
+            return `
                <div class="absolute w-10 h-10 bg-gray-800/90 rounded-full border border-gray-600 flex items-center justify-center shadow-lg z-20 group hover:border-cyan-400 hover:scale-110 transition-all duration-300" 
                     style="transform: translate(${x}px, ${y}px);">
                  <i class="fas ${node.icon} ${node.color} text-sm group-hover:text-white transition-colors"></i>
                </div>
              `;
-            })
-            .join("")}
+          })
+          .join("")}
         </div>
       `;
     case "document":
