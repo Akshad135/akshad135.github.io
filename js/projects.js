@@ -7,7 +7,7 @@ const projects = [
     tags: ["React", "Supabase", "Tailwind", "PWA"],
     links: {
       github: "https://github.com/Akshad135/bookmarks",
-      demo: null,
+      demo: "https://demo-bookmarks.vercel.app",
     },
     visual: {
       type: "bookmark-dashboard",
@@ -142,7 +142,7 @@ function getVisualHTML(project) {
       return `
         <div class="w-full h-full flex items-center justify-center">
             <!-- Main dashboard container with glass tint and subtle float hover -->
-            <div class="relative w-[90%] h-[75%] bg-black/40 backdrop-blur-md border border-white/10 rounded-lg shadow-2xl flex flex-col overflow-hidden group hover:border-orange-500/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] hover:scale-[1.02]">
+            <div class="relative w-[90%] h-[75%] bg-black/40 backdrop-blur-md border border-orange-500/60 rounded-lg shadow-2xl flex flex-col overflow-hidden group transition-all duration-500 hover:border-orange-500/80">
                 <!-- Browser Header -->
                 <div class="h-4 bg-white/5 border-b border-white/5 flex items-center px-2 gap-1.5">
                     <div class="w-1.5 h-1.5 rounded-full bg-red-500/50"></div>
@@ -172,27 +172,27 @@ function getVisualHTML(project) {
                         </div>
                         <div class="grid grid-cols-3 gap-2">
                              <!-- Grid items with subtle hover scale/glow -->
-                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-blue-500/30"></div>
                                 <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-purple-500/30"></div>
                                 <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-green-500/30"></div>
                                 <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-red-500/30"></div>
                                 <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video bg-white/5 rounded border border-white/5 hover:border-orange-500/40 hover:bg-white/10 transition-all duration-300 hover:scale-105 group/item relative overflow-hidden">
+                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
                                 <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-yellow-500/30"></div>
                                 <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
                              </div>
-                             <div class="aspect-video border border-dashed border-white/10 rounded flex items-center justify-center opacity-50 hover:opacity-80 hover:border-white/30 transition-all duration-300">
+                             <div class="aspect-video border border-dashed border-white/10 rounded flex items-center justify-center opacity-50 animate-pulse transition-all duration-300">
                                 <div class="text-[8px] text-zinc-400">+</div>
                              </div>
                         </div>
