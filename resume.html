@@ -18,6 +18,46 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png" />
     <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      /* * CUSTOM MOBILE LAYOUT OVERRIDES 
+       * This logic only runs on screens smaller than 768px (Mobile).
+       * It unwraps the desktop columns and reorders the sections manually.
+       */
+      @media (max-width: 767px) {
+        /* Makes the wrapper div invisible to the grid, so children become direct grid items */
+        .mobile-contents {
+          display: contents !important;
+        }
+
+        /* * Reset the space-y-12 margins on mobile because the main Grid 'gap-12' 
+         * handles the spacing now. Prevents double-spacing.
+         */
+        .mobile-contents > :not([hidden]) ~ :not([hidden]) {
+          margin-top: 0 !important;
+        }
+
+        /* Define the specific order for mobile flow */
+        .order-mobile-1 {
+          order: 1 !important;
+        } /* Education */
+        .order-mobile-2 {
+          order: 2 !important;
+        } /* Skills */
+        .order-mobile-3 {
+          order: 3 !important;
+        } /* Experience */
+        .order-mobile-4 {
+          order: 4 !important;
+        } /* Projects */
+        .order-mobile-5 {
+          order: 5 !important;
+        } /* Certifications */
+        .order-mobile-6 {
+          order: 6 !important;
+        } /* Extra/Clubs */
+      }
+    </style>
   </head>
   <body class="antialiased selection:bg-white selection:text-black">
     <canvas id="vector-canvas" style="opacity: 0.4"></canvas>
@@ -91,10 +131,17 @@
           </div>
         </div>
       </header>
+
+      <!-- Main Grid Layout -->
       <div class="grid md:grid-cols-12 gap-12">
-        <!-- Left Column -->
-        <div class="md:col-span-4 space-y-12">
-          <section class="resume-section" style="animation-delay: 0.2s">
+        <!-- Left Column Wrapper -->
+        <!-- Added 'mobile-contents' class to unwrap this on mobile -->
+        <div class="md:col-span-4 space-y-12 mobile-contents">
+          <!-- Education (Mobile Order: 1) -->
+          <section
+            class="resume-section order-mobile-1"
+            style="animation-delay: 0.2s"
+          >
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
@@ -113,7 +160,12 @@
               </div>
             </div>
           </section>
-          <section class="resume-section" style="animation-delay: 0.3s">
+
+          <!-- Technical Skills (Mobile Order: 2) -->
+          <section
+            class="resume-section order-mobile-2"
+            style="animation-delay: 0.3s"
+          >
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
@@ -183,7 +235,12 @@
               </div>
             </div>
           </section>
-          <section class="resume-section" style="animation-delay: 0.4s">
+
+          <!-- Certifications (Mobile Order: 5 - "Extra") -->
+          <section
+            class="resume-section order-mobile-5"
+            style="animation-delay: 0.4s"
+          >
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
@@ -209,8 +266,11 @@
             </ul>
           </section>
 
-          <!-- Restored Clubs & Extra Curricular Section -->
-          <section class="resume-section" style="animation-delay: 0.6s">
+          <!-- Clubs & Extra Curricular (Mobile Order: 6 - "Extra") -->
+          <section
+            class="resume-section order-mobile-6"
+            style="animation-delay: 0.6s"
+          >
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
@@ -255,9 +315,14 @@
           </section>
         </div>
 
-        <!-- Right Column -->
-        <div class="md:col-span-8 space-y-12">
-          <section class="resume-section" style="animation-delay: 0.45s">
+        <!-- Right Column Wrapper -->
+        <!-- Added 'mobile-contents' class to unwrap this on mobile -->
+        <div class="md:col-span-8 space-y-12 mobile-contents">
+          <!-- Experience (Mobile Order: 3) -->
+          <section
+            class="resume-section order-mobile-3"
+            style="animation-delay: 0.45s"
+          >
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
@@ -290,7 +355,12 @@
               </div>
             </div>
           </section>
-          <section class="resume-section" style="animation-delay: 0.5s">
+
+          <!-- Projects (Mobile Order: 4) -->
+          <section
+            class="resume-section order-mobile-4"
+            style="animation-delay: 0.5s"
+          >
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2"
             >
