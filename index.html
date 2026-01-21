@@ -77,6 +77,11 @@
             >About</a
           >
           <a
+            href="#experience"
+            class="hover:text-white transition-colors duration-200"
+            >Experience</a
+          >
+          <a
             href="#work"
             class="hover:text-white transition-colors duration-200"
             >Work</a
@@ -109,6 +114,9 @@
           >Resume</a
         >
         <a href="#about" class="mobile-link" onclick="toggleMenu()">About</a>
+        <a href="#experience" class="mobile-link" onclick="toggleMenu()"
+          >Experience</a
+        >
         <a href="#work" class="mobile-link" onclick="toggleMenu()">Work</a>
 
         <a href="#contact" class="mobile-link" onclick="toggleMenu()"
@@ -385,6 +393,19 @@
         </div>
       </div>
     </section>
+
+    <!-- NEW EXPERIENCE SECTION -->
+    <section id="experience" class="py-24 md:py-32 px-6 relative">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-white mb-16 reveal-text">
+          Experience
+        </h2>
+        <div class="relative" id="experience-grid">
+          <!-- Experience timeline will be injected here by js/experience.js -->
+        </div>
+      </div>
+    </section>
+
     <section id="work" class="py-24 md:py-32 px-6">
       <div class="max-w-7xl mx-auto">
         <h2 class="text-4xl font-bold text-white mb-8">Stuff I've Built</h2>
@@ -453,6 +474,7 @@
       <i class="fas fa-arrow-up"></i>
     </button>
     <script src="js/projects.js"></script>
+    <script src="js/experience.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
