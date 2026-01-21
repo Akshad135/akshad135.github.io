@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resume | Akshad Agrawal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Removed Tailwind CDN script for manual build -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,10 +19,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body class="antialiased">
+  <body class="antialiased selection:bg-white selection:text-black">
     <canvas id="vector-canvas" style="opacity: 0.4"></canvas>
 
-    <!-- Updated Navigation Bar to match index.html styling -->
     <nav
       class="fixed w-full z-50 glass-nav transition-all duration-300"
       id="navbar"
@@ -54,7 +53,9 @@
         class="mb-16 text-center resume-section"
         style="animation-delay: 0.1s"
       >
-        <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
+        <h1
+          class="text-4xl md:text-6xl font-bold mb-4 tracking-tight text-white"
+        >
           Akshad Agrawal
         </h1>
         <p class="text-xl text-blue-400 font-mono mb-8">
@@ -91,6 +92,7 @@
         </div>
       </header>
       <div class="grid md:grid-cols-12 gap-12">
+        <!-- Left Column -->
         <div class="md:col-span-4 space-y-12">
           <section class="resume-section" style="animation-delay: 0.2s">
             <h3
@@ -206,6 +208,8 @@
               </li>
             </ul>
           </section>
+
+          <!-- Restored Clubs & Extra Curricular Section -->
           <section class="resume-section" style="animation-delay: 0.6s">
             <h3
               class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
@@ -250,6 +254,8 @@
             </div>
           </section>
         </div>
+
+        <!-- Right Column -->
         <div class="md:col-span-8 space-y-12">
           <section class="resume-section" style="animation-delay: 0.45s">
             <h3
@@ -430,6 +436,10 @@
         </div>
       </div>
     </div>
+    <!-- Back to top button (optional, can be synced with main site js) -->
+    <button id="back-to-top" aria-label="Back to Top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
     <script src="js/script.js"></script>
   </body>
 </html>
