@@ -93,6 +93,7 @@ const projects = [
     links: {
       github: "https://github.com/akshad135",
       demo: "https://anime-wrap.vercel.app",
+      liveLabel: "Live",
     },
     visual: {
       type: "anime-card",
@@ -127,6 +128,7 @@ const projects = [
     links: {
       github: "https://github.com/akshad135/resume_builder",
       demo: "https://akshad135.github.io/resume_builder/",
+      liveLabel: "Live",
     },
     visual: {
       type: "document",
@@ -368,7 +370,7 @@ function createProjectCard(project) {
   const demoLink = project.links.demo
     ? `<a href="${project.links.demo}" target="_blank" class="card-link-btn">
          <i class="fas fa-external-link-alt"></i>
-         <span>Demo</span>
+         <span>${project.links.liveLabel || "Demo"}</span>
        </a>`
     : "";
   const tagsHTML = project.tags
