@@ -1,515 +1,382 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resume | Akshad Agrawal</title>
-    <!-- Removed Tailwind CDN script for manual build -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png" />
-    <link rel="stylesheet" href="css/style.css" />
 
-    <style>
-      /* * CUSTOM MOBILE LAYOUT OVERRIDES 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume | Akshad Agrawal</title>
+  <!-- Removed Tailwind CDN script for manual build -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* * CUSTOM MOBILE LAYOUT OVERRIDES 
        * This logic only runs on screens smaller than 768px (Mobile).
        * It unwraps the desktop columns and reorders the sections manually.
        */
-      @media (max-width: 767px) {
-        /* Makes the wrapper div invisible to the grid, so children become direct grid items */
-        .mobile-contents {
-          display: contents !important;
-        }
+    @media (max-width: 767px) {
 
-        /* * Reset the space-y-12 margins on mobile because the main Grid 'gap-12' 
+      /* Makes the wrapper div invisible to the grid, so children become direct grid items */
+      .mobile-contents {
+        display: contents !important;
+      }
+
+      /* * Reset the space-y-12 margins on mobile because the main Grid 'gap-12' 
          * handles the spacing now. Prevents double-spacing.
          */
-        .mobile-contents > :not([hidden]) ~ :not([hidden]) {
-          margin-top: 0 !important;
-        }
-
-        /* Define the specific order for mobile flow */
-        .order-mobile-1 {
-          order: 1 !important;
-        } /* Education */
-        .order-mobile-2 {
-          order: 2 !important;
-        } /* Skills */
-        .order-mobile-3 {
-          order: 3 !important;
-        } /* Experience */
-        .order-mobile-4 {
-          order: 4 !important;
-        } /* Projects */
-        .order-mobile-5 {
-          order: 5 !important;
-        } /* Certifications */
-        .order-mobile-6 {
-          order: 6 !important;
-        } /* Extra/Clubs */
+      .mobile-contents> :not([hidden])~ :not([hidden]) {
+        margin-top: 0 !important;
       }
-    </style>
-  </head>
-  <body class="antialiased selection:bg-white selection:text-black">
-    <canvas id="vector-canvas" style="opacity: 0.4"></canvas>
 
-    <nav
-      class="fixed w-full z-50 glass-nav transition-all duration-300"
-      id="navbar"
-    >
+      /* Define the specific order for mobile flow */
+      .order-mobile-1 {
+        order: 1 !important;
+      }
+
+      /* Education */
+      .order-mobile-2 {
+        order: 2 !important;
+      }
+
+      /* Skills */
+      .order-mobile-3 {
+        order: 3 !important;
+      }
+
+      /* Experience */
+      .order-mobile-4 {
+        order: 4 !important;
+      }
+
+      /* Projects */
+      .order-mobile-5 {
+        order: 5 !important;
+      }
+
+      /* Certifications */
+      .order-mobile-6 {
+        order: 6 !important;
+      }
+
+      /* Extra/Clubs */
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-white selection:text-black">
+  <canvas id="vector-canvas" style="opacity: 0.4"></canvas>
+
+  <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
+      <a href="index.html"
+        class="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition group">
+        <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+        Back to Portfolio
+      </a>
+      <a href="akshad_agrawal.pdf" target="_blank"
+        class="px-5 py-2.5 bg-white text-black text-xs font-bold uppercase tracking-wider rounded hover:bg-gray-200 transition shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+        <i class="fas fa-download mr-2"></i> Download PDF
+      </a>
+    </div>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-6 py-32">
+    <header class="mb-16 text-center resume-section" style="animation-delay: 0.1s">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight text-white">
+        Akshad Agrawal
+      </h1>
+      <p class="text-xl text-blue-400 font-mono mb-8">
+        Computer Science & Engineering (AIML)
+      </p>
       <div
-        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50"
-      >
-        <a
-          href="index.html"
-          class="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition group"
-        >
-          <i
-            class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"
-          ></i>
-          Back to Portfolio
+        class="flex flex-col md:flex-row md:inline-flex md:items-center justify-center gap-4 md:gap-8 text-sm text-gray-400 bg-gray-900/40 p-6 md:px-8 md:py-4 rounded-2xl md:rounded-full border border-gray-800 backdrop-blur-sm w-full md:w-auto">
+        <a href="mailto:akshad.contact@gmail.com"
+          class="hover:text-white transition flex items-center justify-center md:justify-start">
+          <i class="fas fa-envelope mr-2 text-blue-500"></i>
+          Email
         </a>
-        <a
-          href="akshad_agrawal.pdf"
-          target="_blank"
-          class="px-5 py-2.5 bg-white text-black text-xs font-bold uppercase tracking-wider rounded hover:bg-gray-200 transition shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-        >
-          <i class="fas fa-download mr-2"></i> Download PDF
-        </a>
-      </div>
-    </nav>
-
-    <div class="max-w-5xl mx-auto px-6 py-32">
-      <header
-        class="mb-16 text-center resume-section"
-        style="animation-delay: 0.1s"
-      >
-        <h1
-          class="text-4xl md:text-6xl font-bold mb-4 tracking-tight text-white"
-        >
-          Akshad Agrawal
-        </h1>
-        <p class="text-xl text-blue-400 font-mono mb-8">
-          Computer Science & Engineering (AIML)
-        </p>
-        <div
-          class="flex flex-col md:flex-row md:inline-flex md:items-center justify-center gap-4 md:gap-8 text-sm text-gray-400 bg-gray-900/40 p-6 md:px-8 md:py-4 rounded-2xl md:rounded-full border border-gray-800 backdrop-blur-sm w-full md:w-auto"
-        >
-          <a
-            href="mailto:akshad.contact@gmail.com"
-            class="hover:text-white transition flex items-center justify-center md:justify-start"
-          >
-            <i class="fas fa-envelope mr-2 text-blue-500"></i>
-            Email
+        <span class="hidden md:inline text-gray-700">|</span>
+        <div class="flex items-center justify-center gap-6 md:gap-8">
+          <a href="https://linkedin.com/in/akshad135" target="_blank"
+            class="hover:text-white transition flex items-center">
+            <i class="fab fa-linkedin mr-2 text-blue-500"></i>LinkedIn
           </a>
           <span class="hidden md:inline text-gray-700">|</span>
-          <div class="flex items-center justify-center gap-6 md:gap-8">
-            <a
-              href="https://linkedin.com/in/akshad135"
-              target="_blank"
-              class="hover:text-white transition flex items-center"
-            >
-              <i class="fab fa-linkedin mr-2 text-blue-500"></i>LinkedIn
-            </a>
-            <span class="hidden md:inline text-gray-700">|</span>
-            <a
-              href="https://github.com/akshad135"
-              target="_blank"
-              class="hover:text-white transition flex items-center"
-            >
-              <i class="fab fa-github mr-2 text-blue-500"></i>GitHub
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <!-- Main Grid Layout -->
-      <div class="grid md:grid-cols-12 gap-12">
-        <!-- Left Column Wrapper -->
-        <!-- Added 'mobile-contents' class to unwrap this on mobile -->
-        <div class="md:col-span-4 space-y-12 mobile-contents">
-          <!-- Education (Mobile Order: 1) -->
-          <section
-            class="resume-section order-mobile-1"
-            style="animation-delay: 0.2s"
-          >
-            <h3
-              class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
-            >
-              <i class="fas fa-graduation-cap"></i> Education
-            </h3>
-            <div class="mb-6">
-              <div class="text-white font-bold text-lg leading-tight">
-                B.Tech in CSE (AIML)
-              </div>
-              <div class="text-blue-400 text-sm mt-1">
-                VIT Bhopal University
-              </div>
-              <div class="text-gray-500 text-xs mt-2 flex justify-between">
-                <span>Oct 2022 - Sept 2026</span>
-                <span class="text-green-400 font-mono">CGPA: 9.01</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- Technical Skills (Mobile Order: 2) -->
-          <section
-            class="resume-section order-mobile-2"
-            style="animation-delay: 0.3s"
-          >
-            <h3
-              class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
-            >
-              <i class="fas fa-code"></i> Technical Skills
-            </h3>
-            <div class="mb-6">
-              <div
-                class="text-gray-300 text-xs font-semibold uppercase mb-3 tracking-wide"
-              >
-                Languages
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >Python</span
-                >
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >SQL</span
-                >
-              </div>
-            </div>
-            <div class="mb-6">
-              <div
-                class="text-gray-300 text-xs font-semibold uppercase mb-3 tracking-wide"
-              >
-                AI & Frameworks
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="px-2.5 py-1 bg-blue-900/30 border border-blue-800/50 rounded text-xs text-blue-200"
-                  >LangChain</span
-                >
-                <span
-                  class="px-2.5 py-1 bg-blue-900/30 border border-blue-800/50 rounded text-xs text-blue-200"
-                  >TensorFlow</span
-                >
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >Discord.py</span
-                >
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >Py-Cord</span
-                >
-              </div>
-            </div>
-            <div class="mb-6">
-              <div
-                class="text-gray-300 text-xs font-semibold uppercase mb-3 tracking-wide"
-              >
-                Databases & Tools
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >MySQL</span
-                >
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >PostgreSQL</span
-                >
-                <span
-                  class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300"
-                  >Deep Learning</span
-                >
-              </div>
-            </div>
-          </section>
-
-          <!-- Certifications (Mobile Order: 5 - "Extra") -->
-          <section
-            class="resume-section order-mobile-5"
-            style="animation-delay: 0.4s"
-          >
-            <h3
-              class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
-            >
-              <i class="fas fa-certificate"></i> Certifications
-            </h3>
-            <ul class="space-y-4">
-              <li class="bg-gray-900/30 p-3 rounded border border-gray-800">
-                <div class="text-white text-sm font-medium">
-                  OCI GenAI Professional
-                </div>
-                <div class="text-xs text-blue-400 mt-1">
-                  Oracle Cloud Infrastructure
-                </div>
-              </li>
-              <li class="bg-gray-900/30 p-3 rounded border border-gray-800">
-                <div class="text-white text-sm font-medium">
-                  OCI Foundations
-                </div>
-                <div class="text-xs text-blue-400 mt-1">
-                  Foundation's Associate
-                </div>
-              </li>
-            </ul>
-          </section>
-
-          <!-- Clubs & Extra Curricular (Mobile Order: 6 - "Extra") -->
-          <section
-            class="resume-section order-mobile-6"
-            style="animation-delay: 0.6s"
-          >
-            <h3
-              class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2"
-            >
-              <i class="fas fa-users"></i> Clubs & Extra Curricular
-            </h3>
-            <div class="space-y-3">
-              <div
-                class="p-3.5 bg-gray-900/30 border border-gray-800 rounded-lg flex items-center justify-between hover:bg-gray-900/50 transition"
-              >
-                <div class="text-white text-sm font-medium">
-                  Web Team Co-Lead
-                </div>
-                <div
-                  class="text-blue-400 text-[10px] font-mono uppercase tracking-wider"
-                >
-                  Data Science Club
-                </div>
-              </div>
-
-              <div
-                class="p-3.5 bg-gray-900/30 border border-gray-800 rounded-lg flex items-center justify-between hover:bg-gray-900/50 transition"
-              >
-                <div class="text-white text-sm font-medium">Web Team</div>
-                <div
-                  class="text-blue-400 text-[10px] font-mono uppercase tracking-wider"
-                >
-                  AI Club
-                </div>
-              </div>
-
-              <div
-                class="p-3.5 bg-gray-900/30 border border-gray-800 rounded-lg flex items-center justify-between hover:bg-gray-900/50 transition"
-              >
-                <div class="text-white text-sm font-medium">Tech Lead</div>
-                <div
-                  class="text-blue-400 text-[10px] font-mono uppercase tracking-wider"
-                >
-                  Meraki Arts Club
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!-- Right Column Wrapper -->
-        <!-- Added 'mobile-contents' class to unwrap this on mobile -->
-        <div class="md:col-span-8 space-y-12 mobile-contents">
-          <!-- Experience (Mobile Order: 3) -->
-          <section
-            class="resume-section order-mobile-3"
-            style="animation-delay: 0.45s"
-          >
-            <h3
-              class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2"
-            >
-              <i class="fas fa-briefcase"></i> Experience
-            </h3>
-            <div class="space-y-8">
-              <div
-                class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition"
-              >
-                <div
-                  class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4"
-                >
-                  <h4 class="text-xl font-bold text-white">
-                    Ernst & Young LLP
-                  </h4>
-                  <div
-                    class="text-xs font-mono text-amber-400 bg-amber-900/20 px-3 py-1 rounded-full border border-amber-900/50"
-                  >
-                    Jan 2026 — Present
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-300 font-medium"
-                    >GenAI Technical Consultant</span
-                  >
-                  <span class="text-gray-600">•</span>
-                  <span class="text-amber-400/80 text-sm">Intern</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Projects (Mobile Order: 4) -->
-          <section
-            class="resume-section order-mobile-4"
-            style="animation-delay: 0.5s"
-          >
-            <h3
-              class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2"
-            >
-              <i class="fas fa-laptop-code"></i> Projects
-            </h3>
-            <div class="space-y-8">
-              <div
-                class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition"
-              >
-                <div
-                  class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4"
-                >
-                  <h4 class="text-xl font-bold text-white group cursor-pointer">
-                    Agentic Auditor
-                    <a
-                      href="https://github.com/akshad135/agentic-auditor"
-                      target="_blank"
-                      class="inline-block ml-2 text-gray-500 hover:text-blue-400 transition transform hover:-translate-y-0.5"
-                      ><i class="fas fa-external-link-alt text-sm"></i
-                    ></a>
-                  </h4>
-                  <div
-                    class="text-xs font-mono text-blue-400 bg-blue-900/20 px-3 py-1 rounded-full border border-blue-900/50"
-                  >
-                    Autonomous Legal Compliance
-                  </div>
-                </div>
-                <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                  Architected an Agentic RAG system using
-                  <span class="text-white font-medium">LangGraph</span> to audit
-                  legal contracts. Employed a cyclic "Drafter-Critic" workflow
-                  that iteratively refines risk assessments before final output.
-                  Built a Self-Healing Knowledge Base that synthesizes defensive
-                  policies from LexGLUE datasets using LLMs.
-                </p>
-                <div
-                  class="flex flex-wrap gap-2 text-xs font-mono text-gray-500"
-                >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >LangGraph</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >Qdrant</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >Groq</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >Streamlit</span
-                  >
-                </div>
-              </div>
-              <div
-                class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition"
-              >
-                <div
-                  class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4"
-                >
-                  <h4 class="text-xl font-bold text-white group cursor-pointer">
-                    Dilbert-o-Matic
-                    <a
-                      href="https://github.com/akshad135/dilbert-o-matic"
-                      target="_blank"
-                      class="inline-block ml-2 text-gray-500 hover:text-blue-400 transition transform hover:-translate-y-0.5"
-                      ><i class="fas fa-external-link-alt text-sm"></i
-                    ></a>
-                  </h4>
-                  <div
-                    class="text-xs font-mono text-purple-400 bg-purple-900/20 px-3 py-1 rounded-full border border-purple-900/50"
-                  >
-                    End-to-End MLOps Pipeline
-                  </div>
-                </div>
-                <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                  Developed a production-grade MLOps pipeline to automate
-                  training, validation, and versioning of a T5 Transformer model
-                  using <span class="text-white font-medium">Dagster</span>.
-                  Implemented DVC for reproducibility, MLflow for experiment
-                  tracking, and custom drift detection sensors to prevent model
-                  degradation.
-                </p>
-                <div
-                  class="flex flex-wrap gap-2 text-xs font-mono text-gray-500"
-                >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >Dagster</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >MLflow</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >DVC</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >PyTorch</span
-                  >
-                </div>
-              </div>
-              <div
-                class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition"
-              >
-                <div
-                  class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4"
-                >
-                  <h4 class="text-xl font-bold text-white group cursor-pointer">
-                    Smart Resume Screener
-                    <a
-                      href="https://github.com/akshad135/resume-screener"
-                      target="_blank"
-                      class="inline-block ml-2 text-gray-500 hover:text-blue-400 transition transform hover:-translate-y-0.5"
-                      ><i class="fas fa-external-link-alt text-sm"></i
-                    ></a>
-                  </h4>
-                  <div
-                    class="text-xs font-mono text-green-400 bg-green-900/20 px-3 py-1 rounded-full border border-green-900/50"
-                  >
-                    Full-Stack AI Recruiting
-                  </div>
-                </div>
-                <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                  Engineered a platform to screen and rank resumes using
-                  evidence-based matching. Constructed an asynchronous 5-stage
-                  processing pipeline (parsing, extraction, scoring, reasoning)
-                  using <span class="text-white font-medium">Groq API</span> and
-                  SQLAlchemy for persistent state management.
-                </p>
-                <div
-                  class="flex flex-wrap gap-2 text-xs font-mono text-gray-500"
-                >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >FastAPI</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >React</span
-                  >
-                  <span class="border border-gray-800 px-2 py-1 rounded"
-                    >PostgreSQL</span
-                  >
-                </div>
-              </div>
-            </div>
-          </section>
+          <a href="https://github.com/akshad135" target="_blank" class="hover:text-white transition flex items-center">
+            <i class="fab fa-github mr-2 text-blue-500"></i>GitHub
+          </a>
         </div>
       </div>
+    </header>
+
+    <!-- Main Grid Layout -->
+    <div class="grid md:grid-cols-12 gap-12">
+      <!-- Left Column Wrapper -->
+      <!-- Added 'mobile-contents' class to unwrap this on mobile -->
+      <div class="md:col-span-4 space-y-12 mobile-contents">
+        <!-- Education (Mobile Order: 1) -->
+        <section class="resume-section order-mobile-1" style="animation-delay: 0.2s">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2">
+            <i class="fas fa-graduation-cap"></i> Education
+          </h3>
+          <div class="mb-6">
+            <div class="text-white font-bold text-lg leading-tight">
+              B.Tech in CSE (AIML)
+            </div>
+            <div class="text-blue-400 text-sm mt-1">
+              VIT Bhopal University
+            </div>
+            <div class="text-gray-500 text-xs mt-2 flex justify-between">
+              <span>Oct 2022 - Sept 2026</span>
+              <span class="text-green-400 font-mono">CGPA: 9.01</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Technical Skills (Mobile Order: 2) -->
+        <section class="resume-section order-mobile-2" style="animation-delay: 0.3s">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2">
+            <i class="fas fa-code"></i> Technical Skills
+          </h3>
+          <div class="mb-6">
+            <div class="text-gray-300 text-xs font-semibold uppercase mb-3 tracking-wide">
+              Languages
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">Python</span>
+              <span class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">SQL</span>
+            </div>
+          </div>
+          <div class="mb-6">
+            <div class="text-gray-300 text-xs font-semibold uppercase mb-3 tracking-wide">
+              AI & Frameworks
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                class="px-2.5 py-1 bg-blue-900/30 border border-blue-800/50 rounded text-xs text-blue-200">LangChain</span>
+              <span
+                class="px-2.5 py-1 bg-blue-900/30 border border-blue-800/50 rounded text-xs text-blue-200">TensorFlow</span>
+              <span
+                class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">Discord.py</span>
+              <span class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">Py-Cord</span>
+            </div>
+          </div>
+          <div class="mb-6">
+            <div class="text-gray-300 text-xs font-semibold uppercase mb-3 tracking-wide">
+              Databases & Tools
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">MySQL</span>
+              <span
+                class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">PostgreSQL</span>
+              <span class="px-2.5 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">Deep
+                Learning</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Certifications (Mobile Order: 5 - "Extra") -->
+        <section class="resume-section order-mobile-5" style="animation-delay: 0.4s">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2">
+            <i class="fas fa-certificate"></i> Certifications
+          </h3>
+          <ul class="space-y-4">
+            <li class="bg-gray-900/30 p-3 rounded border border-gray-800">
+              <div class="text-white text-sm font-medium">
+                OCI GenAI Professional
+              </div>
+              <div class="text-xs text-blue-400 mt-1">
+                Oracle Cloud Infrastructure
+              </div>
+            </li>
+            <li class="bg-gray-900/30 p-3 rounded border border-gray-800">
+              <div class="text-white text-sm font-medium">
+                OCI Foundations
+              </div>
+              <div class="text-xs text-blue-400 mt-1">
+                Foundation's Associate
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Clubs & Extra Curricular (Mobile Order: 6 - "Extra") -->
+        <section class="resume-section order-mobile-6" style="animation-delay: 0.6s">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6 border-b border-gray-800 pb-2 flex items-center gap-2">
+            <i class="fas fa-users"></i> Clubs & Extra Curricular
+          </h3>
+          <div class="space-y-3">
+            <div
+              class="p-3.5 bg-gray-900/30 border border-gray-800 rounded-lg flex items-center justify-between hover:bg-gray-900/50 transition">
+              <div class="text-white text-sm font-medium">
+                Web Team Co-Lead
+              </div>
+              <div class="text-blue-400 text-[10px] font-mono uppercase tracking-wider">
+                Data Science Club
+              </div>
+            </div>
+
+            <div
+              class="p-3.5 bg-gray-900/30 border border-gray-800 rounded-lg flex items-center justify-between hover:bg-gray-900/50 transition">
+              <div class="text-white text-sm font-medium">Web Team</div>
+              <div class="text-blue-400 text-[10px] font-mono uppercase tracking-wider">
+                AI Club
+              </div>
+            </div>
+
+            <div
+              class="p-3.5 bg-gray-900/30 border border-gray-800 rounded-lg flex items-center justify-between hover:bg-gray-900/50 transition">
+              <div class="text-white text-sm font-medium">Tech Lead</div>
+              <div class="text-blue-400 text-[10px] font-mono uppercase tracking-wider">
+                Meraki Arts Club
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column Wrapper -->
+      <!-- Added 'mobile-contents' class to unwrap this on mobile -->
+      <div class="md:col-span-8 space-y-12 mobile-contents">
+        <!-- Experience (Mobile Order: 3) -->
+        <section class="resume-section order-mobile-3" style="animation-delay: 0.45s">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2">
+            <i class="fas fa-briefcase"></i> Experience
+          </h3>
+          <div class="space-y-8">
+            <div class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <h4 class="text-xl font-bold text-white">
+                  Ernst & Young LLP
+                </h4>
+                <div
+                  class="text-xs font-mono text-amber-400 bg-amber-900/20 px-3 py-1 rounded-full border border-amber-900/50">
+                  Jan 2026 — Present
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="text-gray-300 font-medium">GenAI Technical Consultant</span>
+                <span class="text-gray-600">•</span>
+                <span class="text-amber-400/80 text-sm">Intern</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Projects (Mobile Order: 4) -->
+        <section class="resume-section order-mobile-4" style="animation-delay: 0.5s">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8 border-b border-gray-800 pb-2 flex items-center gap-2">
+            <i class="fas fa-laptop-code"></i> Projects
+          </h3>
+          <div class="space-y-8">
+            <div class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <h4 class="text-xl font-bold text-white group cursor-pointer">
+                  Agentic Auditor
+                  <a href="https://github.com/akshad135/agentic-auditor" target="_blank"
+                    class="inline-block ml-2 text-gray-500 hover:text-blue-400 transition transform hover:-translate-y-0.5"><i
+                      class="fas fa-external-link-alt text-sm"></i></a>
+                </h4>
+                <div
+                  class="text-xs font-mono text-blue-400 bg-blue-900/20 px-3 py-1 rounded-full border border-blue-900/50">
+                  Autonomous Legal Compliance
+                </div>
+              </div>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                Architected an Agentic RAG system using
+                <span class="text-white font-medium">LangGraph</span> to audit
+                legal contracts. Employed a cyclic "Drafter-Critic" workflow
+                that iteratively refines risk assessments before final output.
+                Built a Self-Healing Knowledge Base that synthesizes defensive
+                policies from LexGLUE datasets using LLMs.
+              </p>
+              <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                <span class="border border-gray-800 px-2 py-1 rounded">LangGraph</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">Qdrant</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">Groq</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">Streamlit</span>
+              </div>
+            </div>
+            <div class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <h4 class="text-xl font-bold text-white group cursor-pointer">
+                  Dilbert-o-Matic
+                  <a href="https://github.com/akshad135/dilbert-o-matic" target="_blank"
+                    class="inline-block ml-2 text-gray-500 hover:text-blue-400 transition transform hover:-translate-y-0.5"><i
+                      class="fas fa-external-link-alt text-sm"></i></a>
+                </h4>
+                <div
+                  class="text-xs font-mono text-purple-400 bg-purple-900/20 px-3 py-1 rounded-full border border-purple-900/50">
+                  End-to-End MLOps Pipeline
+                </div>
+              </div>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                Developed a production-grade MLOps pipeline to automate
+                training, validation, and versioning of a T5 Transformer model
+                using <span class="text-white font-medium">Dagster</span>.
+                Implemented DVC for reproducibility, MLflow for experiment
+                tracking, and custom drift detection sensors to prevent model
+                degradation.
+              </p>
+              <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                <span class="border border-gray-800 px-2 py-1 rounded">Dagster</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">MLflow</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">DVC</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">PyTorch</span>
+              </div>
+            </div>
+            <div class="glass-card p-6 md:p-8 hover:bg-gray-900/40 transition">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <h4 class="text-xl font-bold text-white group cursor-pointer">
+                  Smart Resume Screener
+                  <a href="https://github.com/akshad135/resume-screener" target="_blank"
+                    class="inline-block ml-2 text-gray-500 hover:text-blue-400 transition transform hover:-translate-y-0.5"><i
+                      class="fas fa-external-link-alt text-sm"></i></a>
+                </h4>
+                <div
+                  class="text-xs font-mono text-green-400 bg-green-900/20 px-3 py-1 rounded-full border border-green-900/50">
+                  Full-Stack AI Recruiting
+                </div>
+              </div>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                Engineered a platform to screen and rank resumes using
+                evidence-based matching. Constructed an asynchronous 5-stage
+                processing pipeline (parsing, extraction, scoring, reasoning)
+                using <span class="text-white font-medium">Groq API</span> and
+                SQLAlchemy for persistent state management.
+              </p>
+              <div class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                <span class="border border-gray-800 px-2 py-1 rounded">FastAPI</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">React</span>
+                <span class="border border-gray-800 px-2 py-1 rounded">PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
-    <!-- Back to top button (optional, can be synced with main site js) -->
+  </div>
+  <!-- Back to top button (optional, can be synced with main site js) -->
+  <div id="back-to-top-wrapper">
     <button id="back-to-top" aria-label="Back to Top">
       <i class="fas fa-arrow-up"></i>
     </button>
-    <script src="js/script.js"></script>
-  </body>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+
 </html>
