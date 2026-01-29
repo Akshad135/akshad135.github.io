@@ -119,12 +119,13 @@ if (canvas) {
 }
 
 const backToTopBtn = document.getElementById("back-to-top");
-if (backToTopBtn) {
+const backToTopWrapper = document.getElementById("back-to-top-wrapper");
+if (backToTopBtn && backToTopWrapper) {
   window.addEventListener("scroll", () => {
     if (window.scrollY > 300) {
-      backToTopBtn.classList.add("visible");
+      backToTopWrapper.classList.add("visible");
     } else {
-      backToTopBtn.classList.remove("visible");
+      backToTopWrapper.classList.remove("visible");
     }
   });
   backToTopBtn.addEventListener("click", () => {
