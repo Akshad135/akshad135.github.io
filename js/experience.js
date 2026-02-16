@@ -59,7 +59,7 @@ function renderExperience() {
     // --- C. The Content Card ---
     const card = document.createElement("div");
     card.className =
-      "glass-card p-6 md:p-8 hover:bg-gray-900/40 transition relative group-hover:border-blue-500/30";
+      "relative border border-gray-800 bg-gray-900/20 rounded p-6 md:p-8 hover:bg-gray-900/40 transition group-hover:border-blue-500/30";
 
     // Header section of the card
     const headerHtml = `
@@ -69,13 +69,11 @@ function renderExperience() {
                         ${exp.company}
                     </h3>
                     <div class="flex flex-wrap items-center gap-2 text-sm">
-                         <span class="text-blue-300 font-medium">${
-                           exp.role
-                         }</span>
+                         <span class="text-blue-300 font-medium">${exp.role
+      }</span>
                          <span class="text-gray-600">•</span>
-                         <span class="text-xs uppercase tracking-wider text-gray-500 border border-gray-800 px-2 py-0.5 rounded">${
-                           exp.type
-                         }</span>
+                         <span class="text-xs uppercase tracking-wider text-gray-500 border border-gray-800 px-2 py-0.5 rounded">${exp.type
+      }</span>
                     </div>
                 </div>
                 
@@ -101,11 +99,11 @@ function renderExperience() {
         ? `
             <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-800/50">
                 ${exp.tags
-                  .map(
-                    (tag) =>
-                      `<span class="px-2.5 py-1 text-xs bg-gray-800/40 text-gray-400 rounded hover:text-white transition-colors"># ${tag}</span>`,
-                  )
-                  .join("")}
+          .map(
+            (tag) =>
+              `<span class="px-2.5 py-1 text-xs bg-gray-800/40 text-gray-400 rounded hover:text-white transition-colors"># ${tag}</span>`,
+          )
+          .join("")}
             </div>
         `
         : "";
