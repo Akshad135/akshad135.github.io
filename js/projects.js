@@ -162,10 +162,10 @@ function getVisualHTML(project) {
              <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-transparent"></div>
              
              <!--Stack Card 3(Bottom)-->
-             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[85%] h-[60%] bg-[#1e293b] rounded-lg border border-white/5 shadow-2xl transition-transform duration-500 ease-out group-hover/card:rotate-12 group-hover/card:translate-x-4 rotate-6 opacity-30 scale-90"></div>
+             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[85%] h-[60%] bg-[#1e293b] rounded-lg border border-white/5 shadow-2xl transition-transform duration-500 ease-out group-hover/card:rotate-12 rotate-6 opacity-30 scale-90"></div>
 
              <!--Stack Card 2(Middle)-->
-             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[48%] w-[85%] h-[60%] bg-[#1e293b] rounded-lg border border-white/10 shadow-2xl transition-transform duration-500 ease-out group-hover/card:-rotate-6 group-hover/card:-translate-x-4 -rotate-3 opacity-60 scale-95"></div>
+             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[48%] w-[85%] h-[60%] bg-[#1e293b] rounded-lg border border-white/10 shadow-2xl transition-transform duration-500 ease-out group-hover/card:-rotate-6 -rotate-3 opacity-60 scale-95"></div>
 
              <!--Stack Card 1(Top / Main)-->
         <div class="relative w-[85%] h-[65%] bg-[#1e1e2e] rounded-lg border border-slate-700/50 shadow-2xl flex flex-col overflow-hidden transition-all duration-500 ease-out group-hover/card:-translate-y-2 group-hover/card:scale-[1.02] group-hover/card:shadow-violet-500/20 group-hover/card:border-violet-500/30">
