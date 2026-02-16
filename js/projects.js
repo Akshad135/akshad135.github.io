@@ -1,5 +1,20 @@
 const projects = [
   {
+    title: "Paste Bin",
+    description:
+      "A secure, modern pastebin with syntax highlighting, encryption, and self-destructing pastes. Built on Cloudflare Workers for edge performance.",
+    category: "Web",
+    tags: ["React", "Cloudflare Workers", "Hono"],
+    links: {
+      github: "https://github.com/Akshad135/paste-bin",
+      demo: "https://demo-pastebin.vercel.app/",
+    },
+    visual: {
+      type: "paste-bin",
+      bgGradient: "from-slate-900/30 to-gray-900/30",
+    },
+  },
+  {
     title: "Bookmarks",
     description:
       "A free, self-hostable bookmark manager to organize your web life. Features Supabase auth, OG metadata extraction, and PWA support.",
@@ -140,76 +155,131 @@ const projects = [
 function getVisualHTML(project) {
   const v = project.visual;
   switch (v.type) {
+    case "paste-bin":
+      return `
+        <div class="w-full h-full flex items-center justify-center relative overflow-hidden bg-[#0f1117] group/card">
+             <!--Background Elements-->
+             <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-transparent"></div>
+             
+             <!--Stack Card 3(Bottom)-->
+             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[85%] h-[60%] bg-[#1e293b] rounded-lg border border-white/5 shadow-2xl transition-transform duration-500 ease-out group-hover/card:rotate-12 group-hover/card:translate-x-4 rotate-6 opacity-30 scale-90"></div>
+
+             <!--Stack Card 2(Middle)-->
+             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[48%] w-[85%] h-[60%] bg-[#1e293b] rounded-lg border border-white/10 shadow-2xl transition-transform duration-500 ease-out group-hover/card:-rotate-6 group-hover/card:-translate-x-4 -rotate-3 opacity-60 scale-95"></div>
+
+             <!--Stack Card 1(Top / Main)-->
+        <div class="relative w-[85%] h-[65%] bg-[#1e1e2e] rounded-lg border border-slate-700/50 shadow-2xl flex flex-col overflow-hidden transition-all duration-500 ease-out group-hover/card:-translate-y-2 group-hover/card:scale-[1.02] group-hover/card:shadow-violet-500/20 group-hover/card:border-violet-500/30">
+          <!-- Card Header -->
+          <div class="h-10 bg-[#181825] border-b border-white/5 flex items-center justify-between px-3">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-file-code text-indigo-400 text-xs"></i>
+              <div class="w-16 h-1.5 bg-white/10 rounded-full"></div>
+            </div>
+            <div class="flex gap-1.5">
+              <div class="px-1.5 py-0.5 rounded-[3px] text-[8px] bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono">TS</div>
+              <div class="px-1.5 py-0.5 rounded-[3px] text-[8px] bg-orange-500/10 text-orange-300 border border-orange-500/20 font-mono">Public</div>
+            </div>
+          </div>
+
+          <!-- Code Area -->
+          <div class="flex-1 p-3 space-y-2 relative font-mono opacity-80">
+            <!-- Syntax Highlight Lines -->
+            <div class="flex gap-2 items-center">
+              <div class="w-4 text-slate-600 text-[8px] text-right">1</div>
+              <div class="w-12 h-1.5 bg-pink-400/60 rounded-sm"></div>
+              <div class="w-20 h-1.5 bg-blue-400/60 rounded-sm"></div>
+            </div>
+            <div class="flex gap-2 items-center">
+              <div class="w-4 text-slate-600 text-[8px] text-right">2</div>
+              <div class="w-16 h-1.5 bg-yellow-200/60 rounded-sm"></div>
+              <div class="w-8 h-1.5 bg-white/20 rounded-sm"></div>
+              <div class="w-14 h-1.5 bg-green-400/60 rounded-sm"></div>
+            </div>
+            <div class="flex gap-2 items-center">
+              <div class="w-4 text-slate-600 text-[8px] text-right">3</div>
+              <div class="w-24 h-1.5 bg-purple-400/60 rounded-sm"></div>
+            </div>
+            <div class="flex gap-2 items-center">
+              <div class="w-4 text-slate-600 text-[8px] text-right">4</div>
+              <div class="w-10 h-1.5 bg-white/20 rounded-sm"></div>
+            </div>
+
+            <!-- Floating "Cursor" animation -->
+            <div class="absolute top-[4.5rem] left-10 w-1.5 h-3 bg-blue-400 animate-pulse"></div>
+          </div>
+        </div>
+        </div>
+        `;
     case "bookmark-dashboard":
       return `
         <div class="w-full h-full flex items-center justify-center">
-            <!-- Main dashboard container with glass tint and subtle float hover -->
-            <div class="relative w-[90%] h-[75%] bg-black/40 backdrop-blur-md border border-orange-500/60 rounded-lg shadow-2xl flex flex-col overflow-hidden group transition-all duration-500 hover:border-orange-500/80">
-                <!-- Browser Header -->
-                <div class="h-4 bg-white/5 border-b border-white/5 flex items-center px-2 gap-1.5">
-                    <div class="w-1.5 h-1.5 rounded-full bg-red-500/50"></div>
-                    <div class="w-1.5 h-1.5 rounded-full bg-yellow-500/50"></div>
-                    <div class="w-1.5 h-1.5 rounded-full bg-green-500/50"></div>
-                    <div class="ml-2 flex-1 h-2 bg-white/10 rounded-full opacity-50"></div>
-                </div>
-                <!-- App Body -->
-                <div class="flex-1 flex overflow-hidden">
-                    <!-- Sidebar -->
-                    <div class="w-12 bg-white/5 border-r border-white/5 flex flex-col items-center py-3 gap-2">
-                         <div class="w-6 h-6 rounded bg-orange-500/20 flex items-center justify-center text-orange-500 mb-1">
-                            <i class="fas fa-bookmark text-[10px]"></i>
-                         </div>
-                         <div class="w-6 h-1 bg-white/10 rounded-full"></div>
-                         <div class="w-4 h-1 bg-white/10 rounded-full opacity-50"></div>
-                         <div class="w-5 h-1 bg-white/10 rounded-full opacity-50"></div>
-                    </div>
-                    <!-- Main Content Grid -->
-                    <div class="flex-1 p-3 bg-transparent">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="w-16 h-1.5 bg-white/10 rounded-full"></div>
-                            <div class="flex gap-1">
-                                <div class="w-3 h-3 rounded bg-white/10"></div>
-                                <div class="w-3 h-3 rounded bg-orange-600/80"></div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2">
-                             <!-- Grid items with subtle hover scale/glow -->
-                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
-                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-blue-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
-                             </div>
-                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
-                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-purple-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
-                             </div>
-                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
-                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-green-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
-                             </div>
-                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
-                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-red-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
-                             </div>
-                             <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
-                                <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-yellow-500/30"></div>
-                                <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
-                             </div>
-                             <div class="aspect-video border border-dashed border-white/10 rounded flex items-center justify-center opacity-50 animate-pulse transition-all duration-300">
-                                <div class="text-[8px] text-zinc-400">+</div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
+            <!--Main dashboard container with glass tint and subtle float hover-->
+        <div class="relative w-[90%] h-[75%] bg-black/40 backdrop-blur-md border border-orange-500/60 rounded-lg shadow-2xl flex flex-col overflow-hidden group transition-all duration-500 hover:border-orange-500/80">
+          <!-- Browser Header -->
+          <div class="h-4 bg-white/5 border-b border-white/5 flex items-center px-2 gap-1.5">
+            <div class="w-1.5 h-1.5 rounded-full bg-red-500/50"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-yellow-500/50"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-green-500/50"></div>
+            <div class="ml-2 flex-1 h-2 bg-white/10 rounded-full opacity-50"></div>
+          </div>
+          <!-- App Body -->
+          <div class="flex-1 flex overflow-hidden">
+            <!-- Sidebar -->
+            <div class="w-12 bg-white/5 border-r border-white/5 flex flex-col items-center py-3 gap-2">
+              <div class="w-6 h-6 rounded bg-orange-500/20 flex items-center justify-center text-orange-500 mb-1">
+                <i class="fas fa-bookmark text-[10px]"></i>
+              </div>
+              <div class="w-6 h-1 bg-white/10 rounded-full"></div>
+              <div class="w-4 h-1 bg-white/10 rounded-full opacity-50"></div>
+              <div class="w-5 h-1 bg-white/10 rounded-full opacity-50"></div>
             </div>
+            <!-- Main Content Grid -->
+            <div class="flex-1 p-3 bg-transparent">
+              <div class="flex items-center justify-between mb-2">
+                <div class="w-16 h-1.5 bg-white/10 rounded-full"></div>
+                <div class="flex gap-1">
+                  <div class="w-3 h-3 rounded bg-white/10"></div>
+                  <div class="w-3 h-3 rounded bg-orange-600/80"></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <!-- Grid items with subtle hover scale/glow -->
+                <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
+                  <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-blue-500/30"></div>
+                  <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
+                </div>
+                <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
+                  <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-purple-500/30"></div>
+                  <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
+                </div>
+                <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
+                  <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-green-500/30"></div>
+                  <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
+                </div>
+                <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
+                  <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-red-500/30"></div>
+                  <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
+                </div>
+                <div class="aspect-video bg-white/5 rounded border border-orange-500/20 shadow-[0_0_8px_rgba(249,115,22,0.2)] transition-all duration-300 relative overflow-hidden animate-pulse">
+                  <div class="absolute top-1 left-1 w-2 h-2 rounded-full bg-yellow-500/30"></div>
+                  <div class="mt-4 mx-2 h-1 bg-white/10 rounded-full"></div>
+                </div>
+                <div class="aspect-video border border-dashed border-white/10 rounded flex items-center justify-center opacity-50 animate-pulse transition-all duration-300">
+                  <div class="text-[8px] text-zinc-400">+</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      `;
+        </div>
+        `;
     case "emoji":
       return `
         <span class="text-6xl animate-sway font-black text-transparent bg-clip-text bg-gradient-to-b ${v.color} 
-               filter drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] select-none">
+               filter drop - shadow - [0_0_15px_rgba(234, 179, 8, 0.3)] select - none">
           ${v.content}
         </span>
-      `;
+        `;
     case "agent-loop":
       return `
         <div class="relative w-full h-full flex items-center justify-center gap-8">
@@ -230,7 +300,7 @@ function getVisualHTML(project) {
                  <div class="absolute -bottom-6 text-[9px] font-mono text-red-500/60 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Critic</div>
             </div>
         </div>
-      `;
+        `;
     case "resume-scan":
       return `
         <div class="relative w-24 h-32 bg-gray-900 border border-gray-700 rounded-lg overflow-hidden flex flex-col items-center pt-4 shadow-xl group hover:border-blue-500/30 transition-colors duration-500">
@@ -247,7 +317,7 @@ function getVisualHTML(project) {
                 ${v.label}
             </div>
         </div>
-      `;
+        `;
     case "mlops-pipeline":
       return `
         <div class="flex items-center gap-0.5 relative">
@@ -273,11 +343,11 @@ function getVisualHTML(project) {
               </div>
            </div>
         </div>
-      `;
+        `;
     case "anime-card":
       return `
-          <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden" 
-               style="background: radial-gradient(circle at center, rgba(20,0,0,0.5) 0%, rgba(0,0,0,0.95) 100%);">
+        <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden"
+      style = "background: radial-gradient(circle at center, rgba(20,0,0,0.5) 0%, rgba(0,0,0,0.95) 100%);">
              <div class="absolute top-4 right-4 flex items-center gap-1.5 opacity-80 z-20">
                  <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse-fast"></div>
                  <span class="text-[10px] font-mono text-red-500 font-bold tracking-widest">REC</span>
@@ -319,9 +389,10 @@ function getVisualHTML(project) {
                </div>
              `;
           })
-          .join("")}
+          .join("")
+        }
         </div>
-      `;
+        `;
     case "document":
       return `
         <div class="w-20 h-28 bg-white rounded shadow-lg relative animate-float-paper group hover:rotate-0 transition-transform duration-300 overflow-hidden">
@@ -340,9 +411,9 @@ function getVisualHTML(project) {
             <div class="w-2/3 h-1 bg-gray-300 rounded"></div>
           </div>
         </div>
-      `;
+        `;
     default:
-      return `<i class="fas fa-code text-4xl text-gray-500"></i>`;
+      return `<i class="fas fa-code text-4xl text-gray-500"></i> `;
   }
 }
 
@@ -365,19 +436,19 @@ function createProjectCard(project) {
     ? `<a href="${project.links.github}" target="_blank" class="card-link-btn">
          <i class="fab fa-github"></i>
          <span>Code</span>
-       </a>`
+       </a> `
     : "";
   const demoLink = project.links.demo
     ? `<a href="${project.links.demo}" target="_blank" class="card-link-btn">
          <i class="fas fa-external-link-alt"></i>
          <span>${project.links.liveLabel || "Demo"}</span>
-       </a>`
+       </a> `
     : "";
   const tagsHTML = project.tags
-    .map((tag) => `<span class="tag">${tag}</span>`)
+    .map((tag) => `<span class="tag"> ${tag}</span> `)
     .join("");
   return `
-    <div class="project-card-compact reveal-text">
+        <div class="project-card-compact reveal-text">
         <div class="card-visual bg-gradient-to-br ${bgGradient}">
             <div class="card-visual-content w-full h-full flex items-center justify-center relative">
                 ${visualHTML}
@@ -396,7 +467,7 @@ function createProjectCard(project) {
             </div>
         </div>
     </div>
-  `;
+        `;
 }
 
 function renderProjects(filter = "All") {
