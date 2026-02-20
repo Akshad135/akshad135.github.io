@@ -409,3 +409,46 @@ if (backToTopBtn && backToTopWrapper) {
     });
   }
 })();
+
+function fallbackCopyTextToClipboard(text, btn) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.position = "fixed";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+  }
+  document.body.removeChild(textArea);
+
+  const iconDefault = btn.querySelector('.icon-default');
+  const iconCopy = btn.querySelector('.icon-copy');
+  const iconCheck = btn.querySelector('.icon-check');
+
+  if (iconDefault && iconCopy && iconCheck) {
+    // Resume page: 3-state opacity-based (envelope → checkmark)
+    iconDefault.style.opacity = '0';
+    iconCopy.style.opacity = '0';
+    iconCheck.style.opacity = '1';
+
+    setTimeout(() => {
+      iconCheck.style.opacity = '0';
+      iconDefault.style.opacity = '';
+      iconCopy.style.opacity = '';
+    }, 2000);
+  } else if (iconCopy && iconCheck) {
+    // Home page: block/hidden toggle
+    iconCopy.classList.replace('block', 'hidden');
+    iconCheck.classList.replace('hidden', 'block');
+
+    setTimeout(() => {
+      iconCheck.classList.replace('block', 'hidden');
+      iconCopy.classList.replace('hidden', 'block');
+    }, 2000);
+  }
+}
