@@ -48,6 +48,53 @@ async function runLoader() {
 
 window.addEventListener("load", runLoader);
 
+const animationScheduler = (() => {
+  const callbacks = new Set();
+  let frameId = null;
+
+  function tick(timestamp) {
+    frameId = null;
+    callbacks.forEach((callback) => callback(timestamp));
+
+    if (!document.hidden && callbacks.size > 0) {
+      frameId = requestAnimationFrame(tick);
+    }
+  }
+
+  function ensureRunning() {
+    if (frameId === null && !document.hidden && callbacks.size > 0) {
+      frameId = requestAnimationFrame(tick);
+    }
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+        frameId = null;
+      }
+      return;
+    }
+
+    ensureRunning();
+  });
+
+  return {
+    add(callback) {
+      callbacks.add(callback);
+      ensureRunning();
+
+      return () => {
+        callbacks.delete(callback);
+        if (callbacks.size === 0 && frameId !== null) {
+          cancelAnimationFrame(frameId);
+          frameId = null;
+        }
+      };
+    },
+  };
+})();
+
 const canvas = document.getElementById("vector-canvas");
 if (canvas) {
   const ctx = canvas.getContext("2d");
@@ -57,65 +104,85 @@ if (canvas) {
   let time = 0;
   const spacing = 30;
   const length = 10;
+  const maxDist = 400;
+  const maxDistSq = maxDist * maxDist;
+  const points = [];
+
+  function rebuildGrid() {
+    points.length = 0;
+    for (let x = 0; x < width; x += spacing) {
+      for (let y = 0; y < height; y += spacing) {
+        points.push({ x, y });
+      }
+    }
+  }
+
   function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
+    rebuildGrid();
   }
+
   window.addEventListener("resize", resize);
   resize();
-  document.addEventListener("mousemove", (e) => {
+
+  const handlePointerMove = (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-  });
-  document.addEventListener(
-    "touchmove",
-    (e) => {
-      if (e.touches.length > 0) {
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-      }
-    },
-    { passive: true }
-  );
+  };
+  document.addEventListener("pointermove", handlePointerMove, { passive: true });
+
   function draw() {
     ctx.clearRect(0, 0, width, height);
+
     if (window.innerWidth < 768) {
       time += 0.008;
       mouseX = width / 2 + Math.sin(time) * (width / 3);
       mouseY = height / 2 + Math.cos(time * 1.3) * (height / 4);
     }
-    for (let x = 0; x < width; x += spacing) {
-      for (let y = 0; y < height; y += spacing) {
-        const dx = mouseX - x;
-        const dy = mouseY - y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 400;
-        let angle = 0;
-        let lineLen = 2;
-        let opacity = 0.1;
-        if (distance < maxDist) {
-          angle = Math.atan2(dy, dx);
-          const intensity = 1 - distance / maxDist;
-          lineLen = length + intensity * 10;
-          opacity = 0.1 + intensity * 0.4;
+
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i < points.length; i++) {
+      const point = points[i];
+      const dx = mouseX - point.x;
+      const dy = mouseY - point.y;
+      const distanceSq = dx * dx + dy * dy;
+
+      let dirX = 1;
+      let dirY = 0;
+      let lineLen = 2;
+      let opacity = 0.1;
+
+      if (distanceSq < maxDistSq) {
+        const distance = Math.sqrt(distanceSq);
+        const intensity = 1 - distance / maxDist;
+        lineLen = length + intensity * 10;
+        opacity = 0.1 + intensity * 0.4;
+
+        if (distance > 0) {
+          const invDistance = 1 / distance;
+          dirX = dx * invDistance;
+          dirY = dy * invDistance;
         }
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(angle);
-        ctx.beginPath();
-        ctx.moveTo(-lineLen / 2, 0);
-        ctx.lineTo(lineLen / 2, 0);
-        ctx.strokeStyle = `rgba(100, 149, 237, ${opacity})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.restore();
       }
+
+      const halfLen = lineLen / 2;
+      ctx.beginPath();
+      ctx.moveTo(point.x - dirX * halfLen, point.y - dirY * halfLen);
+      ctx.lineTo(point.x + dirX * halfLen, point.y + dirY * halfLen);
+      ctx.strokeStyle = `rgba(100, 149, 237, ${opacity})`;
+      ctx.stroke();
     }
-    requestAnimationFrame(draw);
   }
-  draw();
+
+  const stopVectorAnimation = animationScheduler.add(draw);
+  window.addEventListener("beforeunload", () => {
+    window.removeEventListener("resize", resize);
+    document.removeEventListener("pointermove", handlePointerMove);
+    stopVectorAnimation();
+  });
 }
 
 const backToTopBtn = document.getElementById("back-to-top");
@@ -139,41 +206,18 @@ if (backToTopBtn && backToTopWrapper) {
 (function () {
   const canvas = document.getElementById("neuralCanvas");
   if (!canvas) return;
+
   const card = document.getElementById("simulationCard");
   const tensorCounter = document.getElementById("tensorCounter");
   const ctx = canvas.getContext("2d");
-  let width, height;
+  let width = 0;
+  let height = 0;
+  let pixelRatio = 1;
   let tensorCount = 410294;
-
-  function initSize() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    width = rect.width;
-    height = rect.height;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
-
-    // Re-initialize network on resize to fit new dimensions
-    initNetwork();
-  }
-
-  const resizeObserver = new ResizeObserver(() => initSize());
-  resizeObserver.observe(canvas.parentElement);
-
-  // Cleanup ResizeObserver on page unload to prevent memory leak
-  window.addEventListener("beforeunload", () => {
-    resizeObserver.disconnect();
-  });
-
-  // Initial size setup
-  const rect = canvas.parentElement.getBoundingClientRect();
-  width = rect.width;
-  height = rect.height;
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = width * dpr;
-  canvas.height = height * dpr;
-  ctx.scale(dpr, dpr);
+  let isMobile = window.innerWidth < 768;
+  let counterRenderTs = 0;
+  let renderedTensorCount = tensorCount;
+  let isCardVisible = true;
 
   // Dynamic structure based on screen width
   function getStructure() {
@@ -188,7 +232,10 @@ if (backToTopBtn && backToTopWrapper) {
 
   let structure = getStructure();
   const nodes = [];
+  const layers = [];
+  const connections = [];
   const pulses = [];
+  const MAX_PULSES = 320;
 
   class Node {
     constructor(x, y, layerIndex) {
@@ -201,11 +248,9 @@ if (backToTopBtn && backToTopWrapper) {
     }
 
     draw(time) {
-      // Only animate vertical movement on larger screens (desktop/tablet)
-      if (window.innerWidth >= 768) {
+      if (!isMobile) {
         this.y = this.baseY + Math.sin(time + this.bias) * 3;
       } else {
-        // Static position on mobile to prevent "dangling" look
         this.y = this.baseY;
       }
 
@@ -307,12 +352,13 @@ if (backToTopBtn && backToTopWrapper) {
 
   function initNetwork() {
     structure = getStructure(); // Update structure based on current width
+    isMobile = window.innerWidth < 768;
     nodes.length = 0;
-    pulses.length = 0; // Fix: clear pulses on resize to prevent floating particles
+    layers.length = 0;
+    connections.length = 0;
+    pulses.length = 0;
 
     // Responsive padding
-    const isMobile = window.innerWidth < 768;
-    // UPDATED: Increased padding on mobile to visually shrink the net
     const paddingX = isMobile ? 60 : 60;
     const paddingY = isMobile ? 45 : 50;
 
@@ -326,62 +372,134 @@ if (backToTopBtn && backToTopWrapper) {
       const columnHeight = (nodeCount - 1) * nodeSpacing;
       const startY = (height - columnHeight) / 2 - (isMobile ? 25 : 20); // Center vertically better on mobile
 
+      const layerNodes = [];
       for (let i = 0; i < nodeCount; i++) {
-        // Just center single nodes, otherwise spread them out
         const y = nodeCount > 1 ? startY + i * nodeSpacing : height / 2;
-        nodes.push(new Node(x, y, layerIdx));
+        const node = new Node(x, y, layerIdx);
+        nodes.push(node);
+        layerNodes.push(node);
       }
+      layers.push(layerNodes);
     });
+
+    for (let i = 0; i < layers.length - 1; i++) {
+      const currentLayer = layers[i];
+      const nextLayer = layers[i + 1];
+      for (let j = 0; j < currentLayer.length; j++) {
+        const fromNode = currentLayer[j];
+        for (let k = 0; k < nextLayer.length; k++) {
+          connections.push({ from: fromNode, to: nextLayer[k] });
+        }
+      }
+    }
   }
 
-  // Initialize network after a short delay to ensure DOM is ready
-  setTimeout(initNetwork, 100);
+  function initSize(force = false) {
+    const parentElement = canvas.parentElement;
+    if (!parentElement) return;
 
-  function animate() {
+    const rect = parentElement.getBoundingClientRect();
+    const nextWidth = Math.max(1, Math.round(rect.width));
+    const nextHeight = Math.max(1, Math.round(rect.height));
+    const nextPixelRatio = window.devicePixelRatio || 1;
+
+    if (
+      !force &&
+      nextWidth === width &&
+      nextHeight === height &&
+      nextPixelRatio === pixelRatio
+    ) {
+      return;
+    }
+
+    width = nextWidth;
+    height = nextHeight;
+    pixelRatio = nextPixelRatio;
+
+    canvas.width = Math.round(width * pixelRatio);
+    canvas.height = Math.round(height * pixelRatio);
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    initNetwork();
+  }
+
+  const resizeObserver = new ResizeObserver(() => initSize());
+  if (canvas.parentElement) {
+    resizeObserver.observe(canvas.parentElement);
+  }
+
+  const handleWindowResize = () => initSize();
+  window.addEventListener("resize", handleWindowResize);
+
+  let visibilityObserver = null;
+  if (card) {
+    visibilityObserver = new IntersectionObserver((entries) => {
+      isCardVisible = entries.some((entry) => entry.isIntersecting);
+    });
+    visibilityObserver.observe(card);
+  }
+
+  initSize(true);
+  if (tensorCounter) {
+    tensorCounter.textContent = tensorCount.toLocaleString();
+  }
+
+  function animate(timestamp) {
+    if (!isCardVisible) return;
+
     ctx.clearRect(0, 0, width, height);
     const time = Date.now() * 0.002;
 
     ctx.lineWidth = 1;
-    nodes.forEach((nodeA) => {
-      nodes.forEach((nodeB) => {
-        if (nodeB.layer === nodeA.layer + 1) {
-          const activeFactor = (nodeA.activation + nodeB.activation) / 2;
-          const alpha = 0.05 + activeFactor * 0.2;
+    for (let i = 0; i < connections.length; i++) {
+      const connection = connections[i];
+      const nodeA = connection.from;
+      const nodeB = connection.to;
+      const activeFactor = (nodeA.activation + nodeB.activation) / 2;
+      const alpha = 0.05 + activeFactor * 0.2;
 
-          ctx.beginPath();
-          ctx.moveTo(nodeA.x, nodeA.y);
-          ctx.lineTo(nodeB.x, nodeB.y);
-          ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
-          ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(nodeA.x, nodeA.y);
+      ctx.lineTo(nodeB.x, nodeB.y);
+      ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
+      ctx.stroke();
 
-          const spawnChance = 0.002 + nodeA.activation * 0.01;
-          if (Math.random() < spawnChance) {
-            pulses.push(new Pulse(nodeA, nodeB));
-          }
-        }
-      });
-    });
+      const spawnChance = 0.002 + nodeA.activation * 0.01;
+      if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
+        pulses.push(new Pulse(nodeA, nodeB));
+      }
+    }
 
-    for (let i = pulses.length - 1; i >= 0; i--) {
+    let writeIndex = 0;
+    for (let i = 0; i < pulses.length; i++) {
       const p = pulses[i];
       p.update();
       p.draw();
-      if (p.done) pulses.splice(i, 1);
+      if (!p.done) {
+        pulses[writeIndex++] = p;
+      }
+    }
+    pulses.length = writeIndex;
+
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].draw(time);
     }
 
-    nodes.forEach((node) => node.draw(time));
-
-    if (tensorCounter) {
-      tensorCounter.innerText = tensorCount.toLocaleString();
+    if (
+      tensorCounter &&
+      tensorCount !== renderedTensorCount &&
+      timestamp - counterRenderTs >= 120
+    ) {
+      renderedTensorCount = tensorCount;
+      tensorCounter.textContent = tensorCount.toLocaleString();
+      counterRenderTs = timestamp;
     }
-
-    requestAnimationFrame(animate);
   }
 
-  animate();
+  const stopNeuralAnimation = animationScheduler.add(animate);
 
   if (card) {
-    card.addEventListener("click", () => {
+    const triggerCardReset = () => {
       card.classList.remove("flash-active");
       void card.offsetWidth;
       card.classList.add("flash-active");
@@ -391,8 +509,8 @@ if (backToTopBtn && backToTopWrapper) {
       const lastLayerIdx = structure.length - 1;
 
       for (let i = lastLayerIdx; i > 0; i--) {
-        const currentLayerNodes = nodes.filter((n) => n.layer === i);
-        const prevLayerNodes = nodes.filter((n) => n.layer === i - 1);
+        const currentLayerNodes = layers[i];
+        const prevLayerNodes = layers[i - 1];
 
         const delay = (lastLayerIdx - i) * 120;
 
@@ -406,8 +524,36 @@ if (backToTopBtn && backToTopWrapper) {
           });
         }, delay);
       }
+    };
+
+    card.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      triggerCardReset();
     });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        triggerCardReset();
+      }
+    });
+
+    if (!card.hasAttribute("tabindex")) {
+      card.setAttribute("tabindex", "0");
+    }
+    if (!card.hasAttribute("role")) {
+      card.setAttribute("role", "button");
+    }
   }
+
+  window.addEventListener("beforeunload", () => {
+    window.removeEventListener("resize", handleWindowResize);
+    resizeObserver.disconnect();
+    if (visibilityObserver) {
+      visibilityObserver.disconnect();
+    }
+    stopNeuralAnimation();
+  });
 })();
 
 function fallbackCopyTextToClipboard(text, btn) {
