@@ -45,8 +45,7 @@ document.addEventListener("click", (e) => {
   const target = document.querySelector(hash);
   if (target) {
     e.preventDefault();
-    const navHeight = document.querySelector("nav")?.offsetHeight || 0;
-    smoothScrollTo(target.offsetTop - navHeight);
+    smoothScrollTo(target.offsetTop);
   }
 });
 
