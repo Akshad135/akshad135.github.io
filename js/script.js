@@ -258,12 +258,18 @@ if (backToTopBtn && backToTopWrapper) {
   // Dynamic structure based on screen width
   function getStructure() {
     if (window.innerWidth < 480) {
-      return [4, 5, 5, 4, 2]; // Mobile: Less nodes
+      return [3, 5, 3]; // Small phone: 3 layers, 11 nodes
     } else if (window.innerWidth < 768) {
-      return [5, 6, 6, 5, 3]; // Tablet: Medium nodes
+      return [4, 5, 5, 3]; // Tablet: 4 layers, 17 nodes
     } else {
       return [6, 8, 8, 6, 4]; // Desktop: Full complexity
     }
+  }
+
+  function getMaxPulses() {
+    if (window.innerWidth < 480) return 50;
+    if (window.innerWidth < 768) return 80;
+    return 320;
   }
 
   let structure = getStructure();
@@ -271,7 +277,7 @@ if (backToTopBtn && backToTopWrapper) {
   const layers = [];
   const connections = [];
   const pulses = [];
-  const MAX_PULSES = 320;
+  let MAX_PULSES = getMaxPulses();
 
   class Node {
     constructor(x, y, layerIndex) {
@@ -391,6 +397,7 @@ if (backToTopBtn && backToTopWrapper) {
   function initNetwork() {
     structure = getStructure(); // Update structure based on current width
     isMobile = window.innerWidth < 768;
+    MAX_PULSES = getMaxPulses();
     nodes.length = 0;
     layers.length = 0;
     connections.length = 0;
@@ -502,7 +509,9 @@ if (backToTopBtn && backToTopWrapper) {
       ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
       ctx.stroke();
 
-      const spawnChance = 0.002 + nodeA.activation * 0.01;
+      const spawnChance = isMobile
+        ? 0.001 + nodeA.activation * 0.004
+        : 0.002 + nodeA.activation * 0.01;
       if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
         pulses.push(new Pulse(nodeA, nodeB));
       }
