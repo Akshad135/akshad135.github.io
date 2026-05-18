@@ -141,11 +141,13 @@ if (canvas) {
   let mouseX = 0,
     mouseY = 0;
   let time = 0;
-  const spacing = 30;
+  const isMobileVec = window.innerWidth < 768;
+  const spacing = isMobileVec ? 50 : 30;
   const length = 10;
-  const maxDist = 400;
+  const maxDist = isMobileVec ? 300 : 400;
   const maxDistSq = maxDist * maxDist;
   const points = [];
+  let skipFrame = false;
 
   function rebuildGrid() {
     points.length = 0;
@@ -174,15 +176,26 @@ if (canvas) {
   document.addEventListener("pointermove", handlePointerMove, { passive: true });
 
   function draw() {
+    // Throttle to ~30fps on mobile
+    if (isMobileVec) {
+      skipFrame = !skipFrame;
+      if (skipFrame) return;
+    }
+
     ctx.clearRect(0, 0, width, height);
 
-    if (window.innerWidth < 768) {
-      time += 0.008;
+    if (isMobileVec) {
+      time += 0.016;
       mouseX = width / 2 + Math.sin(time) * (width / 3);
       mouseY = height / 2 + Math.cos(time * 1.3) * (height / 4);
     }
 
     ctx.lineWidth = 1.5;
+
+    // Batch draws: group by opacity to minimize stroke() calls
+    const dimPath = new Path2D();
+    let activePaths = [];
+
     for (let i = 0; i < points.length; i++) {
       const point = points[i];
       const dx = mouseX - point.x;
@@ -192,27 +205,41 @@ if (canvas) {
       let dirX = 1;
       let dirY = 0;
       let lineLen = 2;
-      let opacity = 0.1;
 
       if (distanceSq < maxDistSq) {
         const distance = Math.sqrt(distanceSq);
         const intensity = 1 - distance / maxDist;
         lineLen = length + intensity * 10;
-        opacity = 0.1 + intensity * 0.4;
+        const opacity = 0.1 + intensity * 0.4;
 
         if (distance > 0) {
           const invDistance = 1 / distance;
           dirX = dx * invDistance;
           dirY = dy * invDistance;
         }
-      }
 
-      const halfLen = lineLen / 2;
-      ctx.beginPath();
-      ctx.moveTo(point.x - dirX * halfLen, point.y - dirY * halfLen);
-      ctx.lineTo(point.x + dirX * halfLen, point.y + dirY * halfLen);
-      ctx.strokeStyle = `rgba(100, 149, 237, ${opacity})`;
-      ctx.stroke();
+        const halfLen = lineLen / 2;
+        // Bucket into ~4 opacity levels to batch strokes
+        const bucket = Math.min(3, (intensity * 4) | 0);
+        if (!activePaths[bucket]) activePaths[bucket] = { path: new Path2D(), opacity };
+        activePaths[bucket].path.moveTo(point.x - dirX * halfLen, point.y - dirY * halfLen);
+        activePaths[bucket].path.lineTo(point.x + dirX * halfLen, point.y + dirY * halfLen);
+      } else {
+        dimPath.moveTo(point.x - 1, point.y);
+        dimPath.lineTo(point.x + 1, point.y);
+      }
+    }
+
+    // Draw dim points (single stroke call for all)
+    ctx.strokeStyle = `rgba(100, 149, 237, 0.1)`;
+    ctx.stroke(dimPath);
+
+    // Draw active points (one stroke call per opacity bucket)
+    for (let b = 0; b < activePaths.length; b++) {
+      if (activePaths[b]) {
+        ctx.strokeStyle = `rgba(100, 149, 237, ${activePaths[b].opacity})`;
+        ctx.stroke(activePaths[b].path);
+      }
     }
   }
 
