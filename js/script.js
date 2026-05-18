@@ -10,6 +10,46 @@ if (menuBtn) {
   menuBtn.addEventListener("click", toggleMenu);
 }
 
+// JS-powered smooth scroll with controlled duration
+function smoothScrollTo(targetY, duration = 700) {
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  if (Math.abs(diff) < 1) return;
+  let startTime = null;
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, startY + diff * easeInOutCubic(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+// Intercept all internal anchor links for smooth scroll
+document.addEventListener("click", (e) => {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  const hash = link.getAttribute("href");
+  if (hash === "#") {
+    e.preventDefault();
+    smoothScrollTo(0);
+    return;
+  }
+  const target = document.querySelector(hash);
+  if (target) {
+    e.preventDefault();
+    const navHeight = document.querySelector("nav")?.offsetHeight || 0;
+    smoothScrollTo(target.offsetTop - navHeight);
+  }
+});
+
 const terminalLines = [
   {
     text: "> initializing neural_interface v2.0...",
@@ -196,10 +236,7 @@ if (backToTopBtn && backToTopWrapper) {
     }
   });
   backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    smoothScrollTo(0);
   });
 }
 
@@ -271,7 +308,7 @@ if (backToTopBtn && backToTopWrapper) {
         g
       )}, ${Math.min(255, b)}, ${Math.min(1, alpha)})`;
 
-      if (this.activation > 0.1) {
+      if (!isMobile && this.activation > 0.1) {
         ctx.shadowBlur = this.activation * 15;
         ctx.shadowColor = `rgba(96, 165, 250, ${this.activation})`;
       } else {
@@ -322,7 +359,9 @@ if (backToTopBtn && backToTopWrapper) {
         ctx.shadowColor = "#ffffff";
       }
 
-      ctx.shadowBlur = 6;
+      if (!isMobile) {
+        ctx.shadowBlur = 6;
+      }
       ctx.fill();
       ctx.shadowBlur = 0;
 
