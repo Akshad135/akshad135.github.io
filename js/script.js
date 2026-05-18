@@ -176,12 +176,6 @@ if (canvas) {
   document.addEventListener("pointermove", handlePointerMove, { passive: true });
 
   function draw() {
-    // Throttle to ~30fps on mobile
-    if (isMobileVec) {
-      skipFrame = !skipFrame;
-      if (skipFrame) return;
-    }
-
     ctx.clearRect(0, 0, width, height);
 
     if (isMobileVec) {
@@ -219,8 +213,8 @@ if (canvas) {
         }
 
         const halfLen = lineLen / 2;
-        // Bucket into ~4 opacity levels to batch strokes
-        const bucket = Math.min(3, (intensity * 4) | 0);
+        // Bucket into ~10 opacity levels to batch strokes smoothly
+        const bucket = Math.min(9, (intensity * 10) | 0);
         if (!activePaths[bucket]) activePaths[bucket] = { path: new Path2D(), opacity };
         activePaths[bucket].path.moveTo(point.x - dirX * halfLen, point.y - dirY * halfLen);
         activePaths[bucket].path.lineTo(point.x + dirX * halfLen, point.y + dirY * halfLen);
@@ -509,47 +503,29 @@ if (backToTopBtn && backToTopWrapper) {
     tensorCounter.textContent = tensorCount.toLocaleString();
   }
 
-  let neuralSkipFrame = false;
-
   function animate(timestamp) {
     if (!isCardVisible) return;
-
-    // Pulse spawning always runs (keeps simulation consistent)
-    for (let i = 0; i < connections.length; i++) {
-      const nodeA = connections[i].from;
-      const spawnChance = 0.002 + nodeA.activation * 0.01;
-      if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
-        pulses.push(new Pulse(nodeA, connections[i].to));
-      }
-    }
-
-    // Throttle rendering to ~30fps on mobile
-    if (isMobile) {
-      neuralSkipFrame = !neuralSkipFrame;
-      if (neuralSkipFrame) return;
-    }
 
     ctx.clearRect(0, 0, width, height);
     const time = Date.now() * 0.002;
 
-    // Batch connection lines by alpha bucket (~4 stroke calls instead of ~100)
     ctx.lineWidth = 1;
-    const connBuckets = [];
     for (let i = 0; i < connections.length; i++) {
       const connection = connections[i];
       const nodeA = connection.from;
       const nodeB = connection.to;
       const activeFactor = (nodeA.activation + nodeB.activation) / 2;
       const alpha = 0.05 + activeFactor * 0.2;
-      const bucket = Math.min(3, (activeFactor * 4) | 0);
-      if (!connBuckets[bucket]) connBuckets[bucket] = { path: new Path2D(), alpha };
-      connBuckets[bucket].path.moveTo(nodeA.x, nodeA.y);
-      connBuckets[bucket].path.lineTo(nodeB.x, nodeB.y);
-    }
-    for (let b = 0; b < connBuckets.length; b++) {
-      if (connBuckets[b]) {
-        ctx.strokeStyle = `rgba(96, 165, 250, ${connBuckets[b].alpha})`;
-        ctx.stroke(connBuckets[b].path);
+
+      ctx.beginPath();
+      ctx.moveTo(nodeA.x, nodeA.y);
+      ctx.lineTo(nodeB.x, nodeB.y);
+      ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
+      ctx.stroke();
+
+      const spawnChance = 0.002 + nodeA.activation * 0.01;
+      if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
+        pulses.push(new Pulse(nodeA, nodeB));
       }
     }
 
