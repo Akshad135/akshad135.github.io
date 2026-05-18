@@ -285,18 +285,12 @@ if (backToTopBtn && backToTopWrapper) {
   // Dynamic structure based on screen width
   function getStructure() {
     if (window.innerWidth < 480) {
-      return [3, 5, 3]; // Small phone: 3 layers, 11 nodes
+      return [4, 5, 5, 4, 2]; // Mobile: same as desktop but slightly fewer
     } else if (window.innerWidth < 768) {
-      return [4, 5, 5, 3]; // Tablet: 4 layers, 17 nodes
+      return [5, 6, 6, 5, 3]; // Tablet
     } else {
       return [6, 8, 8, 6, 4]; // Desktop: Full complexity
     }
-  }
-
-  function getMaxPulses() {
-    if (window.innerWidth < 480) return 50;
-    if (window.innerWidth < 768) return 80;
-    return 320;
   }
 
   let structure = getStructure();
@@ -304,7 +298,7 @@ if (backToTopBtn && backToTopWrapper) {
   const layers = [];
   const connections = [];
   const pulses = [];
-  let MAX_PULSES = getMaxPulses();
+  const MAX_PULSES = 320;
 
   class Node {
     constructor(x, y, layerIndex) {
@@ -424,7 +418,6 @@ if (backToTopBtn && backToTopWrapper) {
   function initNetwork() {
     structure = getStructure(); // Update structure based on current width
     isMobile = window.innerWidth < 768;
-    MAX_PULSES = getMaxPulses();
     nodes.length = 0;
     layers.length = 0;
     connections.length = 0;
@@ -516,31 +509,47 @@ if (backToTopBtn && backToTopWrapper) {
     tensorCounter.textContent = tensorCount.toLocaleString();
   }
 
+  let neuralSkipFrame = false;
+
   function animate(timestamp) {
     if (!isCardVisible) return;
+
+    // Pulse spawning always runs (keeps simulation consistent)
+    for (let i = 0; i < connections.length; i++) {
+      const nodeA = connections[i].from;
+      const spawnChance = 0.002 + nodeA.activation * 0.01;
+      if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
+        pulses.push(new Pulse(nodeA, connections[i].to));
+      }
+    }
+
+    // Throttle rendering to ~30fps on mobile
+    if (isMobile) {
+      neuralSkipFrame = !neuralSkipFrame;
+      if (neuralSkipFrame) return;
+    }
 
     ctx.clearRect(0, 0, width, height);
     const time = Date.now() * 0.002;
 
+    // Batch connection lines by alpha bucket (~4 stroke calls instead of ~100)
     ctx.lineWidth = 1;
+    const connBuckets = [];
     for (let i = 0; i < connections.length; i++) {
       const connection = connections[i];
       const nodeA = connection.from;
       const nodeB = connection.to;
       const activeFactor = (nodeA.activation + nodeB.activation) / 2;
       const alpha = 0.05 + activeFactor * 0.2;
-
-      ctx.beginPath();
-      ctx.moveTo(nodeA.x, nodeA.y);
-      ctx.lineTo(nodeB.x, nodeB.y);
-      ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
-      ctx.stroke();
-
-      const spawnChance = isMobile
-        ? 0.001 + nodeA.activation * 0.004
-        : 0.002 + nodeA.activation * 0.01;
-      if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
-        pulses.push(new Pulse(nodeA, nodeB));
+      const bucket = Math.min(3, (activeFactor * 4) | 0);
+      if (!connBuckets[bucket]) connBuckets[bucket] = { path: new Path2D(), alpha };
+      connBuckets[bucket].path.moveTo(nodeA.x, nodeA.y);
+      connBuckets[bucket].path.lineTo(nodeB.x, nodeB.y);
+    }
+    for (let b = 0; b < connBuckets.length; b++) {
+      if (connBuckets[b]) {
+        ctx.strokeStyle = `rgba(96, 165, 250, ${connBuckets[b].alpha})`;
+        ctx.stroke(connBuckets[b].path);
       }
     }
 
