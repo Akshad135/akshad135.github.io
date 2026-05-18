@@ -285,9 +285,9 @@ if (backToTopBtn && backToTopWrapper) {
   // Dynamic structure based on screen width
   function getStructure() {
     if (window.innerWidth < 480) {
-      return [4, 5, 5, 3]; // Small phone: 4 layers, 17 nodes
+      return [3, 4, 4, 3]; // Small phone: 4 layers, 14 nodes
     } else if (window.innerWidth < 768) {
-      return [5, 6, 6, 4]; // Tablet: 4 layers, 21 nodes
+      return [4, 5, 5, 3]; // Tablet: 4 layers, 17 nodes
     } else {
       return [6, 8, 8, 6, 4]; // Desktop: Full complexity
     }
@@ -298,7 +298,7 @@ if (backToTopBtn && backToTopWrapper) {
   const layers = [];
   const connections = [];
   const pulses = [];
-  const MAX_PULSES = isMobile ? 150 : 320;
+  const MAX_PULSES = isMobile ? 100 : 320;
 
   class Node {
     constructor(x, y, layerIndex) {
