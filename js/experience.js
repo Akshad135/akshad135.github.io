@@ -4,7 +4,7 @@ const experience = [
     role: "GenAI Technical Consultant",
     type: "Intern",
     duration: "Jan 2026 — Present",
-    description: "", // Add detailed description if available
+    description: "• Built multi-agent AI pipelines using Google ADK, implementing hierarchical agent architectures with dynamic LLM-driven task routing to automate complex enterprise workflows.<br><br>• Equipped agents with custom capabilities using ADK's FunctionTool and AgentTool ecosystem, integrating external APIs and data sources for production-grade agentic solutions.",
     tags: ["Generative AI", "Technical Consulting"],
     links: {
       website: "https://www.ey.com",
