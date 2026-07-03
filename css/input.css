@@ -611,12 +611,12 @@ html {
 
 @keyframes breathe {
   0%, 100% {
-    opacity: 0.85;
-    transform: scale(0.95);
+    opacity: 0.7;
+    transform: scale(0.9);
   }
   50% {
     opacity: 1;
-    transform: scale(1.02);
+    transform: scale(1.05);
   }
 }
 
@@ -625,7 +625,7 @@ html {
 }
 
 .animate-breathe {
-  animation: breathe 10s ease-in-out infinite;
+  animation: breathe 8s ease-in-out infinite;
 }
 
 @keyframes sway {
