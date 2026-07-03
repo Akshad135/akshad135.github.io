@@ -111,33 +111,67 @@ h4 {
 }
 
 .project-card-compact {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  position: relative;
-  height: 100%;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative; /* important for spotlight */
+  cursor: pointer;
+}
+
+.project-card-compact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.01)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Spotlight Glow Effect */
+.card-spotlight {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  z-index: 10;
+}
+
+.project-card-compact:hover .card-spotlight {
+  opacity: 1;
 }
 
 .project-card-compact:hover {
-  transform: translateY(-6px);
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(59, 130, 246, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .card-visual {
-  height: 160px;
+  aspect-ratio: 16 / 9;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid var(--card-border);
 }
 
 .card-visual::before {
@@ -367,6 +401,18 @@ h4 {
   }
 }
 
+.bg-grid-pattern {
+  background-color: #0a0a0a;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-radial-glow {
+  background-color: #0a0a0a;
+  background-image: radial-gradient(circle at bottom center, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 40%, transparent 80%);
+}
+
 .status-footer {
   position: fixed;
   bottom: 0;
@@ -488,19 +534,7 @@ html {
   scroll-behavior: smooth;
 }
 
-#contact {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.3) 100%
-  );
-  position: relative;
-}
 
-#work {
-  background: transparent;
-  position: relative;
-}
 
 @keyframes scan {
   0% {
@@ -575,8 +609,23 @@ html {
   }
 }
 
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
 .animate-breathe-red {
   animation: breathe-red 4s ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: breathe 10s ease-in-out infinite;
 }
 
 @keyframes sway {

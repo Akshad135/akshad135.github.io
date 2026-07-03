@@ -428,55 +428,113 @@ const observer = new IntersectionObserver(
   { threshold: 0.1 }
 );
 
-function createProjectCard(project) {
+function createFeaturedProject(project, index) {
   const visualHTML = getVisualHTML(project);
-  const bgGradient =
-    project.visual.bgGradient || "from-gray-900/30 to-transparent";
-  const githubLink = project.links.github
-    ? `<a href="${project.links.github}" target="_blank" class="card-link-btn">
-         <i class="fab fa-github"></i>
-         <span>Code</span>
-       </a> `
-    : "";
-  const demoLink = project.links.demo
-    ? `<a href="${project.links.demo}" target="_blank" class="card-link-btn">
-         <i class="fas fa-external-link-alt"></i>
-         <span>${project.links.liveLabel || "Demo"}</span>
-       </a> `
-    : "";
+  const bgGradient = project.visual.bgGradient || "from-gray-900/30 to-transparent";
+  
   const tagsHTML = project.tags
-    .map((tag) => `<span class="tag"> ${tag}</span> `)
+    .map((tag) => `<span class="tag">${tag}</span>`)
     .join("");
+
+  const githubLink = project.links.github
+    ? `<a href="${project.links.github}" target="_blank" class="card-link group/link relative z-10" onclick="event.stopPropagation()">
+            <i class="fab fa-github group-hover/link:-translate-y-0.5 transition-transform"></i> Code
+         </a>`
+    : "";
+
+  const demoLink = project.links.demo
+    ? `<a href="${project.links.demo}" target="_blank" class="card-link group/link relative z-10" onclick="event.stopPropagation()">
+            <i class="fas fa-external-link-alt group-hover/link:-translate-y-0.5 transition-transform"></i> ${
+              project.links.liveLabel || "Demo"
+            }
+         </a>`
+    : "";
+
+  const isEven = index % 2 === 0;
+  
   return `
-        <div class="project-card-compact reveal-text">
-        <div class="card-visual bg-gradient-to-br ${bgGradient}">
+    <div class="project-card-compact group/card reveal-text w-full col-span-1 sm:col-span-2 flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} min-h-[400px] mb-8 bg-gray-900/30 border border-gray-800 rounded-xl" onclick="openProjectModal(${index})" onmousemove="handleCardHover(event, this)">
+        <div class="card-spotlight"></div>
+        <div class="card-visual w-full lg:w-3/5 bg-gradient-to-br ${bgGradient} border-b lg:border-b-0 ${isEven ? 'lg:border-r' : 'lg:border-l'} border-gray-800">
+            <div class="card-visual-content w-full h-full min-h-[300px] flex items-center justify-center relative">
+                ${visualHTML}
+            </div>
+        </div>
+        <div class="card-content w-full lg:w-2/5 p-8 lg:p-10 flex flex-col justify-center">
+            <div class="card-category">${project.category}</div>
+            <h3 class="card-title text-2xl lg:text-3xl mb-2">${project.title}</h3>
+            <div class="text-sm text-gray-500 mt-4 flex items-center gap-2 group-hover/card:text-blue-400 transition-colors">
+                <span>View Project</span> <i class="fas fa-arrow-right text-xs"></i>
+            </div>
+        </div>
+    </div>
+  `;
+}
+
+function createProjectCard(project, index) {
+  if (index < 2) return createFeaturedProject(project, index);
+
+  const visualHTML = getVisualHTML(project);
+  const bgGradient = project.visual.bgGradient || "from-gray-900/30 to-transparent";
+    
+  const tagsHTML = project.tags
+    .map((tag) => `<span class="tag">${tag}</span>`)
+    .join("");
+
+  const githubLink = project.links.github
+    ? `<a href="${project.links.github}" target="_blank" class="card-link group/link relative z-10" onclick="event.stopPropagation()">
+            <i class="fab fa-github group-hover/link:-translate-y-0.5 transition-transform"></i> Code
+         </a>`
+    : "";
+
+  const demoLink = project.links.demo
+    ? `<a href="${project.links.demo}" target="_blank" class="card-link group/link relative z-10" onclick="event.stopPropagation()">
+            <i class="fas fa-external-link-alt group-hover/link:-translate-y-0.5 transition-transform"></i> ${
+              project.links.liveLabel || "Demo"
+            }
+         </a>`
+    : "";
+
+  return `
+    <div class="project-card-compact group/card reveal-text col-span-1 bg-gray-900/30 border border-gray-800 rounded-xl" onclick="openProjectModal(${index})" onmousemove="handleCardHover(event, this)">
+        <div class="card-spotlight"></div>
+        <div class="card-visual bg-gradient-to-br ${bgGradient} border-b border-gray-800">
             <div class="card-visual-content w-full h-full flex items-center justify-center relative">
                 ${visualHTML}
             </div>
         </div>
-        <div class="card-content">
+        <div class="card-content p-6">
             <div class="card-category">${project.category}</div>
-            <h3 class="card-title">${project.title}</h3>
-            <p class="card-desc">${project.description}</p>
-            <div class="card-tags">
-                ${tagsHTML}
-            </div>
-            <div class="card-links">
-                ${githubLink}
-                ${demoLink}
+            <h3 class="card-title text-xl mb-2">${project.title}</h3>
+            <div class="text-xs text-gray-500 mt-2 flex items-center gap-2 group-hover/card:text-blue-400 transition-colors">
+                <span>View Details</span> <i class="fas fa-arrow-right text-[10px]"></i>
             </div>
         </div>
     </div>
-        `;
+  `;
 }
+
+function handleCardHover(e, card) {
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  card.style.setProperty("--mouse-x", `${x}px`);
+  card.style.setProperty("--mouse-y", `${y}px`);
+}
+
+// Ensure filteredProjects is tracked globally for modal lookups
+let currentFilteredProjects = projects;
 
 function renderProjects(filter = "All") {
   const grid = document.getElementById("projects-grid");
   if (!grid) return;
-  const filtered =
+  currentFilteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
-  // Build HTML string first, then assign once (avoids multiple DOM reflows)
-  grid.innerHTML = filtered.map((p) => createProjectCard(p)).join("");
+  
+  grid.innerHTML = currentFilteredProjects
+    .map((p, index) => createProjectCard(p, index))
+    .join("");
+    
   document
     .querySelectorAll(".reveal-text")
     .forEach((el) => observer.observe(el));
@@ -499,6 +557,81 @@ function setupFilters() {
     });
   });
 }
+
+// --- Modal Logic ---
+function openProjectModal(index) {
+  const project = currentFilteredProjects[index];
+  if (!project) return;
+  
+  const modal = document.getElementById("project-modal");
+  const modalContent = document.getElementById("project-modal-content");
+  const modalBody = document.getElementById("project-modal-body");
+  
+  if (!modal || !modalBody || !modalContent) return;
+
+  const bgGradient = project.visual.bgGradient || "from-blue-900/20 to-transparent";
+  const visualHTML = getVisualHTML(project);
+  
+  const tagsHTML = project.tags
+    .map((tag) => `<span class="tag">${tag}</span>`)
+    .join("");
+
+  const githubLink = project.links.github
+    ? `<a href="${project.links.github}" target="_blank" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium text-sm flex items-center gap-2">
+            <i class="fab fa-github"></i> View Source
+         </a>`
+    : "";
+
+  const demoLink = project.links.demo
+    ? `<a href="${project.links.demo}" target="_blank" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors font-medium text-sm flex items-center gap-2">
+            <i class="fas fa-external-link-alt"></i> ${project.links.liveLabel || "Live Demo"}
+         </a>`
+    : "";
+
+  modalBody.innerHTML = `
+    <!-- Left side: Visual -->
+    <div class="w-full md:w-1/2 relative min-h-[300px] md:min-h-full bg-gradient-to-br ${bgGradient}">
+        <div class="w-full h-full flex items-center justify-center relative p-8">
+            ${visualHTML}
+        </div>
+    </div>
+    <!-- Right side: Details -->
+    <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-[#111]">
+        <div class="text-blue-400 font-mono text-xs uppercase tracking-widest mb-3">${project.category}</div>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">${project.title}</h2>
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed mb-8">${project.description}</p>
+        <div class="flex flex-wrap gap-2 mb-10">
+            ${tagsHTML}
+        </div>
+        <div class="flex flex-wrap gap-4 mt-auto">
+            ${demoLink}
+            ${githubLink}
+        </div>
+    </div>
+  `;
+
+  // Show modal
+  modal.classList.remove("opacity-0", "pointer-events-none");
+  modalContent.classList.remove("scale-95");
+  modalContent.classList.add("scale-100");
+  document.body.style.overflow = "hidden"; // Prevent scrolling
+}
+
+function closeProjectModal() {
+  const modal = document.getElementById("project-modal");
+  const modalContent = document.getElementById("project-modal-content");
+  if (!modal || !modalContent) return;
+
+  modal.classList.add("opacity-0", "pointer-events-none");
+  modalContent.classList.remove("scale-100");
+  modalContent.classList.add("scale-95");
+  document.body.style.overflow = ""; // Restore scrolling
+}
+
+// Escape key to close modal
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeProjectModal();
+});
 
 if (typeof projects !== "undefined") {
   if (document.readyState === "loading") {

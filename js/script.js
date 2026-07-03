@@ -219,14 +219,13 @@ if (canvas) {
         activePaths[bucket].path.moveTo(point.x - dirX * halfLen, point.y - dirY * halfLen);
         activePaths[bucket].path.lineTo(point.x + dirX * halfLen, point.y + dirY * halfLen);
       } else {
-        dimPath.moveTo(point.x - 1, point.y);
-        dimPath.lineTo(point.x + 1, point.y);
+        dimPath.rect(point.x - 0.75, point.y - 0.75, 1.5, 1.5);
       }
     }
 
-    // Draw dim points (single stroke call for all)
-    ctx.strokeStyle = `rgba(100, 149, 237, 0.1)`;
-    ctx.stroke(dimPath);
+    // Draw dim points (single fill call for all to make dots)
+    ctx.fillStyle = `rgba(100, 149, 237, 0.15)`;
+    ctx.fill(dimPath);
 
     // Draw active points (one stroke call per opacity bucket)
     for (let b = 0; b < activePaths.length; b++) {

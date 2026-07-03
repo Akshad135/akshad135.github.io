@@ -1,333 +1,522 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akshad Agrawal</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akshad Agrawal</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Akshad Agrawal" />
+    <meta property="og:url" content="https://akshad.github.io/" />
+    <meta
+      property="og:image"
+      content="https://akshad135.vercel.app/assets/og.webp"
+    />
 
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Akshad Agrawal" />
-  <meta property="og:url" content="https://akshad.github.io/" />
-  <meta property="og:image" content="https://akshad135.vercel.app/assets/og.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Akshad Agrawal" />
+    <meta
+      name="twitter:image"
+      content="https://akshad135.vercel.app/assets/og.webp"
+    />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Akshad Agrawal" />
-  <meta name="twitter:image" content="https://akshad135.vercel.app/assets/og.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/logo.png?v=2"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo.png?v=2" />
+    <link rel="stylesheet" href="css/style.css?v=3.5" />
+  </head>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo.png?v=2" />
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo.png?v=2" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-
-<body class="antialiased selection:bg-white selection:text-black">
-  <div id="loader-overlay">
-    <div class="terminal-loader-card">
-      <div class="terminal-header">
-        <div class="dot dot-red"></div>
-        <div class="dot dot-yellow"></div>
-        <div class="dot dot-green"></div>
-        <div class="ml-2 text-xs text-gray-500 font-mono">system_boot</div>
+  <body class="antialiased selection:bg-white selection:text-black">
+    <div id="loader-overlay">
+      <div class="terminal-loader-card">
+        <div class="terminal-header">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <div class="ml-2 text-xs text-gray-500 font-mono">system_boot</div>
+        </div>
+        <div class="loader-content" id="loader-content"></div>
       </div>
-      <div class="loader-content" id="loader-content"></div>
     </div>
-  </div>
-  <canvas id="vector-canvas"></canvas>
-  <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
-      <a href="#" class="flex items-center gap-3 group">
-        <img src="./assets/logo.png" alt="AA Logo"
-          class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]" />
-        <span class="text-xl font-bold tracking-tight text-white">
-          Akshad Agrawal<span class="text-blue-500">.</span>
-        </span>
-      </a>
-      <div class="hidden md:flex gap-10 text-sm font-medium text-gray-400">
-        <a href="resume.html" class="hover:text-blue-400 transition-colors duration-200">Resume</a>
-        <a href="#about" class="hover:text-white transition-colors duration-200">About</a>
-        <a href="#experience" class="hover:text-white transition-colors duration-200">Experience</a>
-        <a href="#work" class="hover:text-white transition-colors duration-200">Work</a>
-        <a href="#contact" class="hover:text-white transition-colors duration-200">Contact</a>
+    <canvas id="vector-canvas"></canvas>
+    <nav
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+      id="navbar"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50"
+      >
+        <a href="#" class="flex items-center gap-3 group">
+          <img
+            src="./assets/logo.png"
+            alt="AA Logo"
+            class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+          />
+          <span class="text-xl font-bold tracking-tight text-white">
+            Akshad Agrawal<span class="text-blue-500">.</span>
+          </span>
+        </a>
+        <div class="hidden md:flex gap-10 text-sm font-medium text-gray-400">
+          <a
+            href="resume.html"
+            class="hover:text-blue-400 transition-colors duration-200"
+            >Resume</a
+          >
+          <a
+            href="#about"
+            class="hover:text-white transition-colors duration-200"
+            >About</a
+          >
+          <a
+            href="#experience"
+            class="hover:text-white transition-colors duration-200"
+            >Experience</a
+          >
+          <a
+            href="#work"
+            class="hover:text-white transition-colors duration-200"
+            >Work</a
+          >
+          <a
+            href="#contact"
+            class="hover:text-white transition-colors duration-200"
+            >Contact</a
+          >
+        </div>
+        <button
+          id="menu-btn"
+          class="md:hidden text-white focus:outline-none z-50 w-8 h-8 flex flex-col justify-center gap-1.5"
+        >
+          <span
+            class="hamburger-line line-1 w-full h-0.5 bg-white block"
+          ></span>
+          <span
+            class="hamburger-line line-2 w-full h-0.5 bg-white block"
+          ></span>
+          <span
+            class="hamburger-line line-3 w-full h-0.5 bg-white block"
+          ></span>
+        </button>
       </div>
-      <button id="menu-btn"
-        class="md:hidden text-white focus:outline-none z-50 w-8 h-8 flex flex-col justify-center gap-1.5">
-        <span class="hamburger-line line-1 w-full h-0.5 bg-white block"></span>
-        <span class="hamburger-line line-2 w-full h-0.5 bg-white block"></span>
-        <span class="hamburger-line line-3 w-full h-0.5 bg-white block"></span>
+    </nav>
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden">
+      <div class="flex flex-col gap-8 text-center">
+        <a href="resume.html" class="mobile-link" onclick="toggleMenu()"
+          >Resume</a
+        >
+        <a href="#about" class="mobile-link" onclick="toggleMenu()">About</a>
+        <a href="#experience" class="mobile-link" onclick="toggleMenu()"
+          >Experience</a
+        >
+        <a href="#work" class="mobile-link" onclick="toggleMenu()">Work</a>
+
+        <a href="#contact" class="mobile-link" onclick="toggleMenu()"
+          >Contact</a
+        >
+      </div>
+    </div>
+    <section
+      id="home"
+      class="min-h-screen flex items-start md:items-center px-6 pt-32 md:pt-20 relative"
+    >
+      <div
+        class="max-w-4xl mx-auto w-full flex flex-col items-center text-center gap-12 mt-10 md:mt-14"
+      >
+        <div class="space-y-8 flex flex-col items-center">
+          <div class="reveal-text" style="transition-delay: 100ms">
+            <p
+              class="text-blue-400 font-medium mb-4 tracking-wide text-xs md:text-sm uppercase"
+            >
+              Professional YAML Configurer & AI Guy
+            </p>
+            <h1
+              class="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight tracking-tight gradient-text"
+            >
+              Making matrices<br />
+              work for me.
+            </h1>
+          </div>
+          <p
+            class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed reveal-text"
+            style="transition-delay: 300ms"
+          >
+            Sometimes they even listen. I work on getting AI out of notebooks
+            and into production...the messy middle between a cool demo and
+            something you'd actually trust.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4 justify-center reveal-text"
+            style="transition-delay: 500ms"
+          >
+            <a
+              href="#work"
+              class="px-8 py-3.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition-colors text-center shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            >
+              See What I've Built
+            </a>
+            <a
+              href="https://github.com/akshad135"
+              target="_blank"
+              class="px-8 py-3.5 border border-gray-700 text-white rounded hover:border-blue-500/50 hover:bg-blue-500/10 hover:text-blue-400 transition-colors flex items-center justify-center gap-2 bg-gray-900/20"
+            >
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- UPDATED: Reduced height for mobile to h-56 (224px) -->
+        <div
+          class="block w-full max-w-3xl h-56 sm:h-72 md:h-[300px] mt-8 mx-auto reveal-text"
+          style="transition-delay: 400ms"
+        >
+          <div
+            id="simulationCard"
+            class="w-full h-full relative border-t border-l border-r border-gray-800 rounded-t-xl bg-gray-900/20 backdrop-blur-sm overflow-hidden group cursor-pointer hover:border-gray-600 transition-all duration-500 hover:shadow-[0_-20px_40px_rgba(59,130,246,0.1)]"
+          >
+            <div
+              class="flash-overlay absolute inset-0 bg-purple-500 mix-blend-overlay opacity-0 z-20 pointer-events-none"
+            ></div>
+
+            <canvas
+              id="neuralCanvas"
+              class="absolute inset-0 w-full h-full block z-10"
+            ></canvas>
+
+            <div
+              class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#0a0a0a] to-transparent z-20 pointer-events-none"
+            ></div>
+
+            <div
+              class="absolute top-4 right-4 flex items-center gap-3 text-gray-500 text-[10px] font-mono z-30 bg-gray-900/50 px-3 py-1.5 rounded border border-gray-800 backdrop-blur-md"
+            >
+              <span class="relative flex h-1.5 w-1.5">
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                ></span>
+                <span
+                  class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"
+                ></span>
+              </span>
+              <span class="text-gray-400">
+                <span id="tensorCounter" class="text-blue-400 font-bold"
+                  >410,294</span
+                >
+                TENSORS PROCESSED
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Smooth transition to About section -->
+      <div
+        class="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none z-0"
+      ></div>
+    </section>
+    <section id="about" class="py-24 md:py-32 px-6 relative z-10 bg-[#0a0a0a]">
+      <div class="max-w-4xl mx-auto flex flex-col gap-16 md:gap-16">
+        <div class="max-w-2xl mx-auto space-y-8 reveal-text text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-white">The Lore</h2>
+          <div class="h-1 w-12 bg-blue-500 mx-auto"></div>
+          <p class="text-gray-400 leading-relaxed">
+            I’m an undergrad at VIT, but these days I'm mostly interning at EY,
+            trying to make GenAI do useful things in the real world. I still
+            mess around with MLOps and agent frameworks when I need to, but
+            mostly I just spend my time building personal projects that I
+            actually use every day. If I find something annoying, I usually just
+            write a script to fix it.
+          </p>
+          <p class="text-gray-400 leading-relaxed text-left">
+            Outside of work, I'm probably losing at table tennis, catching up on
+            anime, or pouring way too many hours into video games.
+          </p>
+        </div>
+        <div class="reveal-text w-full" style="transition-delay: 200ms">
+          <h3
+            class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-8 text-center"
+          >
+            Capabilities & Extras
+          </h3>
+          <!-- TECH WEB CONTAINER -->
+          <div
+            id="tech-web-container"
+            class="relative w-full h-[350px] md:h-[450px] overflow-hidden -mx-6 px-6"
+            style="width: calc(100% + 3rem)"
+          >
+            <canvas id="tech-web-canvas" class="absolute inset-0 z-0"></canvas>
+            <!-- Nodes will be injected here by JS -->
+          </div>
+
+          <!-- EXTRAS: Certs & Challenges (Sleek Text Footer) -->
+          <div
+            class="mt-8 flex flex-col xl:flex-row items-center justify-center gap-6 xl:gap-10 text-[11px] sm:text-xs md:text-sm font-mono text-gray-500"
+          >
+            <!-- Certifications -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+              <div
+                class="flex items-center gap-2 hover:text-gray-300 transition-colors cursor-default"
+              >
+                <span
+                  class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+                ></span>
+                <span>Oracle Cloud Infrastructure GenAI Professional</span>
+              </div>
+              <div
+                class="flex items-center gap-2 hover:text-gray-300 transition-colors cursor-default"
+              >
+                <span
+                  class="w-1.5 h-1.5 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+                ></span>
+                <span>Oracle Cloud Infrastructure Foundations</span>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="hidden xl:block w-px h-4 bg-gray-800"></div>
+            <div class="xl:hidden w-12 h-px bg-gray-800"></div>
+
+            <!-- Seasonal Challenges -->
+            <a
+              href="./assets/aoc-2025.webp"
+              target="_blank"
+              class="flex items-center gap-2 hover:text-gray-300 transition-colors group"
+            >
+              <i
+                class="fas fa-star text-yellow-500/80 group-hover:text-yellow-400 drop-shadow-[0_0_5px_rgba(234,179,8,0.3)] transition-colors"
+              ></i>
+              <span
+                >Advent of Code 2025 <span class="text-gray-700 mx-1">|</span>
+                <span
+                  class="text-yellow-500/90 font-bold group-hover:text-yellow-400 transition-colors"
+                  >24/24 Stars</span
+                ></span
+              >
+              <i
+                class="fas fa-arrow-right text-[10px] ml-1 opacity-50 group-hover:opacity-100 transition-opacity"
+              ></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW EXPERIENCE SECTION -->
+    <section id="experience" class="py-24 md:py-32 px-6 relative">
+      <!-- Smooth transition from About section (black to transparent) -->
+      <div
+        class="absolute top-0 left-0 w-full h-32 md:h-48 bg-gradient-to-b from-[#0a0a0a] to-transparent pointer-events-none z-0"
+      ></div>
+
+      <div class="max-w-4xl mx-auto relative z-10">
+        <h2
+          class="text-3xl md:text-4xl font-bold text-white mb-16 reveal-text text-center"
+        >
+          Experience
+        </h2>
+        <div class="relative max-w-2xl mx-auto" id="experience-grid">
+          <!-- Experience timeline will be injected here by js/experience.js -->
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="py-24 md:py-32 px-6 relative z-10">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+          Stuff I've Built
+        </h2>
+        <div
+          class="flex flex-wrap justify-center gap-4 mb-12"
+          id="project-filters"
+        >
+          <button class="filter-btn active" data-filter="All">All</button>
+          <button class="filter-btn" data-filter="AI/ML">AI/ML</button>
+          <button class="filter-btn" data-filter="MLOps">MLOps</button>
+          <button class="filter-btn" data-filter="Android">Android</button>
+          <button class="filter-btn" data-filter="Web">Web Dev</button>
+        </div>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8"
+          id="projects-grid"
+        ></div>
+      </div>
+      <!-- Smooth transition to Contact section (Pointy canvas to black) -->
+      <div class="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none z-0"></div>
+    </section>
+    <section id="contact" class="min-h-screen flex flex-col justify-center px-6 relative z-10 bg-[#0a0a0a] overflow-hidden">
+      <!-- Deep Atmospheric Orb Wrapper -->
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[800px] h-[400px] pointer-events-none z-0">
+        <!-- Breathing Orb -->
+        <div class="w-full h-full bg-blue-600/20 blur-[120px] rounded-[100%] animate-breathe"></div>
+      </div>
+      
+      <div
+        class="max-w-4xl mx-auto text-center reveal-text flex flex-col items-center relative z-20"
+      >
+        <h2
+          class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight"
+        >
+          Let's work
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500"
+            >together.</span
+          >
+        </h2>
+        <p
+          class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+        >
+          Hit me up if you have a question, want to build something weird, or
+          just want to debate anime.
+        </p>
+
+        <!-- Restored Original Email Display -->
+        <div class="relative group inline-block mb-16">
+          <div
+            class="absolute right-full top-1/2 p-3 cursor-pointer"
+            style="margin-top: -23px"
+          >
+            <button
+              onclick="
+                fallbackCopyTextToClipboard('akshad.contact@gmail.com', this)
+              "
+              class="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out text-gray-500 hover:text-white focus:outline-none cursor-pointer"
+              aria-label="Copy email address"
+              title="Copy to clipboard"
+            >
+              <svg
+                class="icon-copy block transition-transform active:scale-90"
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M20 2H10c-1.1 0-2 .9-2 2v2h8c1.1 0 2 .9 2 2v8h2c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"
+                />
+                <path
+                  d="M16 8H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-2 10H6v-2h8v2zm0-4H6v-2h8v2z"
+                />
+              </svg>
+              <svg
+                class="icon-check hidden text-green-500"
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </button>
+          </div>
+          <a
+            href="mailto:akshad.contact@gmail.com"
+            class="text-white text-xl md:text-2xl font-medium underline decoration-gray-600 hover:decoration-gray-300 underline-offset-[8px] transition-colors duration-300"
+            style="line-height: 1"
+          >
+            akshad.contact@gmail.com
+          </a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center gap-8 text-xl text-gray-500">
+          <a
+            href="https://x.com/akshad135"
+            target="_blank"
+            class="hover:text-white hover:-translate-y-1 transition-all duration-300"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a
+            href="https://linkedin.com/in/akshad135"
+            target="_blank"
+            class="hover:text-white hover:-translate-y-1 transition-all duration-300"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a
+            href="https://github.com/akshad135"
+            target="_blank"
+            class="hover:text-white hover:-translate-y-1 transition-all duration-300"
+            ><i class="fab fa-github"></i
+          ></a>
+        </div>
+
+        <footer
+          class="mt-20 text-xs md:text-sm text-gray-600 font-mono tracking-wider"
+        >
+          &copy; 2026 AKSHAD AGRAWAL. <span class="hidden sm:inline">|</span
+          ><br class="sm:hidden" />
+          WORKS ON MY MACHINE.
+        </footer>
+      </div>
+    </section>
+    <div class="status-footer">
+      <div class="status-item">
+        <i class="fas fa-code-branch text-blue-500"></i>
+        <span>main*</span>
+      </div>
+      <div class="status-item">
+        <i class="fas fa-check-circle text-green-500"></i>
+        <span>build: passing</span>
+      </div>
+      <div class="status-item">
+        <i class="fas fa-database text-yellow-600"></i>
+        <span>v2.5.6</span>
+      </div>
+    </div>
+    <div id="back-to-top-wrapper">
+      <button id="back-to-top" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
       </button>
     </div>
-  </nav>
-  <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden">
-    <div class="flex flex-col gap-8 text-center">
-      <a href="resume.html" class="mobile-link" onclick="toggleMenu()">Resume</a>
-      <a href="#about" class="mobile-link" onclick="toggleMenu()">About</a>
-      <a href="#experience" class="mobile-link" onclick="toggleMenu()">Experience</a>
-      <a href="#work" class="mobile-link" onclick="toggleMenu()">Work</a>
 
-      <a href="#contact" class="mobile-link" onclick="toggleMenu()">Contact</a>
-    </div>
-  </div>
-  <section class="min-h-screen flex items-start md:items-center px-6 pt-32 md:pt-20 relative">
-    <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
-      <div class="space-y-8">
-        <div class="reveal-text" style="transition-delay: 100ms">
-          <p class="text-blue-400 font-medium mb-4 tracking-wide text-xs md:text-sm uppercase">
-            Professional YAML Configurer & AI Guy
-          </p>
-          <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight tracking-tight gradient-text">
-            Making matrices<br />
-            work for me.
-          </h1>
-        </div>
-        <p class="text-lg md:text-xl text-gray-400 max-w-lg leading-relaxed reveal-text"
-          style="transition-delay: 300ms">
-          Sometimes they even listen. I work on getting AI out of notebooks and into production...the messy middle
-          between
-          a cool demo and something you'd actually trust.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4 reveal-text" style="transition-delay: 500ms">
-          <a href="#work"
-            class="px-8 py-3.5 bg-white text-black font-semibold rounded hover:bg-gray-200 transition-colors text-center shadow-[0_0_20px_rgba(255,255,255,0.15)]">
-            See What I've Built
-          </a>
-          <a href="https://github.com/akshad135" target="_blank"
-            class="px-8 py-3.5 border border-gray-700 text-white rounded hover:border-blue-500/50 hover:bg-blue-500/10 hover:text-blue-400 transition-colors flex items-center justify-center gap-2 bg-gray-900/20">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-        </div>
-      </div>
-
-      <!-- UPDATED: Reduced height for mobile to h-56 (224px) -->
-      <div class="block w-full h-56 sm:h-72 md:h-[360px] mt-8 md:-mt-16 reveal-text" style="transition-delay: 400ms">
-        <div id="simulationCard"
-          class="w-full h-full relative border border-gray-800 rounded-xl bg-gray-900/20 backdrop-blur-sm overflow-hidden group cursor-pointer hover:border-gray-700 transition-all duration-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-          <div
-            class="flash-overlay absolute inset-0 bg-purple-500 mix-blend-overlay opacity-0 z-20 pointer-events-none">
-          </div>
-
-          <canvas id="neuralCanvas" class="absolute inset-0 w-full h-full block z-10"></canvas>
-
-          <div
-            class="absolute bottom-4 left-4 flex items-center gap-3 text-gray-500 text-[10px] font-mono z-30 bg-gray-900/50 px-3 py-1.5 rounded border border-gray-800 backdrop-blur-md">
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
-            </span>
-            <span class="text-gray-400">
-              <span id="tensorCounter" class="text-blue-400 font-bold">410,294</span>
-              TENSORS PROCESSED
-            </span>
-          </div>
-        </div>
+    <!-- Project Modal -->
+    <div
+      id="project-modal"
+      class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+    >
+      <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm cursor-pointer"
+        onclick="closeProjectModal()"
+      ></div>
+      <div
+        class="relative w-full max-w-4xl max-h-[90vh] mx-4 bg-[#0a0a0a] border border-gray-800 rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-300"
+        id="project-modal-content"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          class="absolute top-4 right-4 z-50 text-gray-400 hover:text-white bg-black/50 p-2 rounded-full focus:outline-none transition-colors"
+          onclick="closeProjectModal()"
+        >
+          <i class="fas fa-times text-xl"></i>
+        </button>
+        <!-- Injected Content -->
+        <div
+          id="project-modal-body"
+          class="flex flex-col md:flex-row w-full h-full overflow-y-auto"
+        ></div>
       </div>
     </div>
-  </section>
-  <section id="about" class="py-24 md:py-32 px-6 bg-gradient-to-b from-transparent to-black/50">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-12 gap-12 md:gap-16">
-        <div class="md:col-span-5 space-y-8 reveal-text">
-          <h2 class="text-3xl font-bold text-white">The Lore</h2>
-          <div class="h-1 w-12 bg-blue-500"></div>
-          <p class="text-gray-400 leading-relaxed">
-            I’m an undergrad at VIT, but these days I'm mostly interning at EY, trying to make GenAI do useful things in
-            the real world. I still mess around with MLOps and agent frameworks when I need to, but mostly I just spend
-            my time building personal projects that I actually use every day. If I find something annoying, I usually
-            just write a script to fix it.
-          </p>
-          <p class="text-gray-400 leading-relaxed">
-            Outside of work, I'm probably losing at table tennis, catching up on anime, or pouring way too many hours
-            into video games.
-          </p>
 
-          <div class="pt-4">
-            <h4 class="text-white font-medium mb-3">Certifications</h4>
-            <ul class="space-y-3 text-sm text-gray-500 font-mono">
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 mt-1.5 bg-green-500 rounded-full flex-shrink-0"></span>
-                <span>Oracle Cloud Infrastructure GenAI Professional</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 mt-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
-                <span>Oracle Cloud Infrastructure Foundations</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Simplified AoC Section with STAR ICON -->
-          <div class="pt-4">
-            <h4 class="text-white font-medium mb-3">Seasonal Challenges</h4>
-            <ul class="space-y-3 text-sm text-gray-500 font-mono">
-              <li class="flex items-center gap-2">
-                <!-- Changed to a Star Icon -->
-                <i class="fas fa-star text-yellow-500 text-xs"></i>
-                <span class="text-gray-400">AoC 2025</span>
-                <span class="text-gray-600">|</span>
-                <span class="text-yellow-500 font-bold">24/24 Stars</span>
-                <a href="./assets/aoc-2025.webp" target="_blank"
-                  class="ml-1 text-gray-500 hover:text-white transition-colors" title="View Progress">
-                  <i class="fas fa-external-link-alt text-[10px]"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="md:col-span-7 reveal-text" style="transition-delay: 200ms">
-          <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-8">
-            Technology Stack
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
-              <div class="text-blue-400 mb-4 text-xl">
-                <i class="fas fa-brain"></i>
-              </div>
-              <h4 class="text-lg font-bold text-white mb-4">
-                Machine Learning
-              </h4>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">LangChain</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">TensorFlow</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">PyTorch</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Transformers</span>
-              </div>
-            </div>
-            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
-              <div class="text-purple-400 mb-4 text-xl">
-                <i class="fas fa-cogs"></i>
-              </div>
-              <h4 class="text-lg font-bold text-white mb-4">MLOps & Cloud</h4>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Dagster</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">MLflow</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">DVC</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Streamlit</span>
-              </div>
-            </div>
-            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
-              <div class="text-green-400 mb-4 text-xl">
-                <i class="fas fa-server"></i>
-              </div>
-              <h4 class="text-lg font-bold text-white mb-4">
-                Backend Engineering
-              </h4>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">FastAPI</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">PostgreSQL</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Python</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">SQLAlchemy</span>
-              </div>
-            </div>
-            <div class="p-6 border border-gray-800 rounded bg-gray-900/20 hover:bg-gray-900/40 transition">
-              <div class="text-yellow-400 mb-4 text-xl">
-                <i class="fas fa-layer-group"></i>
-              </div>
-              <h4 class="text-lg font-bold text-white mb-4">Agentic AI</h4>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">LangGraph</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">LangChain</span>
-                <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">RAG Systems</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NEW EXPERIENCE SECTION -->
-  <section id="experience" class="py-24 md:py-32 px-6 relative">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-bold text-white mb-16 reveal-text">
-        Experience
-      </h2>
-      <div class="relative" id="experience-grid">
-        <!-- Experience timeline will be injected here by js/experience.js -->
-      </div>
-    </div>
-  </section>
-
-  <section id="work" class="py-24 md:py-32 px-6">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-bold text-white mb-8">Stuff I've Built</h2>
-      <div class="flex flex-wrap gap-4 mb-12" id="project-filters">
-        <button class="filter-btn active" data-filter="All">All</button>
-        <button class="filter-btn" data-filter="AI/ML">AI/ML</button>
-        <button class="filter-btn" data-filter="MLOps">MLOps</button>
-        <button class="filter-btn" data-filter="Android">Android</button>
-        <button class="filter-btn" data-filter="Web">Web Dev</button>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="projects-grid"></div>
-    </div>
-  </section>
-  <section id="contact" class="py-24 md:py-32 px-6 mb-10">
-    <div class="max-w-3xl mx-auto text-center reveal-text">
-      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 md:mb-8">
-        Contact
-      </h2>
-      <p class="text-lg md:text-xl text-gray-400 mb-8 md:mb-12">
-        Hit me up if you want to build something weird, debate anime, or hire me.
-      </p>
-      <div class="relative group inline-block">
-        <div class="absolute right-full top-1/2 p-3 cursor-pointer" style="margin-top: -23px;">
-          <button onclick="fallbackCopyTextToClipboard('akshad.contact@gmail.com', this)"
-            class="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out text-gray-500 hover:text-white focus:outline-none cursor-pointer"
-            aria-label="Copy email address" title="Copy to clipboard">
-            <svg class="icon-copy block transition-transform active:scale-90" xmlns="http://www.w3.org/2000/svg"
-              width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 2H10c-1.1 0-2 .9-2 2v2h8c1.1 0 2 .9 2 2v8h2c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-              <path
-                d="M16 8H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-2 10H6v-2h8v2zm0-4H6v-2h8v2z" />
-            </svg>
-            <svg class="icon-check hidden text-green-500" xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-          </button>
-        </div>
-        <a href="mailto:akshad.contact@gmail.com"
-          class="text-white text-xl md:text-2xl font-medium underline decoration-gray-600 hover:decoration-gray-300 underline-offset-[8px] transition-colors duration-300"
-          style="line-height: 1;">
-          akshad.contact@gmail.com
-        </a>
-      </div>
-      <div class="mt-12 md:mt-16 flex justify-center gap-8 text-2xl text-gray-500">
-        <a href="https://x.com/akshad135" target="_blank" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
-        <a href="https://linkedin.com/in/akshad135" target="_blank" class="hover:text-white transition"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/akshad135" target="_blank" class="hover:text-white transition"><i class="fab fa-github"></i></a>
-      </div>
-      <footer class="mt-16 md:mt-20 text-sm text-gray-600">
-        &copy; 2026 Akshad Agrawal. Works on my machine.
-      </footer>
-    </div>
-  </section>
-  <div class="status-footer">
-    <div class="status-item">
-      <i class="fas fa-code-branch text-blue-500"></i>
-      <span>main*</span>
-    </div>
-    <div class="status-item">
-      <i class="fas fa-check-circle text-green-500"></i>
-      <span>build: passing</span>
-    </div>
-    <div class="status-item">
-      <i class="fas fa-database text-yellow-600"></i>
-      <span>v2.5.6</span>
-    </div>
-  </div>
-  <div id="back-to-top-wrapper">
-    <button id="back-to-top" aria-label="Back to Top">
-      <i class="fas fa-arrow-up"></i>
-    </button>
-  </div>
-  <script src="js/projects.js"></script>
-  <script src="js/experience.js"></script>
-  <script src="js/script.js"></script>
-</body>
-
+    <script src="js/projects.js"></script>
+    <script src="js/experience.js"></script>
+    <script src="js/tech-web.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>
