@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   resize();
 
   // Create nodes
-  techs.forEach((tech) => {
+  techs.forEach((tech, i) => {
     // Create HTML element
     const el = document.createElement("div");
     el.className =
@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
     el.innerText = tech;
     container.appendChild(el);
 
-    // Initial random position (concentrated slightly towards center)
-    const anglePos = Math.random() * Math.PI * 2;
-    const radiusPos = Math.random() * (Math.min(width, height) / 3) + 20;
+    // Distribute evenly in a circle to ensure distance at start
+    const anglePos = (i / techs.length) * Math.PI * 2 + (Math.random() * 0.2);
+    const radiusPos = (Math.min(width, height) / 2.8) + (Math.random() * 40 - 20);
     const x = width / 2 + Math.cos(anglePos) * radiusPos;
     const y = height / 2 + Math.sin(anglePos) * radiusPos;
     
@@ -71,6 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  let isVisible = true;
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+    });
+    observer.observe(container);
+  }
+
   // Track mouse
   container.addEventListener("mousemove", (e) => {
     const rect = container.getBoundingClientRect();
@@ -85,6 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Animation loop
   function animate() {
+    requestAnimationFrame(animate);
+    if (!isVisible) return;
+
     ctx.clearRect(0, 0, width, height);
 
     // Update node positions
@@ -103,6 +114,39 @@ document.addEventListener("DOMContentLoaded", () => {
         const force = (150 - distMouse) / 150;
         node.vx -= (dxMouse / distMouse) * force * 1.2;
         node.vy -= (dyMouse / distMouse) * force * 1.2;
+      }
+
+      // Node-to-node collision (Bounding Box Repulsion)
+      for (let j = 0; j < nodes.length; j++) {
+        if (node === nodes[j]) continue;
+        const other = nodes[j];
+        if (node.width === 0 || other.width === 0) continue;
+
+        let dx = node.x - other.x;
+        let dy = node.y - other.y;
+        
+        // Add 12px padding between nodes
+        const minDx = (node.width + other.width) / 2 + 12;
+        const minDy = (node.height + other.height) / 2 + 12;
+
+        if (Math.abs(dx) < minDx && Math.abs(dy) < minDy) {
+          if (dx === 0 && dy === 0) {
+            dx = (Math.random() - 0.5) * 2;
+            dy = (Math.random() - 0.5) * 2;
+          }
+          
+          const overlapX = minDx - Math.abs(dx);
+          const overlapY = minDy - Math.abs(dy);
+          
+          // Resolve on axis with smallest overlap to mimic realistic bouncing
+          if (overlapX < overlapY) {
+             const dir = dx > 0 ? 1 : -1;
+             node.vx += dir * overlapX * 0.08;
+          } else {
+             const dir = dy > 0 ? 1 : -1;
+             node.vy += dir * overlapY * 0.08;
+          }
+        }
       }
 
       // Apply friction/speed limit
@@ -143,43 +187,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Draw lines
     ctx.lineWidth = 1.0;
+    const maxDistSq = maxDistance * maxDistance;
+    
+    // Batch lines by opacity bucket
+    const activePaths = [];
+    const mousePaths = [];
+
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const dx = nodes[i].x - nodes[j].x;
         const dy = nodes[i].y - nodes[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const distSq = dx * dx + dy * dy;
 
-        if (dist < maxDistance) {
-          ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          
-          // Fades out as they get further apart
+        if (distSq < maxDistSq) {
+          const dist = Math.sqrt(distSq);
           const opacity = (1 - dist / maxDistance) * 0.45;
-          ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`; // Tailwind blue-500
-          ctx.stroke();
+          const bucket = Math.floor(opacity * 20);
+          if (!activePaths[bucket]) {
+             activePaths[bucket] = { path: new Path2D(), opacity: opacity };
+          }
+          activePaths[bucket].path.moveTo(nodes[i].x, nodes[i].y);
+          activePaths[bucket].path.lineTo(nodes[j].x, nodes[j].y);
         }
       }
-    }
 
-    // Draw lines to mouse
-    for (let i = 0; i < nodes.length; i++) {
-      const dx = nodes[i].x - mouse.x;
-      const dy = nodes[i].y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      // Draw lines to mouse in same loop
+      const dxm = nodes[i].x - mouse.x;
+      const dym = nodes[i].y - mouse.y;
+      const distmSq = dxm * dxm + dym * dym;
 
-      if (dist < maxDistance) {
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(mouse.x, mouse.y);
-        
-        const opacity = (1 - dist / maxDistance) * 0.4;
-        ctx.strokeStyle = `rgba(147, 197, 253, ${opacity})`; // Tailwind blue-300
-        ctx.stroke();
+      if (distmSq < maxDistSq) {
+        const distm = Math.sqrt(distmSq);
+        const opacity = (1 - distm / maxDistance) * 0.4;
+        const bucket = Math.floor(opacity * 20);
+        if (!mousePaths[bucket]) {
+           mousePaths[bucket] = { path: new Path2D(), opacity: opacity };
+        }
+        mousePaths[bucket].path.moveTo(nodes[i].x, nodes[i].y);
+        mousePaths[bucket].path.lineTo(mouse.x, mouse.y);
       }
     }
 
-    requestAnimationFrame(animate);
+    for (let b = 0; b < activePaths.length; b++) {
+      if (activePaths[b]) {
+        ctx.strokeStyle = `rgba(59, 130, 246, ${activePaths[b].opacity})`; // Tailwind blue-500
+        ctx.stroke(activePaths[b].path);
+      }
+    }
+    
+    for (let b = 0; b < mousePaths.length; b++) {
+      if (mousePaths[b]) {
+        ctx.strokeStyle = `rgba(147, 197, 253, ${mousePaths[b].opacity})`; // Tailwind blue-300
+        ctx.stroke(mousePaths[b].path);
+      }
+    }
   }
 
   // Start animation
