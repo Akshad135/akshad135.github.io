@@ -543,12 +543,8 @@ function renderProjects(filter = "All") {
 function setupFilters() {
   const filtersContainer = document.getElementById("project-filters");
   if (!filtersContainer) return;
-  const allBtn = filtersContainer.querySelector('[data-filter="All"]');
   const buttons = filtersContainer.querySelectorAll(".filter-btn");
-  if (allBtn) {
-    allBtn.style.display = "";
-  }
-  renderProjects("All");
+  renderProjects("AI/ML");
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       buttons.forEach((b) => b.classList.remove("active"));
