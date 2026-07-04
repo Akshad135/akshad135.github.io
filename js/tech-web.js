@@ -41,10 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Create nodes
   techs.forEach((tech, i) => {
-    // Create HTML element
     const el = document.createElement("div");
     el.className =
       "absolute left-0 top-0 px-3 py-1.5 rounded-full bg-blue-900/10 border border-blue-500/30 text-blue-300 text-xs font-mono tracking-wider shadow-[0_0_10px_rgba(59,130,246,0.2)] backdrop-blur-sm whitespace-nowrap transition-colors hover:bg-blue-500/20 hover:border-blue-400 hover:text-white hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] select-none cursor-pointer z-10";
+    el.style.willChange = "transform";
     el.innerText = tech;
     container.appendChild(el);
 
@@ -91,6 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
     mouse.y = -1000;
   });
 
+  // Pre-allocate flat arrays to eliminate GC lag
+  const activePaths = Array.from({ length: 20 }, () => []);
+  const mousePaths = Array.from({ length: 20 }, () => []);
+
   // Animation loop
   function animate() {
     requestAnimationFrame(animate);
@@ -109,8 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Mouse repulsion (stronger)
       const dxMouse = mouse.x - node.x;
       const dyMouse = mouse.y - node.y;
-      const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-      if (distMouse < 150) {
+      const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
+      if (distMouseSq < 22500) { // 150 * 150
+        const distMouse = Math.sqrt(distMouseSq);
         const force = (150 - distMouse) / 150;
         node.vx -= (dxMouse / distMouse) * force * 1.2;
         node.vy -= (dyMouse / distMouse) * force * 1.2;
@@ -182,16 +187,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Update DOM element position (centered)
-      node.el.style.transform = `translate(${node.x - node.width / 2}px, ${node.y - node.height / 2}px)`;
+      node.el.style.transform = `translate3d(${node.x - node.width / 2}px, ${node.y - node.height / 2}px, 0)`;
     });
 
     // Draw lines
     ctx.lineWidth = 1.0;
     const maxDistSq = maxDistance * maxDistance;
     
-    // Batch lines by opacity bucket
-    const activePaths = [];
-    const mousePaths = [];
+    // Clear paths without memory allocation
+    for (let b = 0; b < 20; b++) {
+      activePaths[b].length = 0;
+      mousePaths[b].length = 0;
+    }
 
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
@@ -202,12 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (distSq < maxDistSq) {
           const dist = Math.sqrt(distSq);
           const opacity = (1 - dist / maxDistance) * 0.45;
-          const bucket = Math.floor(opacity * 20);
-          if (!activePaths[bucket]) {
-             activePaths[bucket] = { path: new Path2D(), opacity: opacity };
-          }
-          activePaths[bucket].path.moveTo(nodes[i].x, nodes[i].y);
-          activePaths[bucket].path.lineTo(nodes[j].x, nodes[j].y);
+          let bucket = Math.floor(opacity * 20);
+          if (bucket > 19) bucket = 19;
+          activePaths[bucket].push(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
         }
       }
 
@@ -219,26 +223,35 @@ document.addEventListener("DOMContentLoaded", () => {
       if (distmSq < maxDistSq) {
         const distm = Math.sqrt(distmSq);
         const opacity = (1 - distm / maxDistance) * 0.4;
-        const bucket = Math.floor(opacity * 20);
-        if (!mousePaths[bucket]) {
-           mousePaths[bucket] = { path: new Path2D(), opacity: opacity };
-        }
-        mousePaths[bucket].path.moveTo(nodes[i].x, nodes[i].y);
-        mousePaths[bucket].path.lineTo(mouse.x, mouse.y);
+        let bucket = Math.floor(opacity * 20);
+        if (bucket > 19) bucket = 19;
+        mousePaths[bucket].push(nodes[i].x, nodes[i].y, mouse.x, mouse.y);
       }
     }
 
-    for (let b = 0; b < activePaths.length; b++) {
-      if (activePaths[b]) {
-        ctx.strokeStyle = `rgba(59, 130, 246, ${activePaths[b].opacity})`; // Tailwind blue-500
-        ctx.stroke(activePaths[b].path);
+    for (let b = 0; b < 20; b++) {
+      const arr = activePaths[b];
+      if (arr.length > 0) {
+        ctx.beginPath();
+        for (let k = 0; k < arr.length; k += 4) {
+          ctx.moveTo(arr[k], arr[k+1]);
+          ctx.lineTo(arr[k+2], arr[k+3]);
+        }
+        ctx.strokeStyle = `rgba(59, 130, 246, ${(b + 0.5) / 20 * 0.45})`;
+        ctx.stroke();
       }
     }
     
-    for (let b = 0; b < mousePaths.length; b++) {
-      if (mousePaths[b]) {
-        ctx.strokeStyle = `rgba(147, 197, 253, ${mousePaths[b].opacity})`; // Tailwind blue-300
-        ctx.stroke(mousePaths[b].path);
+    for (let b = 0; b < 20; b++) {
+      const arr = mousePaths[b];
+      if (arr.length > 0) {
+        ctx.beginPath();
+        for (let k = 0; k < arr.length; k += 4) {
+          ctx.moveTo(arr[k], arr[k+1]);
+          ctx.lineTo(arr[k+2], arr[k+3]);
+        }
+        ctx.strokeStyle = `rgba(147, 197, 253, ${(b + 0.5) / 20 * 0.4})`;
+        ctx.stroke();
       }
     }
   }

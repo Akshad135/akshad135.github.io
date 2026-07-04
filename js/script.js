@@ -149,6 +149,10 @@ if (canvas) {
   const points = [];
   let skipFrame = false;
 
+  // Pre-allocate arrays for zero-allocation rendering
+  const activeLines = Array.from({length: 10}, () => []);
+  const dimPoints = [];
+
   function rebuildGrid() {
     points.length = 0;
     for (let x = 0; x < width; x += spacing) {
@@ -186,9 +190,9 @@ if (canvas) {
 
     ctx.lineWidth = 1.5;
 
-    // Batch draws: group by opacity to minimize stroke() calls
-    const dimPath = new Path2D();
-    let activePaths = [];
+    // Clear pre-allocated arrays
+    dimPoints.length = 0;
+    for (let b = 0; b < 10; b++) activeLines[b].length = 0;
 
     for (let i = 0; i < points.length; i++) {
       const point = points[i];
@@ -204,8 +208,7 @@ if (canvas) {
         const distance = Math.sqrt(distanceSq);
         const intensity = 1 - distance / maxDist;
         lineLen = length + intensity * 10;
-        const opacity = 0.1 + intensity * 0.4;
-
+        
         if (distance > 0) {
           const invDistance = 1 / distance;
           dirX = dx * invDistance;
@@ -213,25 +216,36 @@ if (canvas) {
         }
 
         const halfLen = lineLen / 2;
-        // Bucket into ~10 opacity levels to batch strokes smoothly
         const bucket = Math.min(9, (intensity * 10) | 0);
-        if (!activePaths[bucket]) activePaths[bucket] = { path: new Path2D(), opacity };
-        activePaths[bucket].path.moveTo(point.x - dirX * halfLen, point.y - dirY * halfLen);
-        activePaths[bucket].path.lineTo(point.x + dirX * halfLen, point.y + dirY * halfLen);
+        activeLines[bucket].push(point.x - dirX * halfLen, point.y - dirY * halfLen, point.x + dirX * halfLen, point.y + dirY * halfLen);
       } else {
-        dimPath.rect(point.x - 0.75, point.y - 0.75, 1.5, 1.5);
+        dimPoints.push(point.x - 0.75, point.y - 0.75);
       }
     }
 
-    // Draw dim points (single fill call for all to make dots)
-    ctx.fillStyle = `rgba(100, 149, 237, 0.15)`;
-    ctx.fill(dimPath);
+    // Draw dim points
+    if (dimPoints.length > 0) {
+      ctx.beginPath();
+      for (let k = 0; k < dimPoints.length; k += 2) {
+        ctx.rect(dimPoints[k], dimPoints[k+1], 1.5, 1.5);
+      }
+      ctx.fillStyle = `rgba(100, 149, 237, 0.15)`;
+      ctx.fill();
+    }
 
-    // Draw active points (one stroke call per opacity bucket)
-    for (let b = 0; b < activePaths.length; b++) {
-      if (activePaths[b]) {
-        ctx.strokeStyle = `rgba(100, 149, 237, ${activePaths[b].opacity})`;
-        ctx.stroke(activePaths[b].path);
+    // Draw active points
+    for (let b = 0; b < 10; b++) {
+      const arr = activeLines[b];
+      if (arr.length > 0) {
+        ctx.beginPath();
+        for (let k = 0; k < arr.length; k += 4) {
+          ctx.moveTo(arr[k], arr[k+1]);
+          ctx.lineTo(arr[k+2], arr[k+3]);
+        }
+        const intensity = b / 10;
+        const opacity = 0.1 + intensity * 0.4;
+        ctx.strokeStyle = `rgba(100, 149, 237, ${opacity})`;
+        ctx.stroke();
       }
     }
   }
@@ -292,6 +306,26 @@ if (backToTopBtn && backToTopWrapper) {
   const connections = [];
   const pulses = [];
   const MAX_PULSES = isMobile ? 75 : 320;
+  
+  // Pre-allocate arrays for batching connection lines by opacity
+  const connectionBuckets = Array.from({length: 10}, () => []);
+
+  const pulsePool = [];
+  
+  function getPulse(nodeA, nodeB, speedMultiplier = 1, isGradient = false) {
+    let p = pulsePool.pop();
+    if (!p) {
+      p = new Pulse(nodeA, nodeB, speedMultiplier, isGradient);
+    } else {
+      p.start = nodeA;
+      p.end = nodeB;
+      p.progress = 0;
+      p.speed = (Math.random() * 0.02 + 0.015) * speedMultiplier;
+      p.done = false;
+      p.isGradient = isGradient;
+    }
+    return p;
+  }
 
   class Node {
     constructor(x, y, layerIndex) {
@@ -509,22 +543,43 @@ if (backToTopBtn && backToTopWrapper) {
     const time = Date.now() * 0.002;
 
     ctx.lineWidth = 1;
+    
+    // Clear connection buckets
+    for (let b = 0; b < 10; b++) {
+      connectionBuckets[b].length = 0;
+    }
+
     for (let i = 0; i < connections.length; i++) {
       const connection = connections[i];
       const nodeA = connection.from;
       const nodeB = connection.to;
+      
       const activeFactor = (nodeA.activation + nodeB.activation) / 2;
-      const alpha = 0.05 + activeFactor * 0.2;
-
-      ctx.beginPath();
-      ctx.moveTo(nodeA.x, nodeA.y);
-      ctx.lineTo(nodeB.x, nodeB.y);
-      ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
-      ctx.stroke();
+      let bucket = Math.floor(activeFactor * 10);
+      if (bucket > 9) bucket = 9;
+      if (bucket < 0) bucket = 0;
+      
+      connectionBuckets[bucket].push(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
 
       const spawnChance = 0.002 + nodeA.activation * 0.01;
       if (Math.random() < spawnChance && pulses.length < MAX_PULSES) {
-        pulses.push(new Pulse(nodeA, nodeB));
+        pulses.push(getPulse(nodeA, nodeB));
+      }
+    }
+
+    // Draw batched connections
+    for (let b = 0; b < 10; b++) {
+      const arr = connectionBuckets[b];
+      if (arr.length > 0) {
+        ctx.beginPath();
+        for (let k = 0; k < arr.length; k += 4) {
+          ctx.moveTo(arr[k], arr[k+1]);
+          ctx.lineTo(arr[k+2], arr[k+3]);
+        }
+        const activeFactor = b / 10;
+        const alpha = 0.05 + activeFactor * 0.2;
+        ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
+        ctx.stroke();
       }
     }
 
@@ -535,6 +590,8 @@ if (backToTopBtn && backToTopWrapper) {
       p.draw();
       if (!p.done) {
         pulses[writeIndex++] = p;
+      } else {
+        pulsePool.push(p);
       }
     }
     pulses.length = writeIndex;
@@ -577,7 +634,7 @@ if (backToTopBtn && backToTopWrapper) {
             sourceNode.activation = 1.0;
 
             prevLayerNodes.forEach((targetNode) => {
-              pulses.push(new Pulse(sourceNode, targetNode, 2.0, true));
+              pulses.push(getPulse(sourceNode, targetNode, 2.0, true));
             });
           });
         }, delay);
