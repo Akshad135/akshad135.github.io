@@ -49,8 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(el);
 
     // Distribute evenly in a circle to ensure distance at start
+    const isMobileInit = window.innerWidth < 768;
     const anglePos = (i / techs.length) * Math.PI * 2 + (Math.random() * 0.2);
-    const radiusPos = (Math.min(width, height) / 2.8) + (Math.random() * 40 - 20);
+    const radiusPos = (Math.min(width, height) / (isMobileInit ? 4.0 : 2.8)) + (Math.random() * 40 - 20);
     const x = width / 2 + Math.cos(anglePos) * radiusPos;
     const y = height / 2 + Math.sin(anglePos) * radiusPos;
     
@@ -102,6 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ctx.clearRect(0, 0, width, height);
 
+    const isMobile = window.innerWidth < 768;
+
     // Update node positions
     nodes.forEach((node) => {
       // Get dimensions if not set
@@ -110,15 +113,17 @@ document.addEventListener("DOMContentLoaded", () => {
         node.height = node.el.offsetHeight;
       }
 
-      // Mouse repulsion (stronger)
-      const dxMouse = mouse.x - node.x;
-      const dyMouse = mouse.y - node.y;
+      if (!isMobile) {
+        // Mouse repulsion (stronger)
+        const dxMouse = mouse.x - node.x;
+        const dyMouse = mouse.y - node.y;
       const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
       if (distMouseSq < 22500) { // 150 * 150
         const distMouse = Math.sqrt(distMouseSq);
         const force = (150 - distMouse) / 150;
         node.vx -= (dxMouse / distMouse) * force * 1.2;
         node.vy -= (dyMouse / distMouse) * force * 1.2;
+      }
       }
 
       // Node-to-node collision (Bounding Box Repulsion)
@@ -143,16 +148,31 @@ document.addEventListener("DOMContentLoaded", () => {
           const overlapX = minDx - Math.abs(dx);
           const overlapY = minDy - Math.abs(dy);
           
-          // Resolve on axis with smallest overlap to mimic realistic bouncing
-          if (overlapX < overlapY) {
-             const dir = dx > 0 ? 1 : -1;
-             node.vx += dir * overlapX * 0.08;
+          if (isMobile) {
+            // Instant position resolution without adding velocity
+            if (overlapX < overlapY) {
+               const dir = dx > 0 ? 1 : -1;
+               node.x += dir * overlapX * 0.5;
+               other.x -= dir * overlapX * 0.5;
+            } else {
+               const dir = dy > 0 ? 1 : -1;
+               node.y += dir * overlapY * 0.5;
+               other.y -= dir * overlapY * 0.5;
+            }
           } else {
-             const dir = dy > 0 ? 1 : -1;
-             node.vy += dir * overlapY * 0.08;
+            // Resolve on axis with smallest overlap to mimic realistic bouncing
+            if (overlapX < overlapY) {
+               const dir = dx > 0 ? 1 : -1;
+               node.vx += dir * overlapX * 0.08;
+            } else {
+               const dir = dy > 0 ? 1 : -1;
+               node.vy += dir * overlapY * 0.08;
+            }
           }
         }
       }
+
+      if (!isMobile) {
 
       // Apply friction/speed limit
       const currentSpeed = Math.sqrt(node.vx * node.vx + node.vy * node.vy);
@@ -167,23 +187,24 @@ document.addEventListener("DOMContentLoaded", () => {
       // Move
       node.x += node.vx;
       node.y += node.vy;
+      } // End of !isMobile check
 
       // Bounce off walls (accounting for element size)
       const padding = 10;
       if (node.x < node.width / 2 + padding) {
         node.x = node.width / 2 + padding;
-        node.vx *= -1;
+        if (!isMobile) node.vx *= -1;
       } else if (node.x > width - node.width / 2 - padding) {
         node.x = width - node.width / 2 - padding;
-        node.vx *= -1;
+        if (!isMobile) node.vx *= -1;
       }
 
       if (node.y < node.height / 2 + padding) {
         node.y = node.height / 2 + padding;
-        node.vy *= -1;
+        if (!isMobile) node.vy *= -1;
       } else if (node.y > height - node.height / 2 - padding) {
         node.y = height - node.height / 2 - padding;
-        node.vy *= -1;
+        if (!isMobile) node.vy *= -1;
       }
 
       // Update DOM element position (centered)
@@ -215,17 +236,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Draw lines to mouse in same loop
-      const dxm = nodes[i].x - mouse.x;
-      const dym = nodes[i].y - mouse.y;
-      const distmSq = dxm * dxm + dym * dym;
+      if (!isMobile) {
+        // Draw lines to mouse in same loop
+        const dxm = nodes[i].x - mouse.x;
+        const dym = nodes[i].y - mouse.y;
+        const distmSq = dxm * dxm + dym * dym;
 
-      if (distmSq < maxDistSq) {
+        if (distmSq < maxDistSq) {
         const distm = Math.sqrt(distmSq);
         const opacity = (1 - distm / maxDistance) * 0.4;
         let bucket = Math.floor(opacity * 20);
         if (bucket > 19) bucket = 19;
-        mousePaths[bucket].push(nodes[i].x, nodes[i].y, mouse.x, mouse.y);
+          mousePaths[bucket].push(nodes[i].x, nodes[i].y, mouse.x, mouse.y);
+        }
       }
     }
 
