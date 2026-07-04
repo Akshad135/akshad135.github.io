@@ -22,3 +22,15 @@
 .animate-pulse-flow {
     animation: pulse-flow 4s infinite linear;
 }
+
+@keyframes pulse-flow-vertical {
+    0% { top: 0%; opacity: 0; }
+    2.5% { opacity: 1; }
+    47.5% { opacity: 1; }
+    50% { top: calc(100% - 6px); opacity: 0; }
+    100% { top: calc(100% - 6px); opacity: 0; }
+}
+
+.animate-pulse-flow-vertical {
+    animation: pulse-flow-vertical 4s infinite linear;
+}

@@ -38,7 +38,7 @@
     />
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo.png?v=2" />
     <link rel="stylesheet" href="css/style.css?v=4.1" />
-    <link rel="stylesheet" href="css/homelab.css" />
+    <link rel="stylesheet" href="css/homelab.css?v=3" />
   </head>
 
   <body class="antialiased selection:bg-white selection:text-black">
@@ -298,29 +298,51 @@
                     <div class="relative flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 font-mono text-[10px] sm:text-xs text-gray-400 max-w-4xl mx-auto w-full overflow-x-auto pb-4">
                         <!-- Internet -->
                         <div class="flex flex-col items-center gap-2 z-10 min-w-[60px]">
-                            <div class="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center relative">
                                 <i class="fas fa-globe text-gray-500 text-base"></i>
+                                <!-- Mobile Connection (Left Curve) -->
+                                <svg class="md:hidden absolute top-1/2 right-full w-10 h-[82px] overflow-visible z-[-1]" viewBox="0 0 40 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path id="path-left" d="M 40 0 C 0 0, 0 82, 40 82" stroke="#1f2937" stroke-width="1" />
+                                    <circle r="3" fill="#3b82f6" class="drop-shadow-[0_0_4px_rgba(59,130,246,0.8)]">
+                                        <animateMotion dur="4s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.5;1" calcMode="linear">
+                                            <mpath href="#path-left" />
+                                        </animateMotion>
+                                        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.45;0.5;1" dur="4s" repeatCount="indefinite" />
+                                    </circle>
+                                </svg>
                             </div>
                             <span>Internet</span>
                         </div>
                         
-                        <!-- Connection Line -->
-                        <div class="hidden md:block flex-1 h-px bg-gray-800 relative min-w-[20px]">
+                        <!-- Connection Line (Desktop) -->
+                        <div class="hidden md:flex flex-1 h-px bg-gray-800 relative min-w-[20px]">
                             <div class="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] animate-pulse-flow"></div>
                         </div>
 
+
                         <!-- Tailscale -->
                         <div class="flex flex-col items-center gap-2 z-10 min-w-[70px]">
-                            <div class="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center relative">
                                 <i class="fas fa-network-wired text-gray-400 text-base"></i>
+                                <!-- Mobile Connection (Right Curve) -->
+                                <svg class="md:hidden absolute top-1/2 left-full w-10 h-[84px] overflow-visible z-[-1]" viewBox="0 0 40 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path id="path-right" d="M 0 0 C 40 0, 40 84, 4 84" stroke="#1f2937" stroke-width="1" />
+                                    <circle r="3" fill="#3b82f6" class="drop-shadow-[0_0_4px_rgba(59,130,246,0.8)]">
+                                        <animateMotion dur="4s" repeatCount="indefinite" keyPoints="0;0;1" keyTimes="0;0.5;1" calcMode="linear">
+                                            <mpath href="#path-right" />
+                                        </animateMotion>
+                                        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.5;0.55;0.95;1" dur="4s" repeatCount="indefinite" />
+                                    </circle>
+                                </svg>
                             </div>
                             <span>Tailscale</span>
                         </div>
 
-                        <!-- Connection Line -->
-                        <div class="hidden md:block flex-1 h-px bg-gray-800 relative min-w-[20px]">
+                        <!-- Connection Line (Desktop) -->
+                        <div class="hidden md:flex flex-1 h-px bg-gray-800 relative min-w-[20px]">
                             <div class="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] animate-pulse-flow" style="animation-delay: 2s"></div>
                         </div>
+
 
                         <!-- Caddy -->
                         <div class="flex flex-col items-center gap-2 z-10 min-w-[60px]">
