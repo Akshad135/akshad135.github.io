@@ -2,12 +2,12 @@ const projects = [
   {
     title: "Paste Bin",
     description:
-      "A secure, modern pastebin with syntax highlighting, encryption, and self-destructing pastes. Built on Cloudflare Workers for edge performance.",
+      "A secure, zero-tracking pastebin with E2EE, Shiki syntax highlighting, and file attachments. Powered by a Rust and SQLite backend with PWA support.",
     category: "Web",
-    tags: ["React", "Cloudflare Workers", "Hono"],
+    tags: ["Rust", "SQLite", "E2EE", "PWA"],
     links: {
       github: "https://github.com/Akshad135/paste-bin",
-      demo: "https://demo-pastebin.vercel.app/",
+      demo: null,
     },
     visual: {
       type: "paste-bin",
@@ -79,27 +79,6 @@ const projects = [
     },
   },
   {
-    title: "TailSync",
-    description:
-      "Secure clipboard synchronization tool for Tailscale networks. Features end-to-end encryption, background sync services, and multi-device support.",
-    category: "Android",
-    tags: ["Kotlin", "FastAPI", "WebSockets", "Compose"],
-    links: {
-      github: "https://github.com/Akshad135/tailsync",
-      demo: null,
-    },
-    visual: {
-      type: "sync-network",
-      center: { icon: "fa-shield-alt", color: "text-cyan-400" },
-      nodes: [
-        { icon: "fa-mobile-alt", color: "text-blue-400", label: "Android" },
-        { icon: "fa-laptop", color: "text-purple-400", label: "Desktop" },
-        { icon: "fa-server", color: "text-green-400", label: "Server" },
-      ],
-      bgGradient: "from-cyan-900/30 to-transparent",
-    },
-  },
-  {
     title: "Anime Wrapped",
     description:
       "A cinematic year-in-review application that turns viewing history into a visual journey. Features dynamic reports and an AI-powered 'Roast' system.",
@@ -115,23 +94,6 @@ const projects = [
       content: "鬼",
       color: "from-red-500 to-red-900",
       bgGradient: "from-gray-900 via-black to-black",
-    },
-  },
-  {
-    title: "Bloom",
-    description:
-      "An aesthetic daily journal app where memories grow like a garden. Built for Android with a focus on mindfulness and nature-themed visuals.",
-    category: "Android",
-    tags: ["Kotlin", "Jetpack Compose", "Room DB", "Widgets"],
-    links: {
-      github: "https://github.com/akshad135/plantmemory",
-      demo: "https://github.com/akshad135/plantmemory/releases",
-    },
-    visual: {
-      type: "emoji",
-      content: "🌻",
-      color: "from-yellow-400 to-orange-500",
-      bgGradient: "from-orange-900/30 to-transparent",
     },
   },
   {
